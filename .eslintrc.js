@@ -21,5 +21,6 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'comma-dangle': ['error', 'always-multiline'],
+    'space-before-function-paren': ['error', 'never'],
   },
 }
