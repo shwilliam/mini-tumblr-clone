@@ -1,19 +1,37 @@
 const {GraphQLServer} = require('graphql-yoga')
 
-const typeDefs = `
-  type Query {
-    test: String!
-  }
-`
+const posts = [
+  {
+    id: '1',
+    description: 'desc',
+    imgUrl: 'http://place-puppy.com/200x200',
+  },
+]
 
 const resolvers = {
   Query: {
-    test: () => `hello`,
+    feed: () => posts,
+  },
+  Mutation: {
+    publish: (p, args) => {
+      const newPost = {
+        id: posts.length + 1,
+        description: args.description,
+        imgUrl: args.imgUrl,
+      }
+      posts.push(newPost)
+      return newPost
+    },
+  },
+  Post: {
+    id: p => p.id,
+    description: p => p.description,
+    imgUrl: p => p.imgUrl,
   },
 }
 
 const server = new GraphQLServer({
-  typeDefs,
+  typeDefs: './src/schema.graphql',
   resolvers,
 })
 

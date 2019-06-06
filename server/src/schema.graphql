@@ -1,0 +1,13 @@
+type Query {
+  feed: [Post!]!
+}
+
+type Mutation {
+  publish(imgUrl: String!, description: String!): Post!
+}
+
+type Post {
+  id: ID!
+  description: String!
+  imgUrl: String!
+}
