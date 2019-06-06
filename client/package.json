@@ -1,21 +1,28 @@
 {
   "name": "mini-tumblr-clone",
+  "author": "William L <w-lindvall@outlook.com>",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1"
   },
   "scripts": {
-    "serve": "node server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shwilliam/mini-tumblr-clone.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shwilliam/mini-tumblr-clone/issues"
+  },
+  "homepage": "https://github.com/shwilliam/mini-tumblr-clone#readme",
   "browserslist": {
     "production": [
       ">0.2%",

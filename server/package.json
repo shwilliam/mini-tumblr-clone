@@ -1,0 +1,22 @@
+{
+  "name": "mini-tumblr-clone-server",
+  "author": "William L <w-lindvall@outlook.com>",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shwilliam/mini-tumblr-clone.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shwilliam/mini-tumblr-clone/issues"
+  },
+  "homepage": "https://github.com/shwilliam/mini-tumblr-clone#readme",
+  "dependencies": {
+    "graphql-yoga": "^1.17.4"
+  }
+}
