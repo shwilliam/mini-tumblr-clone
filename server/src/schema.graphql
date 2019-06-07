@@ -15,6 +15,10 @@ type Post {
   op: User
 }
 
+type Subscription {
+  newPost: Post
+}
+
 type AuthPayload {
   token: String
   user: User
