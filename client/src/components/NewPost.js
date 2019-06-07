@@ -28,11 +28,13 @@ const NewPost = () => {
           <input
             type="text"
             onChange={e => setDescription(e.target.value)}
+            placeholder="description"
             required
           />
           <input
             type="url"
             onChange={e => setImgUrl(e.target.value)}
+            placeholder="image url"
             required
           />
           <button type="submit">post</button>
