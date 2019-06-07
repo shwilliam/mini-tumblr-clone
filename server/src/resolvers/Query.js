@@ -10,6 +10,8 @@ const feed = async (root, args, context) => {
 
   const posts = await context.prisma.posts({
     where,
+    skip: args.skip,
+    first: args.first,
   })
   return posts
 }

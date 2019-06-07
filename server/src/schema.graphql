@@ -1,5 +1,5 @@
 type Query {
-  feed(filter: String): [Post!]!
+  feed(filter: String, skip: Int, first: Int): [Post!]!
 }
 
 type Mutation {
