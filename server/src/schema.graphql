@@ -4,10 +4,25 @@ type Query {
 
 type Mutation {
   publish(imgUrl: String!, description: String!): Post!
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
 }
 
 type Post {
   id: ID!
   description: String!
   imgUrl: String!
+  op: User
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  posts: [Post!]!
 }

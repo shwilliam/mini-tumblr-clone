@@ -3,4 +3,13 @@ type Post {
   createdAt: DateTime! @createdAt
   description: String!
   imgUrl: String!
+  op: User
+}
+
+type User {
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  password: String!
+  posts: [Post!]!
 }
