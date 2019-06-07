@@ -12,7 +12,7 @@ const POST_MUTATION = gql`
   }
 `
 
-function NewPost() {
+const NewPost = () => {
   const [description, setDescription] = useState('')
   const [imgUrl, setImgUrl] = useState('')
 
