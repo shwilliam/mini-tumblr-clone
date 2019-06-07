@@ -1,38 +1,28 @@
 const {GraphQLServer} = require('graphql-yoga')
-
-const posts = [
-  {
-    id: '1',
-    description: 'desc',
-    imgUrl: 'http://place-puppy.com/200x200',
-  },
-]
+const {prisma} = require('./generated/prisma-client')
 
 const resolvers = {
   Query: {
-    feed: () => posts,
+    feed: (root, args, context) => context.prisma.posts(),
   },
   Mutation: {
-    publish: (p, args) => {
-      const newPost = {
-        id: posts.length + 1,
+    publish: (root, args, context) =>
+      context.prisma.createPost({
         description: args.description,
         imgUrl: args.imgUrl,
-      }
-      posts.push(newPost)
-      return newPost
-    },
+      }),
   },
   Post: {
-    id: p => p.id,
-    description: p => p.description,
-    imgUrl: p => p.imgUrl,
+    id: root => root.id,
+    description: root => root.description,
+    imgUrl: root => root.imgUrl,
   },
 }
 
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
+  context: {prisma},
 })
 
 server.start(() => console.log('server running on port 4000'))

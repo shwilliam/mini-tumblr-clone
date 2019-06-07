@@ -1,4 +1,4 @@
-endpoint: ''
+endpoint: https://us1.prisma.sh/william-l-410431/mini-tumblr-clone-server/dev
 datamodel: datamodel.prisma
 generate:
   - generator: javascript-client
