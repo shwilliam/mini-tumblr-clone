@@ -1,5 +1,19 @@
 type Query {
-  feed(filter: String, skip: Int, first: Int): [Post!]!
+  feed(
+    filter: String
+    skip: Int
+    first: Int
+    orderBy: PostOrderByInput
+  ): [Post!]!
+}
+
+enum PostOrderByInput {
+  description_ASC
+  description_DESC
+  imgUrl_ASC
+  imgUrl_DESC
+  createdAt_ASC
+  createdAt_DESC
 }
 
 type Mutation {
