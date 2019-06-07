@@ -1,10 +1,10 @@
 import React from 'react'
 import {Router} from '@reach/router'
 
-import Home from './pages/index'
-import Auth from './pages/auth'
-import New from './pages/new'
-import NotFound from './pages/not-found'
+import Home from './pages/Home'
+import Auth from './pages/Auth'
+import New from './pages/New'
+import NotFound from './pages/NotFound'
 
 const BrowserRouter = () => (
   <Router>
