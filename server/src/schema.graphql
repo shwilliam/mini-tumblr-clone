@@ -6,6 +6,7 @@ type Mutation {
   publish(imgUrl: String!, description: String!): Post!
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
+  like(postId: ID): Like
 }
 
 type Post {
@@ -13,6 +14,13 @@ type Post {
   description: String!
   imgUrl: String!
   op: User
+  likes: [Like!]!
+}
+
+type Like {
+  id: ID!
+  post: Post!
+  user: User!
 }
 
 type Subscription {

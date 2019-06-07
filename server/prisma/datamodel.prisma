@@ -4,6 +4,7 @@ type Post {
   description: String!
   imgUrl: String!
   op: User
+  likes: [Like!]!
 }
 
 type User {
@@ -12,4 +13,11 @@ type User {
   email: String! @unique
   password: String!
   posts: [Post!]!
+  likes: [Like!]!
+}
+
+type Like {
+  id: ID! @id
+  post: Post!
+  user: User!
 }

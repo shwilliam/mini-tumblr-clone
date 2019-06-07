@@ -40,4 +40,21 @@ const login = async (parent, args, context, info) => {
   }
 }
 
-module.exports = {publish, signup, login}
+const like = async (parent, args, context, info) => {
+  const userId = getUserId(context)
+
+  const postExists = await context.prisma.$exists.like({
+    user: {id: userId},
+    post: {id: args.postId},
+  })
+  if (postExists) {
+    throw new Error(`Already liked ${args.postId}`)
+  }
+
+  return context.prisma.createLike({
+    user: {connect: {id: userId}},
+    post: {connect: {id: args.postId}},
+  })
+}
+
+module.exports = {publish, signup, login, like}
