@@ -14,7 +14,15 @@ const feed = async (root, args, context) => {
     first: args.first,
     orderBy: args.orderBy,
   })
-  return posts
+
+  const count = await context.prisma
+    .postsConnection({
+      where,
+    })
+    .aggregate()
+    .count()
+
+  return {posts, count}
 }
 
 module.exports = {feed}
