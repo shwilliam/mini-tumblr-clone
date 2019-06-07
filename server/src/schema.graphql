@@ -25,6 +25,7 @@ type Like {
 
 type Subscription {
   newPost: Post
+  newLike: Like
 }
 
 type AuthPayload {
