@@ -19,7 +19,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "repository": {
     "type": "git",
@@ -42,6 +44,10 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^5.1.3",
+    "@storybook/addon-links": "^5.1.3",
+    "@storybook/addons": "^5.1.3",
+    "@storybook/react": "^5.1.3",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.17.3",
