@@ -5,11 +5,11 @@ import styled from 'styled-components'
 import SPACING from '../styles/spacing'
 import COLORS from '../styles/colors'
 const {PAD} = SPACING
-const {BLUE, WHITE} = COLORS
+const {BLUE} = COLORS
 
 const SiteHeader = styled.header`
-  background-color: ${BLUE};
-  color: ${WHITE};
+  border-bottom: 1px solid ${BLUE};
+  color: ${BLUE};
   display: flex;
   justify-content: space-between;
   overflow: hidden;
@@ -22,7 +22,7 @@ const SiteHeader = styled.header`
   h1 {
     font-size: 2rem;
     line-height: 2rem;
-    margin: 0;
+    margin: 0 0 0 0.6rem;
   }
 
   h1,
