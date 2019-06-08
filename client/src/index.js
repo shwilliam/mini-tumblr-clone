@@ -10,6 +10,7 @@ import {InMemoryCache} from 'apollo-cache-inmemory'
 import {onError} from 'apollo-link-error'
 import {setContext} from 'apollo-link-context'
 
+import './styles/reset.css'
 import {AUTH_TOKEN} from './constants'
 
 const errorLink = onError(({graphQLErrors, networkError}) => {
