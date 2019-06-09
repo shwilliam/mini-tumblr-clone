@@ -5,16 +5,40 @@ import PostList from '../components/PostList'
 import Card from '../components/Card'
 import {timeDifferenceForDate} from '../utils'
 
+const _subscribeToNewPosts = subscribeToMore => {
+  subscribeToMore({
+    document: NEW_POSTS_SUBSCRIPTION,
+    updateQuery: (prev, {subscriptionData}) => {
+      console.log('???????')
+      if (!subscriptionData.data) return prev
+      const newPost = subscriptionData.data.newPost
+      const exists = prev.feed.posts.find(({id}) => id === newPost.id)
+      if (exists) return prev
+
+      return Object.assign({}, prev, {
+        feed: {
+          posts: [newPost, ...prev.feed.posts],
+          count: prev.feed.posts.length + 1,
+          __typename: prev.feed.__typename,
+        },
+      })
+    },
+  })
+}
+
 const Home = () => (
   <Query query={FEED_QUERY}>
-    {({loading, error, data}) => {
+    {({loading, error, data, subscribeToMore}) => {
       if (loading) return <p>fetching...</p>
       if (error) return <p>error</p>
+
+      _subscribeToNewPosts(subscribeToMore)
+
       if (!data.feed.posts.length) return <p>no posts</p>
       return (
         <PostList>
           {data.feed.posts.map((post, i) => (
-            <Card key={post.id} index={i}>
+            <Card key={post.id}>
               <img alt="" src={post.imgUrl} />
               <p>{post.description}</p>
               <p>{post.likes.length} likes</p>
@@ -37,7 +61,7 @@ const Home = () => (
 
 const FEED_QUERY = gql`
   {
-    feed {
+    feed(orderBy: createdAt_DESC) {
       posts {
         id
         imgUrl
@@ -72,6 +96,27 @@ const LIKE_MUTATION = gql`
       }
       user {
         id
+      }
+    }
+  }
+`
+
+const NEW_POSTS_SUBSCRIPTION = gql`
+  subscription {
+    newPost {
+      id
+      imgUrl
+      description
+      createdAt
+      op {
+        id
+        name
+      }
+      likes {
+        id
+        user {
+          id
+        }
       }
     }
   }

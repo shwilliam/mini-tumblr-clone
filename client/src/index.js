@@ -9,6 +9,9 @@ import {InMemoryCache} from 'apollo-cache-inmemory'
 import {onError} from 'apollo-link-error'
 import {setContext} from 'apollo-link-context'
 import {createUploadLink} from 'apollo-upload-client'
+import {split} from 'apollo-link'
+import {WebSocketLink} from 'apollo-link-ws'
+import {getMainDefinition} from 'apollo-utilities'
 
 import './styles/reset.css'
 import {AUTH_TOKEN} from './constants'
@@ -23,10 +26,6 @@ const errorLink = onError(({graphQLErrors, networkError}) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-const link = createUploadLink({
-  uri: 'http://localhost:4000',
-})
-
 const authLink = setContext((_, {headers}) => {
   const token = localStorage.getItem(AUTH_TOKEN)
   return {
@@ -37,8 +36,33 @@ const authLink = setContext((_, {headers}) => {
   }
 })
 
+const wsLink = new WebSocketLink({
+  uri: 'ws://localhost:4000',
+  options: {
+    reconnect: true,
+    connectionParams: {
+      authToken: localStorage.getItem(AUTH_TOKEN),
+    },
+  },
+})
+
+const link = authLink.concat(
+  errorLink.concat(
+    split(
+      ({query}) => {
+        const {kind, operation} = getMainDefinition(query)
+        return kind === 'OperationDefinition' && operation === 'subscription'
+      },
+      wsLink,
+      createUploadLink({
+        uri: 'http://localhost:4000',
+      }),
+    ),
+  ),
+)
+
 const client = new ApolloClient({
-  link: authLink.concat(errorLink.concat(link)),
+  link,
   cache: new InMemoryCache(),
 })
 
