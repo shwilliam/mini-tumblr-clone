@@ -7,7 +7,6 @@ const POST_MUTATION = gql`
   mutation PostMutation($description: String!, $picture: Upload) {
     publish(description: $description, picture: $picture) {
       id
-      description
     }
   }
 `

@@ -28,7 +28,7 @@ type Post {
   description: String!
   op: User
   likes: [Like!]!
-  pictureId: String
+  imgUrl: String!
 }
 
 type Like {
@@ -52,4 +52,5 @@ type User {
   name: String!
   email: String!
   posts: [Post!]!
+  likes: [Like!]!
 }

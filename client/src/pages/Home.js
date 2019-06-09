@@ -14,10 +14,7 @@ const Home = () => (
         <PostList>
           {data.feed.posts.map(post => (
             <Card key={post.id}>
-              <img
-                alt=""
-                src={`http://localhost:4000/uploads/${post.pictureId}`}
-              />
+              <img alt="" src={post.imgUrl} />
               <p>{post.description}</p>
             </Card>
           ))}
@@ -32,7 +29,7 @@ const FEED_QUERY = gql`
     feed {
       posts {
         id
-        pictureId
+        imgUrl
         description
       }
     }

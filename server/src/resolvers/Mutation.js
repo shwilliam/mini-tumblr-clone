@@ -16,17 +16,22 @@ const storeUpload = async ({stream}) => {
   )
 }
 
-const processUpload = async upload => {
+const processUpload = async (upload, hostUrl) => {
   const {stream, filename} = await upload
   const {id} = await storeUpload({stream, filename})
-  return id
+  return `${hostUrl}uploads/${id}`
 }
 
 const publish = async (root, args, context) => {
-  const pictureId = await processUpload(args.picture)
+  const host =
+    context.request.protocol +
+    '://' +
+    context.request.get('host') +
+    context.request.originalUrl
+  const imgUrl = await processUpload(args.picture, host)
 
   return context.prisma.createPost({
-    pictureId,
+    imgUrl,
     description: args.description,
     op: {connect: {id: getUserId(context)}},
   })
