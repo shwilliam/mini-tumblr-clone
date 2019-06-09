@@ -26,6 +26,12 @@ const _subscribeToNewPosts = subscribeToMore => {
   })
 }
 
+const _subscribeToNewLikes = subscribeToMore => {
+  subscribeToMore({
+    document: NEW_LIKES_SUBSCRIPTION,
+  })
+}
+
 const Home = () => (
   <Query query={FEED_QUERY}>
     {({loading, error, data, subscribeToMore}) => {
@@ -33,6 +39,7 @@ const Home = () => (
       if (error) return <p>error</p>
 
       _subscribeToNewPosts(subscribeToMore)
+      _subscribeToNewLikes(subscribeToMore)
 
       if (!data.feed.posts.length) return <p>no posts</p>
       return (
@@ -117,6 +124,33 @@ const NEW_POSTS_SUBSCRIPTION = gql`
         user {
           id
         }
+      }
+    }
+  }
+`
+
+const NEW_LIKES_SUBSCRIPTION = gql`
+  subscription {
+    newLike {
+      id
+      post {
+        id
+        imgUrl
+        description
+        createdAt
+        op {
+          id
+          name
+        }
+        likes {
+          id
+          user {
+            id
+          }
+        }
+      }
+      user {
+        id
       }
     }
   }
