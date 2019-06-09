@@ -1,4 +1,5 @@
 scalar Upload
+scalar DateTime
 
 type Query {
   feed(filter: String, skip: Int, first: Int, orderBy: PostOrderByInput): Feed!
@@ -29,6 +30,7 @@ type Post {
   op: User
   likes: [Like!]!
   imgUrl: String!
+  createdAt: DateTime!
 }
 
 type Like {
