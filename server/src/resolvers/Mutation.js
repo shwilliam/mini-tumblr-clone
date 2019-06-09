@@ -1,13 +1,36 @@
+const {createWriteStream} = require('fs')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const shortid = require('shortid')
 const {APP_SECRET, getUserId} = require('../utils')
 
-const publish = (root, args, context) =>
-  context.prisma.createPost({
-    imgUrl: args.imgUrl,
+const storeUpload = async ({stream}) => {
+  const id = shortid.generate()
+  const path = `uploads/${id}`
+
+  return new Promise((resolve, reject) =>
+    stream
+      .pipe(createWriteStream(path))
+      .on('finish', () => resolve({id, path}))
+      .on('error', reject),
+  )
+}
+
+const processUpload = async upload => {
+  const {stream, filename} = await upload
+  const {id} = await storeUpload({stream, filename})
+  return id
+}
+
+const publish = async (root, args, context) => {
+  const pictureId = await processUpload(args.picture)
+
+  return context.prisma.createPost({
+    pictureId,
     description: args.description,
     op: {connect: {id: getUserId(context)}},
   })
+}
 
 const signup = async (parent, args, context, info) => {
   const password = await bcrypt.hash(args.password, 10)

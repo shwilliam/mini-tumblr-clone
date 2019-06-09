@@ -7,6 +7,8 @@ const Post = require('./resolvers/Post')
 const Subscription = require('./resolvers/Subscription')
 const Like = require('./resolvers/Like')
 
+// TODO: ensure uploads/ exists or create
+
 const resolvers = {
   Query,
   Mutation,

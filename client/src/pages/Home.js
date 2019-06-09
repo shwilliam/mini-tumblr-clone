@@ -11,9 +11,13 @@ const Home = () => (
       if (error) return <p>error</p>
       return (
         <PostList>
-          {data.feed.posts.map(post => (
-            <Card key={post.id}>{post.description}</Card>
-          ))}
+          {data.feed.posts.length ? (
+            data.feed.posts.map(post => (
+              <Card key={post.id}>{post.description}</Card>
+            ))
+          ) : (
+            <Card>no posts</Card>
+          )}
         </PostList>
       )
     }}
@@ -25,7 +29,7 @@ const FEED_QUERY = gql`
     feed {
       posts {
         id
-        imgUrl
+        pictureId
         description
       }
     }

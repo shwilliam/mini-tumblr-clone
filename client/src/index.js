@@ -5,10 +5,10 @@ import * as serviceWorker from './serviceWorker'
 
 import {ApolloProvider} from 'react-apollo'
 import {ApolloClient} from 'apollo-client'
-import {createHttpLink} from 'apollo-link-http'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import {onError} from 'apollo-link-error'
 import {setContext} from 'apollo-link-context'
+import {createUploadLink} from 'apollo-upload-client'
 
 import './styles/reset.css'
 import {AUTH_TOKEN} from './constants'
@@ -23,7 +23,7 @@ const errorLink = onError(({graphQLErrors, networkError}) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-const httpLink = createHttpLink({
+const link = createUploadLink({
   uri: 'http://localhost:4000',
 })
 
@@ -38,7 +38,7 @@ const authLink = setContext((_, {headers}) => {
 })
 
 const client = new ApolloClient({
-  link: authLink.concat(errorLink.concat(httpLink)),
+  link: authLink.concat(errorLink.concat(link)),
   cache: new InMemoryCache(),
 })
 

@@ -237,7 +237,7 @@ type Post {
   id: ID!
   createdAt: DateTime!
   description: String!
-  imgUrl: String!
+  pictureId: String
   op: User
   likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
 }
@@ -251,7 +251,7 @@ type PostConnection {
 input PostCreateInput {
   id: ID
   description: String!
-  imgUrl: String!
+  pictureId: String
   op: UserCreateOneWithoutPostsInput
   likes: LikeCreateManyWithoutPostInput
 }
@@ -269,14 +269,14 @@ input PostCreateOneWithoutLikesInput {
 input PostCreateWithoutLikesInput {
   id: ID
   description: String!
-  imgUrl: String!
+  pictureId: String
   op: UserCreateOneWithoutPostsInput
 }
 
 input PostCreateWithoutOpInput {
   id: ID
   description: String!
-  imgUrl: String!
+  pictureId: String
   likes: LikeCreateManyWithoutPostInput
 }
 
@@ -292,15 +292,15 @@ enum PostOrderByInput {
   createdAt_DESC
   description_ASC
   description_DESC
-  imgUrl_ASC
-  imgUrl_DESC
+  pictureId_ASC
+  pictureId_DESC
 }
 
 type PostPreviousValues {
   id: ID!
   createdAt: DateTime!
   description: String!
-  imgUrl: String!
+  pictureId: String
 }
 
 input PostScalarWhereInput {
@@ -340,20 +340,20 @@ input PostScalarWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
-  imgUrl: String
-  imgUrl_not: String
-  imgUrl_in: [String!]
-  imgUrl_not_in: [String!]
-  imgUrl_lt: String
-  imgUrl_lte: String
-  imgUrl_gt: String
-  imgUrl_gte: String
-  imgUrl_contains: String
-  imgUrl_not_contains: String
-  imgUrl_starts_with: String
-  imgUrl_not_starts_with: String
-  imgUrl_ends_with: String
-  imgUrl_not_ends_with: String
+  pictureId: String
+  pictureId_not: String
+  pictureId_in: [String!]
+  pictureId_not_in: [String!]
+  pictureId_lt: String
+  pictureId_lte: String
+  pictureId_gt: String
+  pictureId_gte: String
+  pictureId_contains: String
+  pictureId_not_contains: String
+  pictureId_starts_with: String
+  pictureId_not_starts_with: String
+  pictureId_ends_with: String
+  pictureId_not_ends_with: String
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -379,19 +379,19 @@ input PostSubscriptionWhereInput {
 
 input PostUpdateInput {
   description: String
-  imgUrl: String
+  pictureId: String
   op: UserUpdateOneWithoutPostsInput
   likes: LikeUpdateManyWithoutPostInput
 }
 
 input PostUpdateManyDataInput {
   description: String
-  imgUrl: String
+  pictureId: String
 }
 
 input PostUpdateManyMutationInput {
   description: String
-  imgUrl: String
+  pictureId: String
 }
 
 input PostUpdateManyWithoutOpInput {
@@ -420,13 +420,13 @@ input PostUpdateOneRequiredWithoutLikesInput {
 
 input PostUpdateWithoutLikesDataInput {
   description: String
-  imgUrl: String
+  pictureId: String
   op: UserUpdateOneWithoutPostsInput
 }
 
 input PostUpdateWithoutOpDataInput {
   description: String
-  imgUrl: String
+  pictureId: String
   likes: LikeUpdateManyWithoutPostInput
 }
 
@@ -483,20 +483,20 @@ input PostWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
-  imgUrl: String
-  imgUrl_not: String
-  imgUrl_in: [String!]
-  imgUrl_not_in: [String!]
-  imgUrl_lt: String
-  imgUrl_lte: String
-  imgUrl_gt: String
-  imgUrl_gte: String
-  imgUrl_contains: String
-  imgUrl_not_contains: String
-  imgUrl_starts_with: String
-  imgUrl_not_starts_with: String
-  imgUrl_ends_with: String
-  imgUrl_not_ends_with: String
+  pictureId: String
+  pictureId_not: String
+  pictureId_in: [String!]
+  pictureId_not_in: [String!]
+  pictureId_lt: String
+  pictureId_lte: String
+  pictureId_gt: String
+  pictureId_gte: String
+  pictureId_contains: String
+  pictureId_not_contains: String
+  pictureId_starts_with: String
+  pictureId_not_starts_with: String
+  pictureId_ends_with: String
+  pictureId_not_ends_with: String
   op: UserWhereInput
   likes_every: LikeWhereInput
   likes_some: LikeWhereInput

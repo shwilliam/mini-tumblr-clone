@@ -1,3 +1,5 @@
+scalar Upload
+
 type Query {
   feed(filter: String, skip: Int, first: Int, orderBy: PostOrderByInput): Feed!
 }
@@ -10,14 +12,12 @@ type Feed {
 enum PostOrderByInput {
   description_ASC
   description_DESC
-  imgUrl_ASC
-  imgUrl_DESC
   createdAt_ASC
   createdAt_DESC
 }
 
 type Mutation {
-  publish(imgUrl: String!, description: String!): Post!
+  publish(picture: Upload, description: String!): Post!
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   like(postId: ID): Like
@@ -26,9 +26,9 @@ type Mutation {
 type Post {
   id: ID!
   description: String!
-  imgUrl: String!
   op: User
   likes: [Like!]!
+  pictureId: String
 }
 
 type Like {

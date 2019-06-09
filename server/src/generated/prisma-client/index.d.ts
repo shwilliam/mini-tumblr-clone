@@ -182,8 +182,8 @@ export type PostOrderByInput =
   | "createdAt_DESC"
   | "description_ASC"
   | "description_DESC"
-  | "imgUrl_ASC"
-  | "imgUrl_DESC";
+  | "pictureId_ASC"
+  | "pictureId_DESC";
 
 export type LikeOrderByInput = "id_ASC" | "id_DESC";
 
@@ -292,7 +292,7 @@ export interface UserUpdateManyMutationInput {
 export interface PostCreateWithoutOpInput {
   id?: Maybe<ID_Input>;
   description: String;
-  imgUrl: String;
+  pictureId?: Maybe<String>;
   likes?: Maybe<LikeCreateManyWithoutPostInput>;
 }
 
@@ -312,7 +312,7 @@ export interface LikeCreateManyWithoutPostInput {
 
 export interface PostUpdateInput {
   description?: Maybe<String>;
-  imgUrl?: Maybe<String>;
+  pictureId?: Maybe<String>;
   op?: Maybe<UserUpdateOneWithoutPostsInput>;
   likes?: Maybe<LikeUpdateManyWithoutPostInput>;
 }
@@ -325,7 +325,7 @@ export interface LikeCreateWithoutPostInput {
 export interface PostCreateInput {
   id?: Maybe<ID_Input>;
   description: String;
-  imgUrl: String;
+  pictureId?: Maybe<String>;
   op?: Maybe<UserCreateOneWithoutPostsInput>;
   likes?: Maybe<LikeCreateManyWithoutPostInput>;
 }
@@ -337,7 +337,7 @@ export interface LikeUpdateInput {
 
 export interface PostUpdateManyDataInput {
   description?: Maybe<String>;
-  imgUrl?: Maybe<String>;
+  pictureId?: Maybe<String>;
 }
 
 export interface LikeUpdateWithoutPostDataInput {
@@ -351,7 +351,7 @@ export interface PostUpdateManyWithWhereNestedInput {
 
 export interface PostUpdateWithoutLikesDataInput {
   description?: Maybe<String>;
-  imgUrl?: Maybe<String>;
+  pictureId?: Maybe<String>;
   op?: Maybe<UserUpdateOneWithoutPostsInput>;
 }
 
@@ -412,20 +412,20 @@ export interface PostWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
-  imgUrl?: Maybe<String>;
-  imgUrl_not?: Maybe<String>;
-  imgUrl_in?: Maybe<String[] | String>;
-  imgUrl_not_in?: Maybe<String[] | String>;
-  imgUrl_lt?: Maybe<String>;
-  imgUrl_lte?: Maybe<String>;
-  imgUrl_gt?: Maybe<String>;
-  imgUrl_gte?: Maybe<String>;
-  imgUrl_contains?: Maybe<String>;
-  imgUrl_not_contains?: Maybe<String>;
-  imgUrl_starts_with?: Maybe<String>;
-  imgUrl_not_starts_with?: Maybe<String>;
-  imgUrl_ends_with?: Maybe<String>;
-  imgUrl_not_ends_with?: Maybe<String>;
+  pictureId?: Maybe<String>;
+  pictureId_not?: Maybe<String>;
+  pictureId_in?: Maybe<String[] | String>;
+  pictureId_not_in?: Maybe<String[] | String>;
+  pictureId_lt?: Maybe<String>;
+  pictureId_lte?: Maybe<String>;
+  pictureId_gt?: Maybe<String>;
+  pictureId_gte?: Maybe<String>;
+  pictureId_contains?: Maybe<String>;
+  pictureId_not_contains?: Maybe<String>;
+  pictureId_starts_with?: Maybe<String>;
+  pictureId_not_starts_with?: Maybe<String>;
+  pictureId_ends_with?: Maybe<String>;
+  pictureId_not_ends_with?: Maybe<String>;
   op?: Maybe<UserWhereInput>;
   likes_every?: Maybe<LikeWhereInput>;
   likes_some?: Maybe<LikeWhereInput>;
@@ -547,7 +547,7 @@ export interface LikeUpdateWithoutUserDataInput {
 
 export interface PostUpdateManyMutationInput {
   description?: Maybe<String>;
-  imgUrl?: Maybe<String>;
+  pictureId?: Maybe<String>;
 }
 
 export interface LikeUpsertWithWhereUniqueWithoutUserInput {
@@ -618,20 +618,20 @@ export interface PostScalarWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
-  imgUrl?: Maybe<String>;
-  imgUrl_not?: Maybe<String>;
-  imgUrl_in?: Maybe<String[] | String>;
-  imgUrl_not_in?: Maybe<String[] | String>;
-  imgUrl_lt?: Maybe<String>;
-  imgUrl_lte?: Maybe<String>;
-  imgUrl_gt?: Maybe<String>;
-  imgUrl_gte?: Maybe<String>;
-  imgUrl_contains?: Maybe<String>;
-  imgUrl_not_contains?: Maybe<String>;
-  imgUrl_starts_with?: Maybe<String>;
-  imgUrl_not_starts_with?: Maybe<String>;
-  imgUrl_ends_with?: Maybe<String>;
-  imgUrl_not_ends_with?: Maybe<String>;
+  pictureId?: Maybe<String>;
+  pictureId_not?: Maybe<String>;
+  pictureId_in?: Maybe<String[] | String>;
+  pictureId_not_in?: Maybe<String[] | String>;
+  pictureId_lt?: Maybe<String>;
+  pictureId_lte?: Maybe<String>;
+  pictureId_gt?: Maybe<String>;
+  pictureId_gte?: Maybe<String>;
+  pictureId_contains?: Maybe<String>;
+  pictureId_not_contains?: Maybe<String>;
+  pictureId_starts_with?: Maybe<String>;
+  pictureId_not_starts_with?: Maybe<String>;
+  pictureId_ends_with?: Maybe<String>;
+  pictureId_not_ends_with?: Maybe<String>;
   AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
@@ -707,7 +707,7 @@ export interface LikeUpdateManyWithoutPostInput {
 
 export interface PostUpdateWithoutOpDataInput {
   description?: Maybe<String>;
-  imgUrl?: Maybe<String>;
+  pictureId?: Maybe<String>;
   likes?: Maybe<LikeUpdateManyWithoutPostInput>;
 }
 
@@ -760,7 +760,7 @@ export interface UserSubscriptionWhereInput {
 export interface PostCreateWithoutLikesInput {
   id?: Maybe<ID_Input>;
   description: String;
-  imgUrl: String;
+  pictureId?: Maybe<String>;
   op?: Maybe<UserCreateOneWithoutPostsInput>;
 }
 
@@ -1142,7 +1142,7 @@ export interface PostPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
   description: String;
-  imgUrl: String;
+  pictureId?: String;
 }
 
 export interface PostPreviousValuesPromise
@@ -1151,7 +1151,7 @@ export interface PostPreviousValuesPromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   description: () => Promise<String>;
-  imgUrl: () => Promise<String>;
+  pictureId: () => Promise<String>;
 }
 
 export interface PostPreviousValuesSubscription
@@ -1160,7 +1160,7 @@ export interface PostPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   description: () => Promise<AsyncIterator<String>>;
-  imgUrl: () => Promise<AsyncIterator<String>>;
+  pictureId: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserEdge {
@@ -1226,14 +1226,14 @@ export interface Post {
   id: ID_Output;
   createdAt: DateTimeOutput;
   description: String;
-  imgUrl: String;
+  pictureId?: String;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   description: () => Promise<String>;
-  imgUrl: () => Promise<String>;
+  pictureId: () => Promise<String>;
   op: <T = UserPromise>() => T;
   likes: <T = FragmentableArray<Like>>(args?: {
     where?: LikeWhereInput;
@@ -1252,7 +1252,7 @@ export interface PostSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   description: () => Promise<AsyncIterator<String>>;
-  imgUrl: () => Promise<AsyncIterator<String>>;
+  pictureId: () => Promise<AsyncIterator<String>>;
   op: <T = UserSubscription>() => T;
   likes: <T = Promise<AsyncIterator<LikeSubscription>>>(args?: {
     where?: LikeWhereInput;
@@ -1271,7 +1271,7 @@ export interface PostNullablePromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   description: () => Promise<String>;
-  imgUrl: () => Promise<String>;
+  pictureId: () => Promise<String>;
   op: <T = UserPromise>() => T;
   likes: <T = FragmentableArray<Like>>(args?: {
     where?: LikeWhereInput;
