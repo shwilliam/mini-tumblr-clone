@@ -9,7 +9,6 @@ const _subscribeToNewPosts = subscribeToMore => {
   subscribeToMore({
     document: NEW_POSTS_SUBSCRIPTION,
     updateQuery: (prev, {subscriptionData}) => {
-      console.log('???????')
       if (!subscriptionData.data) return prev
       const newPost = subscriptionData.data.newPost
       const exists = prev.feed.posts.find(({id}) => id === newPost.id)

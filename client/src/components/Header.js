@@ -2,14 +2,9 @@ import React from 'react'
 import {Link} from '@reach/router'
 import styled from 'styled-components'
 
-import SPACING from '../styles/spacing'
-import COLORS from '../styles/colors'
-const {PAD} = SPACING
-const {BLUE} = COLORS
-
 const SiteHeader = styled.header`
-  border-bottom: 1px solid ${BLUE};
-  color: ${BLUE};
+  border-bottom: 1px solid ${p => p.theme.secondary};
+  color: ${p => p.theme.secondary};
   display: flex;
   justify-content: space-between;
   overflow: hidden;
@@ -27,7 +22,7 @@ const SiteHeader = styled.header`
 
   h1,
   ul {
-    padding: ${PAD.TOP} ${PAD.H} ${PAD.V} ${PAD.H};
+    padding: 1rem;
   }
 
   ul {

@@ -1,11 +1,8 @@
 import styled from 'styled-components'
 
-import SPACING from '../styles/spacing'
-const {PAD} = SPACING
-
 const PostList = styled.ul`
   padding-left: 0;
-  margin: ${PAD.V};
+  margin: 1rem;
   list-style: none;
 `
 
