@@ -9,15 +9,18 @@ const Home = () => (
     {({loading, error, data}) => {
       if (loading) return <p>fetching...</p>
       if (error) return <p>error</p>
+      if (!data.feed.posts.length) return <p>no posts</p>
       return (
         <PostList>
-          {data.feed.posts.length ? (
-            data.feed.posts.map(post => (
-              <Card key={post.id}>{post.description}</Card>
-            ))
-          ) : (
-            <Card>no posts</Card>
-          )}
+          {data.feed.posts.map(post => (
+            <Card key={post.id}>
+              <img
+                alt=""
+                src={`http://localhost:4000/uploads/${post.pictureId}`}
+              />
+              <p>{post.description}</p>
+            </Card>
+          ))}
         </PostList>
       )
     }}
