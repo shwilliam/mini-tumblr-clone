@@ -1,2 +1,2 @@
-import '../styles/reset.css'
+import '../theme/reset.css'
 import './Header'
