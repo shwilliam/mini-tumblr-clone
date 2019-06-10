@@ -236,8 +236,8 @@ type PageInfo {
 type Post {
   id: ID!
   createdAt: DateTime!
-  description: String!
-  imgUrl: String!
+  text: String!
+  imgUrl: String
   op: User
   likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
 }
@@ -250,8 +250,8 @@ type PostConnection {
 
 input PostCreateInput {
   id: ID
-  description: String!
-  imgUrl: String!
+  text: String!
+  imgUrl: String
   op: UserCreateOneWithoutPostsInput
   likes: LikeCreateManyWithoutPostInput
 }
@@ -268,15 +268,15 @@ input PostCreateOneWithoutLikesInput {
 
 input PostCreateWithoutLikesInput {
   id: ID
-  description: String!
-  imgUrl: String!
+  text: String!
+  imgUrl: String
   op: UserCreateOneWithoutPostsInput
 }
 
 input PostCreateWithoutOpInput {
   id: ID
-  description: String!
-  imgUrl: String!
+  text: String!
+  imgUrl: String
   likes: LikeCreateManyWithoutPostInput
 }
 
@@ -290,8 +290,8 @@ enum PostOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  description_ASC
-  description_DESC
+  text_ASC
+  text_DESC
   imgUrl_ASC
   imgUrl_DESC
 }
@@ -299,8 +299,8 @@ enum PostOrderByInput {
 type PostPreviousValues {
   id: ID!
   createdAt: DateTime!
-  description: String!
-  imgUrl: String!
+  text: String!
+  imgUrl: String
 }
 
 input PostScalarWhereInput {
@@ -326,20 +326,20 @@ input PostScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
   imgUrl: String
   imgUrl_not: String
   imgUrl_in: [String!]
@@ -378,19 +378,19 @@ input PostSubscriptionWhereInput {
 }
 
 input PostUpdateInput {
-  description: String
+  text: String
   imgUrl: String
   op: UserUpdateOneWithoutPostsInput
   likes: LikeUpdateManyWithoutPostInput
 }
 
 input PostUpdateManyDataInput {
-  description: String
+  text: String
   imgUrl: String
 }
 
 input PostUpdateManyMutationInput {
-  description: String
+  text: String
   imgUrl: String
 }
 
@@ -419,13 +419,13 @@ input PostUpdateOneRequiredWithoutLikesInput {
 }
 
 input PostUpdateWithoutLikesDataInput {
-  description: String
+  text: String
   imgUrl: String
   op: UserUpdateOneWithoutPostsInput
 }
 
 input PostUpdateWithoutOpDataInput {
-  description: String
+  text: String
   imgUrl: String
   likes: LikeUpdateManyWithoutPostInput
 }
@@ -469,20 +469,20 @@ input PostWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
   imgUrl: String
   imgUrl_not: String
   imgUrl_in: [String!]

@@ -180,8 +180,8 @@ export type PostOrderByInput =
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
-  | "description_ASC"
-  | "description_DESC"
+  | "text_ASC"
+  | "text_DESC"
   | "imgUrl_ASC"
   | "imgUrl_DESC";
 
@@ -291,8 +291,8 @@ export interface UserUpdateManyMutationInput {
 
 export interface PostCreateWithoutOpInput {
   id?: Maybe<ID_Input>;
-  description: String;
-  imgUrl: String;
+  text: String;
+  imgUrl?: Maybe<String>;
   likes?: Maybe<LikeCreateManyWithoutPostInput>;
 }
 
@@ -311,7 +311,7 @@ export interface LikeCreateManyWithoutPostInput {
 }
 
 export interface PostUpdateInput {
-  description?: Maybe<String>;
+  text?: Maybe<String>;
   imgUrl?: Maybe<String>;
   op?: Maybe<UserUpdateOneWithoutPostsInput>;
   likes?: Maybe<LikeUpdateManyWithoutPostInput>;
@@ -324,8 +324,8 @@ export interface LikeCreateWithoutPostInput {
 
 export interface PostCreateInput {
   id?: Maybe<ID_Input>;
-  description: String;
-  imgUrl: String;
+  text: String;
+  imgUrl?: Maybe<String>;
   op?: Maybe<UserCreateOneWithoutPostsInput>;
   likes?: Maybe<LikeCreateManyWithoutPostInput>;
 }
@@ -336,7 +336,7 @@ export interface LikeUpdateInput {
 }
 
 export interface PostUpdateManyDataInput {
-  description?: Maybe<String>;
+  text?: Maybe<String>;
   imgUrl?: Maybe<String>;
 }
 
@@ -350,7 +350,7 @@ export interface PostUpdateManyWithWhereNestedInput {
 }
 
 export interface PostUpdateWithoutLikesDataInput {
-  description?: Maybe<String>;
+  text?: Maybe<String>;
   imgUrl?: Maybe<String>;
   op?: Maybe<UserUpdateOneWithoutPostsInput>;
 }
@@ -398,20 +398,20 @@ export interface PostWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
   imgUrl?: Maybe<String>;
   imgUrl_not?: Maybe<String>;
   imgUrl_in?: Maybe<String[] | String>;
@@ -546,7 +546,7 @@ export interface LikeUpdateWithoutUserDataInput {
 }
 
 export interface PostUpdateManyMutationInput {
-  description?: Maybe<String>;
+  text?: Maybe<String>;
   imgUrl?: Maybe<String>;
 }
 
@@ -604,20 +604,20 @@ export interface PostScalarWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
   imgUrl?: Maybe<String>;
   imgUrl_not?: Maybe<String>;
   imgUrl_in?: Maybe<String[] | String>;
@@ -706,7 +706,7 @@ export interface LikeUpdateManyWithoutPostInput {
 }
 
 export interface PostUpdateWithoutOpDataInput {
-  description?: Maybe<String>;
+  text?: Maybe<String>;
   imgUrl?: Maybe<String>;
   likes?: Maybe<LikeUpdateManyWithoutPostInput>;
 }
@@ -759,8 +759,8 @@ export interface UserSubscriptionWhereInput {
 
 export interface PostCreateWithoutLikesInput {
   id?: Maybe<ID_Input>;
-  description: String;
-  imgUrl: String;
+  text: String;
+  imgUrl?: Maybe<String>;
   op?: Maybe<UserCreateOneWithoutPostsInput>;
 }
 
@@ -1141,8 +1141,8 @@ export interface LikeNullablePromise
 export interface PostPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
-  description: String;
-  imgUrl: String;
+  text: String;
+  imgUrl?: String;
 }
 
 export interface PostPreviousValuesPromise
@@ -1150,7 +1150,7 @@ export interface PostPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
+  text: () => Promise<String>;
   imgUrl: () => Promise<String>;
 }
 
@@ -1159,7 +1159,7 @@ export interface PostPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  description: () => Promise<AsyncIterator<String>>;
+  text: () => Promise<AsyncIterator<String>>;
   imgUrl: () => Promise<AsyncIterator<String>>;
 }
 
@@ -1225,14 +1225,14 @@ export interface PostEdgeSubscription
 export interface Post {
   id: ID_Output;
   createdAt: DateTimeOutput;
-  description: String;
-  imgUrl: String;
+  text: String;
+  imgUrl?: String;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
+  text: () => Promise<String>;
   imgUrl: () => Promise<String>;
   op: <T = UserPromise>() => T;
   likes: <T = FragmentableArray<Like>>(args?: {
@@ -1251,7 +1251,7 @@ export interface PostSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  description: () => Promise<AsyncIterator<String>>;
+  text: () => Promise<AsyncIterator<String>>;
   imgUrl: () => Promise<AsyncIterator<String>>;
   op: <T = UserSubscription>() => T;
   likes: <T = Promise<AsyncIterator<LikeSubscription>>>(args?: {
@@ -1270,7 +1270,7 @@ export interface PostNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
+  text: () => Promise<String>;
   imgUrl: () => Promise<String>;
   op: <T = UserPromise>() => T;
   likes: <T = FragmentableArray<Like>>(args?: {

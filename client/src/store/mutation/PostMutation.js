@@ -3,15 +3,15 @@ import {Mutation} from 'react-apollo'
 import gql from 'graphql-tag'
 
 const POST_MUTATION = gql`
-  mutation PostMutation($description: String!, $picture: Upload) {
-    publish(description: $description, picture: $picture) {
+  mutation PostMutation($text: String!, $picture: Upload) {
+    publish(text: $text, picture: $picture) {
       id
     }
   }
 `
 
-const PostMutation = ({description, picture, children}) => (
-  <Mutation mutation={POST_MUTATION} variables={{description, picture}}>
+const PostMutation = ({text, picture, children}) => (
+  <Mutation mutation={POST_MUTATION} variables={{text, picture}}>
     {createPost => children(createPost)}
   </Mutation>
 )

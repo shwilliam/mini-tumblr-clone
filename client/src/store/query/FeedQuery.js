@@ -12,7 +12,7 @@ const FEED_QUERY = gql`
       posts {
         id
         imgUrl
-        description
+        text
         createdAt
         op {
           id

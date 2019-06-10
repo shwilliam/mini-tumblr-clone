@@ -25,7 +25,7 @@ const Feed = () => (
           {data.feed.posts.map(post => (
             <Card key={post.id}>
               <img alt="" src={post.imgUrl} />
-              <p>{post.description}</p>
+              <p>{post.text}</p>
               <p>{post.likes.length} likes</p>
               <p>posted by {post.op.name}</p>
               <p>{timeDifferenceForDate(post.createdAt)}</p>

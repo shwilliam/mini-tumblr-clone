@@ -1,7 +1,7 @@
 const feed = async (root, args, context) => {
   const where = args.filter
     ? {
-        OR: [{description_contains: args.filter}],
+        OR: [{text_contains: args.filter}],
       }
     : {}
 

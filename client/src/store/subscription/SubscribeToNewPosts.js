@@ -25,7 +25,7 @@ const NEW_POSTS_SUBSCRIPTION = gql`
     newPost {
       id
       imgUrl
-      description
+      text
       createdAt
       op {
         id

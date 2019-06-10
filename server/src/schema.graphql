@@ -11,14 +11,14 @@ type Feed {
 }
 
 enum PostOrderByInput {
-  description_ASC
-  description_DESC
+  text_ASC
+  text_DESC
   createdAt_ASC
   createdAt_DESC
 }
 
 type Mutation {
-  publish(picture: Upload, description: String!): Post!
+  publish(picture: Upload, text: String!): Post!
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   like(postId: ID): Like
@@ -26,10 +26,10 @@ type Mutation {
 
 type Post {
   id: ID!
-  description: String!
+  text: String!
   op: User
   likes: [Like!]!
-  imgUrl: String!
+  imgUrl: String
   createdAt: DateTime!
 }
 

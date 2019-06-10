@@ -28,11 +28,11 @@ const publish = async (root, args, context) => {
     '://' +
     context.request.get('host') +
     context.request.originalUrl
-  const imgUrl = await processUpload(args.picture, host)
+  const imgUrl = args.picture ? await processUpload(args.picture, host) : null
 
   return context.prisma.createPost({
     imgUrl,
-    description: args.description,
+    text: args.text,
     op: {connect: {id: getUserId(context)}},
   })
 }
