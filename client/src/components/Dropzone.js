@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone'
 
-function Dropzone({file, onChange}) {
+function Dropzone({file, onChange, ...props}) {
   const onDrop = useCallback(
     ([file]) => {
       onChange(file)
@@ -15,7 +15,7 @@ function Dropzone({file, onChange}) {
   })
 
   return (
-    <div {...getRootProps()}>
+    <div {...getRootProps()} {...props}>
       <input {...getInputProps()} />
       {isDragActive ? (
         <p>drop your file here!</p>

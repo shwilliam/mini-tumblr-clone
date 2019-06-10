@@ -1,5 +1,3 @@
-import React from 'react'
-import {ApolloProvider} from 'react-apollo'
 import {ApolloClient} from 'apollo-client'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import {onError} from 'apollo-link-error'
@@ -9,7 +7,7 @@ import {split} from 'apollo-link'
 import {WebSocketLink} from 'apollo-link-ws'
 import {getMainDefinition} from 'apollo-utilities'
 
-import {AUTH_TOKEN} from './constants'
+import {AUTH_TOKEN} from '../constants'
 
 const errorLink = onError(({graphQLErrors, networkError}) => {
   if (graphQLErrors)
@@ -61,6 +59,4 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
-export default ({children}) => (
-  <ApolloProvider client={client}>{children}</ApolloProvider>
-)
+export default client

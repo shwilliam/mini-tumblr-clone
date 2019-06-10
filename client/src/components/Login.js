@@ -1,25 +1,10 @@
 import React, {useState} from 'react'
 import {AUTH_TOKEN} from '../constants'
 import {Mutation} from 'react-apollo'
-import gql from 'graphql-tag'
+import {LOGIN_MUTATION} from '../store/mutation/LoginMutation'
+import {SIGNUP_MUTATION} from '../store/mutation/SignupMutation'
 
-const SIGNUP_MUTATION = gql`
-  mutation SignupMutation($email: String!, $password: String!, $name: String!) {
-    signup(email: $email, password: $password, name: $name) {
-      token
-    }
-  }
-`
-
-const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-    }
-  }
-`
-
-const Login = () => {
+const Login = props => {
   const [isLogin, setIsLogin] = useState(true)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -46,6 +31,7 @@ const Login = () => {
             e.preventDefault()
             mutation()
           }}
+          {...props}
         >
           {!isLogin && (
             <input

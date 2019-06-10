@@ -1,28 +1,20 @@
 import React, {useState} from 'react'
-import {Mutation} from 'react-apollo'
-import gql from 'graphql-tag'
 import Dropzone from './Dropzone'
+import PostMutation from '../store/mutation/PostMutation'
 
-const POST_MUTATION = gql`
-  mutation PostMutation($description: String!, $picture: Upload) {
-    publish(description: $description, picture: $picture) {
-      id
-    }
-  }
-`
-
-const NewPost = () => {
+const NewPost = props => {
   const [description, setDescription] = useState('')
   const [file, setFile] = useState()
 
   return (
-    <Mutation mutation={POST_MUTATION} variables={{description, picture: file}}>
+    <PostMutation description={description} picture={file}>
       {createPost => (
         <form
           onSubmit={e => {
             e.preventDefault()
             if (file) createPost()
           }}
+          {...props}
         >
           <Dropzone file={file} onChange={setFile} />
           <input
@@ -34,7 +26,7 @@ const NewPost = () => {
           <button type="submit">post</button>
         </form>
       )}
-    </Mutation>
+    </PostMutation>
   )
 }
 

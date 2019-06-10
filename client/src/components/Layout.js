@@ -6,8 +6,8 @@ const StyleWrapper = styled.div`
   background-color: ${p => p.theme.main};
 `
 
-const Layout = ({children}) => (
-  <StyleWrapper>
+const Layout = ({children, ...props}) => (
+  <StyleWrapper {...props}>
     <Header />
     <main>{children}</main>
   </StyleWrapper>

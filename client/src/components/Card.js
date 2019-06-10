@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const Card = styled.li`
+const Card = styled.div`
   margin: 1rem;
   padding: 1rem;
   background-color: ${p => p.theme.secondary};
