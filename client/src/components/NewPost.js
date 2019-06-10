@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Dropzone from './Dropzone'
+import ImageDropzone from './ImageDropzone'
 import PostMutation from '../store/mutation/PostMutation'
 
 const NewPost = ({type, ...props}) => {
@@ -16,7 +16,7 @@ const NewPost = ({type, ...props}) => {
           }}
           {...props}
         >
-          {type === 'photo' && <Dropzone file={file} onChange={setFile} />}
+          {type === 'photo' && <ImageDropzone file={file} onChange={setFile} />}
           <textarea
             onChange={e => setText(e.target.value)}
             placeholder="your text here"
