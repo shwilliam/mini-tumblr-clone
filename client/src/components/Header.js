@@ -27,7 +27,6 @@ const Header = props => (
     </TextLink>
     <Nav>
       <TextLink to="auth">Log in</TextLink>
-      <TextLink to="new">New post</TextLink>
     </Nav>
   </StyledHeader>
 )

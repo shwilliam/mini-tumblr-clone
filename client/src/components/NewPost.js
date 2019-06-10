@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import Dropzone from './Dropzone'
 import PostMutation from '../store/mutation/PostMutation'
 
-const NewPost = props => {
+const NewPost = ({type, ...props}) => {
   const [description, setDescription] = useState('')
   const [file, setFile] = useState()
 
@@ -16,11 +16,11 @@ const NewPost = props => {
           }}
           {...props}
         >
-          <Dropzone file={file} onChange={setFile} />
+          {type === 'photo' && <Dropzone file={file} onChange={setFile} />}
           <input
             type="text"
             onChange={e => setDescription(e.target.value)}
-            placeholder="description"
+            placeholder="your text here"
             required
           />
           <button type="submit">post</button>
