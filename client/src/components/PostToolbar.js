@@ -37,7 +37,12 @@ const PostToolbar = props => {
             <p>Photo</p>
           </ToolbarItem>
         </Toolbar>
-        {activePostType && <NewPost type={activePostType} />}
+        {activePostType && (
+          <NewPost
+            type={activePostType}
+            onCreate={() => setActivePostType(null)}
+          />
+        )}
       </Card>
     </StyleWrapper>
   )

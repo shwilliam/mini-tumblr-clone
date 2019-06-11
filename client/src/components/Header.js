@@ -19,6 +19,19 @@ const Mini = styled.span`
   left: 0.2em;
 `
 
+const TextButton = styled.button`
+  border: none;
+  background: none;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+`
+
+const logout = () => {
+  localStorage.removeItem(AUTH_TOKEN)
+  document.location.reload(true)
+}
+
 const Header = props => {
   const authToken = localStorage.getItem(AUTH_TOKEN)
 
@@ -29,7 +42,13 @@ const Header = props => {
           <Mini>mini</Mini>Tumblr
         </Title>
       </TextLink>
-      <Nav>{!authToken && <TextLink to="auth">Log in</TextLink>}</Nav>
+      <Nav>
+        {!authToken ? (
+          <TextLink to="auth">log in</TextLink>
+        ) : (
+          <TextButton onClick={logout}>log out</TextButton>
+        )}
+      </Nav>
     </StyledHeader>
   )
 }

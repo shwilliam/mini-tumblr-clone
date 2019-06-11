@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import ImageDropzone from './ImageDropzone'
 import PostMutation from '../store/mutation/PostMutation'
 
-const NewPost = ({type, ...props}) => {
+const NewPost = ({type, onCreate, ...props}) => {
   const [text, setText] = useState('')
   const [file, setFile] = useState()
 
@@ -13,6 +13,7 @@ const NewPost = ({type, ...props}) => {
           onSubmit={e => {
             e.preventDefault()
             createPost()
+            onCreate()
           }}
           {...props}
         >

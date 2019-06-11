@@ -12,6 +12,7 @@ const Login = props => {
 
   const _saveUserData = token => {
     localStorage.setItem(AUTH_TOKEN, token)
+    window.location.pathname = '/'
   }
 
   const _confirm = async data => {
