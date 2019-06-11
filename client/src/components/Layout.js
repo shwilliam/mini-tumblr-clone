@@ -2,15 +2,22 @@ import React from 'react'
 import Header from './Header'
 import styled from 'styled-components'
 
-const StyleWrapper = styled.div`
+const Background = styled.div`
   background-color: ${p => p.theme.main};
 `
 
+const StyleWrapper = styled.div`
+  max-width: 500px;
+  margin: 0 auto;
+`
+
 const Layout = ({children, ...props}) => (
-  <StyleWrapper {...props}>
+  <Background>
     <Header />
-    <main>{children}</main>
-  </StyleWrapper>
+    <StyleWrapper {...props}>
+      <main>{children}</main>
+    </StyleWrapper>
+  </Background>
 )
 
 export default Layout
