@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactMD from 'react-markdown'
 import styled from 'styled-components'
 import {GoHeart} from 'react-icons/go'
 import Card from './Card'
@@ -18,8 +19,18 @@ const Picture = styled.img`
   width: 100%;
 `
 
-const Text = styled.p`
-  margin-top: 0;
+const Text = styled(ReactMD)`
+  margin-bottom: 0.5rem;
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 0.5rem;
+  }
 `
 
 const Footer = styled.footer`
@@ -43,8 +54,8 @@ const PostCard = ({post, onLike, children}) => {
     <PostCardStyleWrapper>
       <article>
         <Header>{post.op.name}</Header>
-        <Picture alt="" src={post.imgUrl} />
-        <Text>{post.text}</Text>
+        {post.imgUrl && <Picture alt="" src={post.imgUrl} />}
+        <Text source={post.text} />
         <Footer>
           <Timestamp>{timeDifferenceForDate(post.createdAt)}</Timestamp>
           <Actions>
