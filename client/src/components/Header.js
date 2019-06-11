@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import {GoSignIn, GoSignOut} from 'react-icons/go'
 import Nav from './Nav'
 import TextLink from './TextLink'
 import Title from './Title'
@@ -44,9 +45,13 @@ const Header = props => {
       </TextLink>
       <Nav>
         {!authToken ? (
-          <TextLink to="auth">log in</TextLink>
+          <TextLink aria-label="Sign in" title="Enter" to="auth">
+            <GoSignIn />
+          </TextLink>
         ) : (
-          <TextButton onClick={logout}>log out</TextButton>
+          <TextButton aria-label="Sign out" label="Exit" onClick={logout}>
+            <GoSignOut />
+          </TextButton>
         )}
       </Nav>
     </StyledHeader>
