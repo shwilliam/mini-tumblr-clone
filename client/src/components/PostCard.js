@@ -34,6 +34,7 @@ const Timestamp = styled.p`
 const Actions = styled.div`
   display: flex;
 `
+const isLiked = post => post.likes.some(p => p.user.id === post.op.id)
 
 const PostCard = ({post, onLike, children}) => {
   const authToken = localStorage.getItem(AUTH_TOKEN)
@@ -54,6 +55,7 @@ const PostCard = ({post, onLike, children}) => {
                 title="Heart"
                 type="button"
                 onClick={onLike}
+                disabled={isLiked(post)}
               >
                 <GoHeart />
               </button>
