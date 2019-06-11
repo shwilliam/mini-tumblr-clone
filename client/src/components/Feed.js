@@ -6,42 +6,49 @@ import {subscribeToNewLikes} from '../store/subscription/SubscribeToNewLikes'
 import PostList from '../components/PostList'
 import Card from '../components/Card'
 import {timeDifferenceForDate} from '../utils'
+import {AUTH_TOKEN} from '../constants'
 
 const Loading = () => <p>fetching...</p>
 const Error = () => <p>something went wrong</p>
 
-const Feed = () => (
-  <FeedQuery>
-    {({loading, error, data, subscribeToMore}) => {
-      if (loading) return <Loading />
-      if (error) return <Error />
+const Feed = () => {
+  const authToken = localStorage.getItem(AUTH_TOKEN)
 
-      subscribeToNewPosts(subscribeToMore)
-      subscribeToNewLikes(subscribeToMore)
+  return (
+    <FeedQuery>
+      {({loading, error, data, subscribeToMore}) => {
+        if (loading) return <Loading />
+        if (error) return <Error />
 
-      if (!data.feed.posts.length) return <p>no posts</p>
-      return (
-        <PostList>
-          {data.feed.posts.map(post => (
-            <Card key={post.id}>
-              <img alt="" src={post.imgUrl} />
-              <p>{post.text}</p>
-              <p>{post.likes.length} likes</p>
-              <p>posted by {post.op.name}</p>
-              <p>{timeDifferenceForDate(post.createdAt)}</p>
-              <LikeMutation postId={post.id}>
-                {likeMutation => (
-                  <button type="button" onClick={likeMutation}>
-                    like
-                  </button>
+        subscribeToNewPosts(subscribeToMore)
+        subscribeToNewLikes(subscribeToMore)
+
+        if (!data.feed.posts.length) return <p>no posts</p>
+        return (
+          <PostList>
+            {data.feed.posts.map(post => (
+              <Card key={post.id}>
+                <img alt="" src={post.imgUrl} />
+                <p>{post.text}</p>
+                <p>{post.likes.length} likes</p>
+                <p>posted by {post.op.name}</p>
+                <p>{timeDifferenceForDate(post.createdAt)}</p>
+                {authToken && (
+                  <LikeMutation postId={post.id}>
+                    {likeMutation => (
+                      <button type="button" onClick={likeMutation}>
+                        like
+                      </button>
+                    )}
+                  </LikeMutation>
                 )}
-              </LikeMutation>
-            </Card>
-          ))}
-        </PostList>
-      )
-    }}
-  </FeedQuery>
-)
+              </Card>
+            ))}
+          </PostList>
+        )
+      }}
+    </FeedQuery>
+  )
+}
 
 export default Feed
