@@ -3,13 +3,14 @@ import styled from 'styled-components'
 import Card from './Card'
 import Toolbar from './Toolbar'
 import NewPost from './NewPost'
+import TextButton from './TextButton'
 import {GoTextSize, GoDeviceCamera} from 'react-icons/go'
 
 const StyleWrapper = styled.div`
   margin: 0 1rem;
 `
 
-const ToolbarItem = styled.button`
+const ToolbarItem = styled(TextButton)`
   text-align: center;
 
   svg {

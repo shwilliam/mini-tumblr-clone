@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactMD from 'react-markdown'
 import styled from 'styled-components'
-import {GoHeart} from 'react-icons/go'
 import Card from './Card'
+import LikeButton from './LikeButton'
 import {timeDifferenceForDate} from '../utils'
 import {AUTH_TOKEN} from '../constants'
 
@@ -61,15 +61,12 @@ const PostCard = ({post, onLike, children}) => {
           <Actions>
             ({post.likes.length})
             {authToken && (
-              <button
+              <LikeButton
                 aria-label={`Like post by ${post.op.name}`}
-                title="Heart"
-                type="button"
                 onClick={onLike}
                 disabled={isLiked(post)}
-              >
-                <GoHeart />
-              </button>
+                value={isLiked(post)}
+              />
             )}
           </Actions>
         </Footer>

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {GoSignIn, GoSignOut} from 'react-icons/go'
 import Nav from './Nav'
+import TextButton from './TextButton'
 import TextLink from './TextLink'
 import Title from './Title'
 import {AUTH_TOKEN} from '../constants'
@@ -18,14 +19,6 @@ const Mini = styled.span`
   font-size: 0.4em;
   position: relative;
   left: 0.2em;
-`
-
-const TextButton = styled.button`
-  border: none;
-  background: none;
-  padding: 0;
-  color: inherit;
-  cursor: pointer;
 `
 
 const logout = () => {
