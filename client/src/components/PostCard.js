@@ -3,7 +3,7 @@ import ReactMD from 'react-markdown'
 import styled from 'styled-components'
 import Card from './Card'
 import LikeButton from './LikeButton'
-import {timeDifferenceForDate} from '../utils'
+import {timeFromDate} from '../utils'
 import {AUTH_TOKEN} from '../constants'
 
 const PostCardStyleWrapper = styled(Card)`
@@ -57,7 +57,7 @@ const PostCard = ({post, onLike, children}) => {
         {post.imgUrl && <Picture alt="" src={post.imgUrl} />}
         <Text source={post.text} />
         <Footer>
-          <Timestamp>{timeDifferenceForDate(post.createdAt)}</Timestamp>
+          <Timestamp>{timeFromDate(post.createdAt)}</Timestamp>
           <Actions>
             ({post.likes.length})
             {authToken && (
