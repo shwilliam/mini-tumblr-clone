@@ -6,11 +6,6 @@ import LikeButton from './LikeButton'
 import {timeFromDate} from '../utils'
 import {AUTH_TOKEN} from '../constants'
 
-const PostCardStyleWrapper = styled(Card)`
-  padding-top: 0;
-  padding-bottom: 0;
-`
-
 const Header = styled.header`
   font-weight: bold;
 `
@@ -20,8 +15,6 @@ const Picture = styled.img`
 `
 
 const Text = styled(ReactMD)`
-  margin-bottom: 0.5rem;
-
   p,
   h1,
   h2,
@@ -51,7 +44,7 @@ const PostCard = ({post, onLike, children}) => {
   const authToken = localStorage.getItem(AUTH_TOKEN)
 
   return (
-    <PostCardStyleWrapper>
+    <Card>
       <article>
         <Header>{post.op.name}</Header>
         {post.imgUrl && <Picture alt="" src={post.imgUrl} />}
@@ -71,7 +64,7 @@ const PostCard = ({post, onLike, children}) => {
           </Actions>
         </Footer>
       </article>
-    </PostCardStyleWrapper>
+    </Card>
   )
 }
 

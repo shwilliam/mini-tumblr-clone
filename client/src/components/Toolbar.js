@@ -5,7 +5,6 @@ import PlainList from './PlainList'
 const StyledList = styled(PlainList)`
   display: flex;
   justify-content: space-around;
-  margin: 0 1rem;
 `
 
 const Toolbar = ({children, ...props}) => (

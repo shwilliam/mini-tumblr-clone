@@ -6,10 +6,6 @@ import NewPost from './NewPost'
 import TextButton from './TextButton'
 import {GoTextSize, GoDeviceCamera} from 'react-icons/go'
 
-const StyleWrapper = styled.div`
-  margin: 0 1rem;
-`
-
 const ToolbarItem = styled(TextButton)`
   text-align: center;
 
@@ -26,26 +22,24 @@ const PostToolbar = props => {
   const [activePostType, setActivePostType] = useState()
 
   return (
-    <StyleWrapper>
-      <Card>
-        <Toolbar {...props}>
-          <ToolbarItem onClick={() => setActivePostType('text')}>
-            <GoTextSize />
-            <p>Text</p>
-          </ToolbarItem>
-          <ToolbarItem onClick={() => setActivePostType('photo')}>
-            <GoDeviceCamera />
-            <p>Photo</p>
-          </ToolbarItem>
-        </Toolbar>
-        {activePostType && (
-          <NewPost
-            type={activePostType}
-            onCreate={() => setActivePostType(null)}
-          />
-        )}
-      </Card>
-    </StyleWrapper>
+    <Card>
+      <Toolbar {...props}>
+        <ToolbarItem onClick={() => setActivePostType('text')}>
+          <GoTextSize />
+          <p>Text</p>
+        </ToolbarItem>
+        <ToolbarItem onClick={() => setActivePostType('photo')}>
+          <GoDeviceCamera />
+          <p>Photo</p>
+        </ToolbarItem>
+      </Toolbar>
+      {activePostType && (
+        <NewPost
+          type={activePostType}
+          onCreate={() => setActivePostType(null)}
+        />
+      )}
+    </Card>
   )
 }
 

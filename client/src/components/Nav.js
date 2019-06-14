@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const StyledNav = styled.nav`
   ul {
-    padding: 1rem;
     margin: 0;
     list-style: none;
     height: 100%;
@@ -14,7 +13,6 @@ const StyledNav = styled.nav`
   li {
     display: flex;
     align-items: center;
-    padding: 0 1rem;
     white-space: nowrap;
   }
 `
