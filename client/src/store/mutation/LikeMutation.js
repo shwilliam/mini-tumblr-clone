@@ -9,10 +9,11 @@ const LikeMutation = ({postId, children}) => (
 )
 
 const LIKE_MUTATION = gql`
-  mutation VoteMutation($postId: ID!) {
+  mutation LikeMutation($postId: ID!) {
     like(postId: $postId) {
       id
       post {
+        id
         likes {
           id
           user {
