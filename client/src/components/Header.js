@@ -6,6 +6,8 @@ import TextButton from './TextButton'
 import TextLink from './TextLink'
 import Title from './Title'
 import {AUTH_TOKEN} from '../constants'
+const localUserDataJSON = localStorage.getItem(AUTH_TOKEN)
+const localUserData = localUserDataJSON && JSON.parse(localUserDataJSON)
 
 const StyledHeader = styled.header`
   border-bottom: 1px solid ${({theme}) => theme.secondary};
@@ -27,8 +29,6 @@ const logout = () => {
 }
 
 const Header = props => {
-  const authToken = localStorage.getItem(AUTH_TOKEN)
-
   return (
     <StyledHeader {...props}>
       <TextLink to="/">
@@ -37,7 +37,7 @@ const Header = props => {
         </Title>
       </TextLink>
       <Nav>
-        {!authToken ? (
+        {!localUserData ? (
           <TextLink aria-label="Sign in" title="Enter" to="auth">
             <GoSignIn />
           </TextLink>

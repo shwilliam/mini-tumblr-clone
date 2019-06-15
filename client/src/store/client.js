@@ -8,33 +8,32 @@ import {WebSocketLink} from 'apollo-link-ws'
 import {getMainDefinition} from 'apollo-utilities'
 
 import {AUTH_TOKEN} from '../constants'
+const localUserDataJSON = localStorage.getItem(AUTH_TOKEN)
+const localUserData = localUserDataJSON && JSON.parse(localUserDataJSON)
 
 const errorLink = onError(({graphQLErrors, networkError}) => {
   if (graphQLErrors)
     graphQLErrors.map(({message, locations, path}) =>
-      console.log(
+      console.error(
         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
       ),
     )
-  if (networkError) console.log(`[Network error]: ${networkError}`)
+  if (networkError) console.error(`[Network error]: ${networkError}`)
 })
 
-const authLink = setContext((_, {headers}) => {
-  const token = localStorage.getItem(AUTH_TOKEN)
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
-  }
-})
+const authLink = setContext((_, {headers}) => ({
+  headers: {
+    ...headers,
+    authorization: localUserData ? `Bearer ${localUserData.token}` : '',
+  },
+}))
 
 const wsLink = new WebSocketLink({
   uri: 'ws://localhost:4000',
   options: {
     reconnect: true,
     connectionParams: {
-      authToken: localStorage.getItem(AUTH_TOKEN),
+      authToken: localUserData && localUserData.token,
     },
   },
 })

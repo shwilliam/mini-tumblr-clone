@@ -10,14 +10,15 @@ const Login = props => {
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
 
-  const _saveUserData = token => {
-    localStorage.setItem(AUTH_TOKEN, token)
+  const _saveUserData = data => {
+    localStorage.setItem(AUTH_TOKEN, JSON.stringify(data))
     window.location.pathname = '/'
   }
 
   const _confirm = async data => {
-    const {token} = isLogin ? data.login : data.signup
-    _saveUserData(token)
+    const authData = isLogin ? data.login : data.signup
+    const {token, user} = authData
+    _saveUserData({token, email: user.email})
   }
 
   return (

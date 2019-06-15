@@ -17,11 +17,13 @@ const FEED_QUERY = gql`
         op {
           id
           name
+          email
         }
         likes {
           id
           user {
             id
+            email
           }
         }
       }

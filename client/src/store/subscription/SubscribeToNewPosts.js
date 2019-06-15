@@ -30,11 +30,13 @@ const NEW_POSTS_SUBSCRIPTION = gql`
       op {
         id
         name
+        email
       }
       likes {
         id
         user {
           id
+          email
         }
       }
     }

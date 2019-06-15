@@ -5,6 +5,8 @@ import Card from './Card'
 import LikeButton from './LikeButton'
 import {timeFromDate} from '../utils'
 import {AUTH_TOKEN} from '../constants'
+const localUserDataJSON = localStorage.getItem(AUTH_TOKEN)
+const localUserData = localUserDataJSON && JSON.parse(localUserDataJSON)
 
 const Header = styled.header`
   font-weight: bold;
@@ -38,10 +40,10 @@ const Timestamp = styled.p`
 const Actions = styled.div`
   display: flex;
 `
-const isLiked = post => post.likes.some(p => p.user.id === post.op.id)
 
 const PostCard = ({post, onLike, children}) => {
-  const authToken = localStorage.getItem(AUTH_TOKEN)
+  const email = localUserData && localUserData.email
+  const isLiked = post => post.likes.some(like => like.user.email === email)
 
   return (
     <Card>
@@ -53,7 +55,7 @@ const PostCard = ({post, onLike, children}) => {
           <Timestamp>{timeFromDate(post.createdAt)}</Timestamp>
           <Actions>
             ({post.likes.length})
-            {authToken && (
+            {email && (
               <LikeButton
                 aria-label={`Like post by ${post.op.name}`}
                 onClick={onLike}
