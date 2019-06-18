@@ -1,4 +1,6 @@
+const fs = require('fs')
 const {GraphQLServer} = require('graphql-yoga')
+const express = require('express')
 const {prisma} = require('./generated/prisma-client')
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
@@ -6,9 +8,15 @@ const User = require('./resolvers/User')
 const Post = require('./resolvers/Post')
 const Subscription = require('./resolvers/Subscription')
 const Like = require('./resolvers/Like')
-const express = require('express')
 
-// TODO: ensure uploads/ exists or create
+const dir = './uploads'
+try {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
+  }
+} catch (err) {
+  console.error(err)
+}
 
 const resolvers = {
   Query,
