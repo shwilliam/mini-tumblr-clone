@@ -17,7 +17,7 @@ const ToolbarItem = styled(TextButton)`
 `
 
 const PostToolbarItem = ({Icon, children, ...props}) => {
-  const [spring, set, stop] = useSpring(() => ({transform: 'translateY(0px)'}))
+  const [spring, set] = useSpring(() => ({transform: 'translateY(0px)'}))
 
   return (
     <ToolbarItem
