@@ -1,14 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import BrowserRouter from './router'
 import * as serviceWorker from './serviceWorker'
+
+import BrowserRouter from './router'
 import ApolloProvider from './store'
 import ThemeProvider from './theme'
+import Layout from './components/Layout'
 
 ReactDOM.render(
   <ApolloProvider>
     <ThemeProvider>
-      <BrowserRouter />
+      <Layout>
+        <BrowserRouter />
+      </Layout>
     </ThemeProvider>
   </ApolloProvider>,
   document.getElementById('root'),

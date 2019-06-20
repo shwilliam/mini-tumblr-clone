@@ -1,10 +1,11 @@
 import React from 'react'
-import ReactMD from 'react-markdown'
 import styled from 'styled-components'
-import Card from './Card'
+import {timeFromDate} from '../../utils'
+import {AUTH_TOKEN} from '../../constants'
+import Card from '../Card'
 import LikeButton from './LikeButton'
-import {timeFromDate} from '../utils'
-import {AUTH_TOKEN} from '../constants'
+import MarkdownText from '../MarkdownText'
+
 const localUserDataJSON = localStorage.getItem(AUTH_TOKEN)
 const localUserData = localUserDataJSON && JSON.parse(localUserDataJSON)
 
@@ -14,18 +15,6 @@ const Header = styled.header`
 
 const Picture = styled.img`
   width: 100%;
-`
-
-const Text = styled(ReactMD)`
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin-top: 0.5rem;
-  }
 `
 
 const Footer = styled.footer`
@@ -50,12 +39,12 @@ const PostCard = ({post, onLike, children}) => {
       <article>
         <Header>{post.op.name}</Header>
         {post.imgUrl && <Picture alt="" src={post.imgUrl} />}
-        <Text source={post.text} />
+        <MarkdownText source={post.text} />
         <Footer>
           <Timestamp>{timeFromDate(post.createdAt)}</Timestamp>
           <Actions>
             ({post.likes.length})
-            {email && (
+            {email && email !== post.op.email && (
               <LikeButton
                 aria-label={`Like post by ${post.op.name}`}
                 onClick={onLike}

@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import PostToolbarItem from './PostToolbarItem'
+import {GoTextSize, GoDeviceCamera} from 'react-icons/go'
 import Card from '../Card'
 import Toolbar from '../Toolbar'
 import NewPost from '../NewPost'
-import {GoTextSize, GoDeviceCamera} from 'react-icons/go'
 
 const PostToolbar = props => {
   const [activePostType, setActivePostType] = useState()

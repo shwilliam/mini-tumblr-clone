@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import ImageDropzone from './ImageDropzone'
-import PostMutation from '../store/mutation/PostMutation'
+import PostMutation from '../../store/mutation/PostMutation'
+import ImageDropzone from '../ImageDropzone'
 
 const NewPost = ({type, onCreate, ...props}) => {
   const [text, setText] = useState('')

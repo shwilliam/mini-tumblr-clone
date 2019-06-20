@@ -1,5 +1,5 @@
 import React from 'react'
-import PlainList from './PlainList'
+import PlainList from '../PlainList'
 
 const PostList = ({children, ...props}) => (
   <PlainList {...props}>

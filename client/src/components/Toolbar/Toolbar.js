@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import PlainList from './PlainList'
+import PlainList from '../PlainList'
 
 const StyledList = styled(PlainList)`
   display: flex;

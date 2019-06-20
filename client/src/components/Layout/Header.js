@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import {GoSignIn, GoSignOut} from 'react-icons/go'
+import {AUTH_TOKEN} from '../../constants'
+import TextButton from '../TextButton'
+import TextLink from '../TextLink'
 import Nav from './Nav'
-import TextButton from './TextButton'
-import TextLink from './TextLink'
 import Title from './Title'
-import {AUTH_TOKEN} from '../constants'
+
 const localUserDataJSON = localStorage.getItem(AUTH_TOKEN)
 const localUserData = localUserDataJSON && JSON.parse(localUserDataJSON)
 

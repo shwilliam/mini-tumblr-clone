@@ -1,7 +1,7 @@
 import React from 'react'
-import TextButton from './TextButton'
 import {useSpring, animated, interpolate} from 'react-spring'
 import {GoHeart} from 'react-icons/go'
+import TextButton from '../TextButton'
 
 const LikeButton = ({value = false, onClick, ...props}) => {
   const {spring} = useSpring({

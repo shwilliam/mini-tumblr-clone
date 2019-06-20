@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
-import {AUTH_TOKEN} from '../constants'
 import {Mutation} from 'react-apollo'
-import {LOGIN_MUTATION} from '../store/mutation/LoginMutation'
-import {SIGNUP_MUTATION} from '../store/mutation/SignupMutation'
+import {AUTH_TOKEN} from '../../constants'
+import {LOGIN_MUTATION} from '../../store/mutation/LoginMutation'
+import {SIGNUP_MUTATION} from '../../store/mutation/SignupMutation'
 
 const Login = props => {
   const [isLogin, setIsLogin] = useState(true)
