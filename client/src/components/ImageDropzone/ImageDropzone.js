@@ -2,20 +2,28 @@ import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone'
 import styled from 'styled-components'
 
-const getColor = ({isDragAccept, isDragReject, isDragActive, theme}) => {
-  if (isDragAccept) {
-    return theme.success
+const getColor = ({file}) => {
+  switch (!!file) {
+    case true:
+      return '#bdbdbd'
+    default:
+      return '#000'
   }
-  if (isDragReject) {
-    return theme.error
-  }
-  if (isDragActive) {
-    return '#eee'
-  }
-  return '#eee'
 }
 
-const StyleWrapper = styled.div`
+const getBorderColor = ({theme, isDragAccept, isDragReject, isDragActive}) => {
+  if (isDragAccept) {
+    return theme.success
+  } else if (isDragReject) {
+    return theme.error
+  } else if (isDragActive) {
+    return '#eee'
+  } else {
+    return '#eee'
+  }
+}
+
+const Container = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -23,31 +31,43 @@ const StyleWrapper = styled.div`
   padding: 1rem;
   border-width: 2px;
   border-radius: 2px;
-  border-color: ${props => getColor(props)};
-  border-style: dashed;
   background-color: ${({theme}) => theme.field};
-  color: #bdbdbd;
+  border-color: ${getBorderColor};
+  border-style: dashed;
+  color: ${getColor};
   outline: none;
   transition: border 0.24s ease-in-out;
 `
 
 const Dropzone = ({file, onChange, ...props}) => {
   const onDrop = useCallback(([file]) => onChange(file), [onChange])
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+  } = useDropzone({
     onDrop,
     multiple: false,
-    accept: 'image/jpeg, image/png',
+    accept: 'image/*',
   })
 
   return (
-    <StyleWrapper {...getRootProps()} {...props}>
+    <Container
+      file={file}
+      {...getRootProps({isDragActive, isDragReject, isDragAccept})}
+      {...props}
+    >
       <input {...getInputProps()} />
       {isDragActive ? (
         <p>drop your file here!</p>
+      ) : file ? (
+        <p>dont't forget alt text</p>
       ) : (
         <p>drag your file here, or click to select</p>
       )}
-    </StyleWrapper>
+    </Container>
   )
 }
 
