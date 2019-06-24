@@ -11,7 +11,6 @@ const LikeButton = ({value = false, onClick, ...props}) => {
   })
 
   // TODO: use styled-components
-  // FIXME: a11y (aria-hidden?)
   return (
     <TextButton
       title="Heart"
@@ -21,6 +20,7 @@ const LikeButton = ({value = false, onClick, ...props}) => {
       {...props}
     >
       <animated.div
+        aria-hidden
         style={{
           position: 'absolute',
           opacity: spring.interpolate({output: [1, 0]}),
@@ -43,7 +43,7 @@ const LikeButton = ({value = false, onClick, ...props}) => {
       >
         <GoHeart fill={value ? 'red' : 'grey'} />
       </animated.div>
-      <GoHeart fill={value ? 'red' : 'grey'} style={{zIndex: 999}} />
+      <GoHeart fill={value ? 'red' : 'grey'} />
     </TextButton>
   )
 }
