@@ -39,7 +39,9 @@ const PostCard = ({post, onLike, children}) => {
       <article>
         <Header>{post.op.name}</Header>
         {post.imgUrl && <Picture alt={post.text} src={post.imgUrl} />}
-        {!post.link && post.text && <MarkdownText source={post.text} />}
+        {!post.link && !post.imgUrl && post.text && (
+          <MarkdownText source={post.text} />
+        )}
         {post.link && (
           <a href={post.link} rel="noopener noreferrer" target="_blank">
             {post.text}
@@ -48,13 +50,14 @@ const PostCard = ({post, onLike, children}) => {
         <Footer>
           <Timestamp>{timeFromDate(post.createdAt)}</Timestamp>
           <Actions>
-            ({post.likes.length})
             {email && email !== post.op.email && (
               <LikeButton
                 aria-label={`Like post by ${post.op.name}`}
                 onClick={onLike}
                 disabled={isLiked(post)}
                 value={isLiked(post)}
+                label={post.likes.length}
+                id={post.id}
               />
             )}
           </Actions>
