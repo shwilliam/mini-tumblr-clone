@@ -238,6 +238,7 @@ type Post {
   createdAt: DateTime!
   text: String!
   imgUrl: String
+  link: String
   op: User
   likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
 }
@@ -252,6 +253,7 @@ input PostCreateInput {
   id: ID
   text: String!
   imgUrl: String
+  link: String
   op: UserCreateOneWithoutPostsInput
   likes: LikeCreateManyWithoutPostInput
 }
@@ -270,6 +272,7 @@ input PostCreateWithoutLikesInput {
   id: ID
   text: String!
   imgUrl: String
+  link: String
   op: UserCreateOneWithoutPostsInput
 }
 
@@ -277,6 +280,7 @@ input PostCreateWithoutOpInput {
   id: ID
   text: String!
   imgUrl: String
+  link: String
   likes: LikeCreateManyWithoutPostInput
 }
 
@@ -294,6 +298,8 @@ enum PostOrderByInput {
   text_DESC
   imgUrl_ASC
   imgUrl_DESC
+  link_ASC
+  link_DESC
 }
 
 type PostPreviousValues {
@@ -301,6 +307,7 @@ type PostPreviousValues {
   createdAt: DateTime!
   text: String!
   imgUrl: String
+  link: String
 }
 
 input PostScalarWhereInput {
@@ -354,6 +361,20 @@ input PostScalarWhereInput {
   imgUrl_not_starts_with: String
   imgUrl_ends_with: String
   imgUrl_not_ends_with: String
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -380,6 +401,7 @@ input PostSubscriptionWhereInput {
 input PostUpdateInput {
   text: String
   imgUrl: String
+  link: String
   op: UserUpdateOneWithoutPostsInput
   likes: LikeUpdateManyWithoutPostInput
 }
@@ -387,11 +409,13 @@ input PostUpdateInput {
 input PostUpdateManyDataInput {
   text: String
   imgUrl: String
+  link: String
 }
 
 input PostUpdateManyMutationInput {
   text: String
   imgUrl: String
+  link: String
 }
 
 input PostUpdateManyWithoutOpInput {
@@ -421,12 +445,14 @@ input PostUpdateOneRequiredWithoutLikesInput {
 input PostUpdateWithoutLikesDataInput {
   text: String
   imgUrl: String
+  link: String
   op: UserUpdateOneWithoutPostsInput
 }
 
 input PostUpdateWithoutOpDataInput {
   text: String
   imgUrl: String
+  link: String
   likes: LikeUpdateManyWithoutPostInput
 }
 
@@ -497,6 +523,20 @@ input PostWhereInput {
   imgUrl_not_starts_with: String
   imgUrl_ends_with: String
   imgUrl_not_ends_with: String
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
   op: UserWhereInput
   likes_every: LikeWhereInput
   likes_some: LikeWhereInput

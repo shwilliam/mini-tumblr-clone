@@ -18,7 +18,7 @@ enum PostOrderByInput {
 }
 
 type Mutation {
-  publish(picture: Upload, text: String!): Post!
+  publish(picture: Upload, text: String!, link: String): Post!
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   like(postId: ID): Like
@@ -27,9 +27,10 @@ type Mutation {
 type Post {
   id: ID!
   text: String!
+  imgUrl: String
+  link: String
   op: User
   likes: [Like!]!
-  imgUrl: String
   createdAt: DateTime!
 }
 

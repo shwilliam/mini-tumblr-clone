@@ -14,6 +14,7 @@ const NEW_LIKES_SUBSCRIPTION = gql`
         id
         imgUrl
         text
+        link
         createdAt
         op {
           id

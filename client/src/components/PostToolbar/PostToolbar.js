@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import PostToolbarItem from './PostToolbarItem'
-import {GoTextSize, GoDeviceCamera} from 'react-icons/go'
+import {GoTextSize, GoDeviceCamera, GoLink} from 'react-icons/go'
 import Card from '../Card'
 import Toolbar from '../Toolbar'
 import NewPost from '../NewPost'
@@ -22,6 +22,12 @@ const PostToolbar = props => {
           Icon={GoDeviceCamera}
         >
           <p>Photo</p>
+        </PostToolbarItem>
+        <PostToolbarItem
+          onClick={() => setActivePostType('link')}
+          Icon={GoLink}
+        >
+          <p>Link</p>
         </PostToolbarItem>
       </Toolbar>
       {activePostType && (

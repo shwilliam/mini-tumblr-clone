@@ -11,8 +11,9 @@ const FEED_QUERY = gql`
     feed(orderBy: createdAt_DESC) {
       posts {
         id
-        imgUrl
         text
+        imgUrl
+        link
         createdAt
         op {
           id

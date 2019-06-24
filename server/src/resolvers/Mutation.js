@@ -33,6 +33,7 @@ const publish = async (root, args, context) => {
   return context.prisma.createPost({
     imgUrl,
     text: args.text,
+    link: args.link,
     op: {connect: {id: getUserId(context)}},
   })
 }

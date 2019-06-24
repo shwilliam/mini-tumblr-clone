@@ -3,6 +3,7 @@ type Post {
   createdAt: DateTime! @createdAt
   text: String!
   imgUrl: String
+  link: String
   op: User
   likes: [Like!]!
 }

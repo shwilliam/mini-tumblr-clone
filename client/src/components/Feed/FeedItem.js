@@ -38,8 +38,13 @@ const PostCard = ({post, onLike, children}) => {
     <Card>
       <article>
         <Header>{post.op.name}</Header>
-        {post.imgUrl && <Picture alt="" src={post.imgUrl} />}
-        <MarkdownText source={post.text} />
+        {post.imgUrl && <Picture alt={post.text} src={post.imgUrl} />}
+        {!post.link && post.text && <MarkdownText source={post.text} />}
+        {post.link && (
+          <a href={post.link} rel="noopener noreferrer" target="_blank">
+            {post.text}
+          </a>
+        )}
         <Footer>
           <Timestamp>{timeFromDate(post.createdAt)}</Timestamp>
           <Actions>
