@@ -1,16 +1,10 @@
 import React, {useState} from 'react'
-import styled from 'styled-components'
-
-// TODO: refactor to withValidation HOC
+import ErrorText from '../ErrorText'
 
 const validate = (val, message, pattern) =>
   new RegExp(pattern).test(val) ? '' : message
 
-const Container = styled.div``
-
-const ErrorText = styled.p``
-
-const Input = ({
+const withValidation = Component => ({
   type = 'text',
   errorMessage,
   validation,
@@ -28,11 +22,11 @@ const Input = ({
   }
 
   return (
-    <Container>
+    <div>
       {error && <ErrorText>{error}</ErrorText>}
-      <input value={value} onChange={handleChange} type={type} {...props} />
-    </Container>
+      <Component value={value} onChange={handleChange} type={type} {...props} />
+    </div>
   )
 }
 
-export default Input
+export default withValidation

@@ -2,8 +2,8 @@ import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone'
 import styled from 'styled-components'
 
-const getColor = ({file}) => {
-  switch (!!file) {
+const getColor = ({value}) => {
+  switch (!!value) {
     case true:
       return '#bdbdbd'
     default:
@@ -39,7 +39,7 @@ const Container = styled.div`
   transition: border 0.24s ease-in-out;
 `
 
-const Dropzone = ({file, onChange, ...props}) => {
+const Dropzone = ({value, onChange, ...props}) => {
   const onDrop = useCallback(([file]) => onChange(file), [onChange])
   const {
     getRootProps,
@@ -55,15 +55,14 @@ const Dropzone = ({file, onChange, ...props}) => {
 
   return (
     <Container
-      file={file}
+      file={value}
       {...getRootProps({isDragActive, isDragReject, isDragAccept})}
-      {...props}
     >
-      <input {...getInputProps()} />
+      <input {...getInputProps()} {...props} />
       {isDragActive ? (
         <p>drop your file here!</p>
-      ) : file ? (
-        <p>dont't forget alt text</p>
+      ) : value ? (
+        <p>dont't forget to add a description</p>
       ) : (
         <p>drag your file here, or click to select</p>
       )}

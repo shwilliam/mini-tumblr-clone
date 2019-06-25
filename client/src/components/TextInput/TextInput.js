@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import Input from '../Input'
 
-export default styled(Input)`
+export default styled.input`
   width: 100%;
 `
