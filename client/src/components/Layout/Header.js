@@ -17,6 +17,7 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   overflow: hidden;
   padding: 1rem;
+  margin-bottom: 1rem;
 `
 
 const Mini = styled.span`

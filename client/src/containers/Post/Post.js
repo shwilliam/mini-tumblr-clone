@@ -11,7 +11,7 @@ const localUserDataJSON = localStorage.getItem(AUTH_TOKEN)
 const localUserData = localUserDataJSON && JSON.parse(localUserDataJSON)
 
 const PostCard = styled(Card)`
-  margin: 1.5rem 0;
+  padding: 1rem;
 `
 
 const Header = styled.header`
@@ -39,6 +39,7 @@ const Actions = styled.div`
 
 const Link = styled.a`
   color: inherit;
+  font-weight: bold;
 `
 
 const Post = ({post, onLike, children}) => {

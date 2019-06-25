@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import styled from 'styled-components'
 import PostMutation from '../../store/mutation/PostMutation'
 import withValidation from '../../enhancers/withValidation'
 import TextArea from '../../components/TextArea'
@@ -13,6 +14,10 @@ const UrlInput = withValidation(TextInput)
 // TODO: require text fields
 // TODO: clean up file error handling
 
+const Form = styled.form`
+  flex-grow: 1;
+`
+
 const NewPostForm = ({type, onCreate, ...props}) => {
   const [text, setText] = useState('')
   const [link, setLink] = useState('')
@@ -26,7 +31,7 @@ const NewPostForm = ({type, onCreate, ...props}) => {
       link={type === 'link' ? link : null}
     >
       {createPost => (
-        <form
+        <Form
           onSubmit={e => {
             e.preventDefault()
 
@@ -65,7 +70,7 @@ const NewPostForm = ({type, onCreate, ...props}) => {
           <Button type="primary" htmlType="submit">
             post
           </Button>
-        </form>
+        </Form>
       )}
     </PostMutation>
   )

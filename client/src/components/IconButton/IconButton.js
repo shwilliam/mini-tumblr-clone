@@ -5,6 +5,7 @@ import TextButton from '../TextButton'
 
 const Button = styled(TextButton)`
   text-align: center;
+  padding: 1rem;
 
   svg {
     margin-bottom: -0.3rem;

@@ -1,15 +1,28 @@
 import React, {useState} from 'react'
+import styled from 'styled-components'
 import {GoTextSize, GoDeviceCamera, GoLink} from 'react-icons/go'
+import {AUTH_TOKEN} from '../../constants'
 import Card from '../../components/Card'
 import Toolbar from '../../components/Toolbar'
 import IconButton from '../../components/IconButton'
+import DisplayPicture from '../../components/DisplayPicture'
 import NewPostForm from '../NewPostForm'
+
+const localUserDataJSON = localStorage.getItem(AUTH_TOKEN)
+const localUserData = localUserDataJSON && JSON.parse(localUserDataJSON)
+
+const Wrapper = styled(Card)`
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+`
 
 const ToolbarContainer = props => {
   const [activePostType, setActivePostType] = useState()
 
   return (
-    <Card>
+    <Wrapper>
+      <DisplayPicture email={localUserData.email} />
       <Toolbar {...props}>
         <IconButton onClick={() => setActivePostType('text')} Icon={GoTextSize}>
           <p>Text</p>
@@ -30,7 +43,7 @@ const ToolbarContainer = props => {
           onCreate={() => setActivePostType(null)}
         />
       )}
-    </Card>
+    </Wrapper>
   )
 }
 

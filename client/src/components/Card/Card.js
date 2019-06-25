@@ -2,7 +2,8 @@ import styled from 'styled-components'
 
 const Card = styled.div`
   background-color: ${p => p.theme.secondary};
-  padding: 1rem;
+  flex-grow: 1;
+  border-radius: 5px;
 `
 
 export default Card
