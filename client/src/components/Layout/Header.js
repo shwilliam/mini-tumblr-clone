@@ -16,6 +16,7 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   overflow: hidden;
+  padding: 1rem;
 `
 
 const Mini = styled.span`

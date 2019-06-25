@@ -62,7 +62,9 @@ const NewPostForm = ({type, onCreate, ...props}) => {
               placeholder="your link here"
             />
           )}
-          <Button type="submit">post</Button>
+          <Button type="primary" htmlType="submit">
+            post
+          </Button>
         </form>
       )}
     </PostMutation>

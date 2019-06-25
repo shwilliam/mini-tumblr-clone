@@ -9,6 +9,12 @@ export default styled(ReactMD)`
   h4,
   h5,
   h6 {
-    margin-top: 0.5rem;
+    margin: 0;
+  }
+
+  ul,
+  ol {
+    list-style-type: square;
+    padding-left: 1.25rem;
   }
 `

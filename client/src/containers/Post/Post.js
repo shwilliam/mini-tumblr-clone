@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import {GoChevronRight} from 'react-icons/go'
 import {timeFromDate} from '../../utils'
 import {AUTH_TOKEN} from '../../constants'
 import Card from '../../components/Card'
@@ -9,8 +10,13 @@ import MarkdownText from '../../components/MarkdownText'
 const localUserDataJSON = localStorage.getItem(AUTH_TOKEN)
 const localUserData = localUserDataJSON && JSON.parse(localUserDataJSON)
 
+const PostCard = styled(Card)`
+  margin: 1.5rem 0;
+`
+
 const Header = styled.header`
   font-weight: bold;
+  margin-bottom: 1rem;
 `
 
 const Picture = styled.img`
@@ -20,6 +26,7 @@ const Picture = styled.img`
 const Footer = styled.footer`
   display: flex;
   justify-content: space-between;
+  margin-top: 1rem;
 `
 
 const Timestamp = styled.p`
@@ -30,12 +37,16 @@ const Actions = styled.div`
   display: flex;
 `
 
+const Link = styled.a`
+  color: inherit;
+`
+
 const Post = ({post, onLike, children}) => {
   const email = localUserData && localUserData.email
   const isLiked = post => post.likes.some(like => like.user.email === email)
 
   return (
-    <Card>
+    <PostCard>
       <article>
         <Header>{post.op.name}</Header>
         {post.imgUrl && <Picture alt={post.text} src={post.imgUrl} />}
@@ -43,9 +54,9 @@ const Post = ({post, onLike, children}) => {
           <MarkdownText source={post.text} />
         )}
         {post.link && (
-          <a href={post.link} rel="noopener noreferrer" target="_blank">
-            {post.text}
-          </a>
+          <Link href={post.link} rel="noopener noreferrer" target="_blank">
+            {post.text} <GoChevronRight />
+          </Link>
         )}
         <Footer>
           <Timestamp>{timeFromDate(post.createdAt)}</Timestamp>
@@ -63,7 +74,7 @@ const Post = ({post, onLike, children}) => {
           </Actions>
         </Footer>
       </article>
-    </Card>
+    </PostCard>
   )
 }
 

@@ -14,9 +14,10 @@ const Button = styled(TextButton)`
 const CountLabel = styled.p`
   z-index: 1;
   position: absolute;
-  bottom: 27.5%;
+  bottom: 20%;
   margin: 0;
-  font-size: 0.6rem;
+  font-size: 0.5rem;
+  line-height: 2;
   opacity: 0.4;
 `
 
@@ -58,9 +59,12 @@ const LikeButton = ({value = false, label, id, onClick, ...props}) => {
             ),
         }}
       >
-        <GoHeart fill={value ? 'red' : 'grey'} />
+        <GoHeart fill={value ? '#ff0000a5' : 'none'} />
       </animated.div>
-      <GoHeart fill={value ? 'red' : 'grey'} aria-labelledby={`label-${id}`} />
+      <GoHeart
+        fill={value ? '#ff0000a5' : '#000000a5'}
+        aria-labelledby={`label-${id}`}
+      />
     </Button>
   )
 }

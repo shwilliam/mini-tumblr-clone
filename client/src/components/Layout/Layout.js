@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Header from './Header'
 
-const Background = styled.div`
+const Container = styled.div`
   ${({theme}) => theme['typography']};
   background-color: ${({theme}) => theme.main};
   min-height: 100vh;
@@ -14,10 +14,10 @@ const Main = styled.main`
 `
 
 const Layout = ({children, ...props}) => (
-  <Background>
+  <Container>
     <Header />
     <Main {...props}>{children}</Main>
-  </Background>
+  </Container>
 )
 
 export default Layout
