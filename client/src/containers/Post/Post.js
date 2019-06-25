@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import {timeFromDate} from '../../utils'
 import {AUTH_TOKEN} from '../../constants'
-import Card from '../Card'
-import LikeButton from '../LikeButton'
-import MarkdownText from '../MarkdownText'
+import Card from '../../components/Card'
+import LikeButton from '../../components/LikeButton'
+import MarkdownText from '../../components/MarkdownText'
 
 const localUserDataJSON = localStorage.getItem(AUTH_TOKEN)
 const localUserData = localUserDataJSON && JSON.parse(localUserDataJSON)

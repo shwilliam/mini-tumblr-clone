@@ -4,7 +4,7 @@ import LikeMutation from '../../store/mutation/LikeMutation'
 import {subscribeToNewPosts} from '../../store/subscription/SubscribeToNewPosts'
 import {subscribeToNewLikes} from '../../store/subscription/SubscribeToNewLikes'
 import PlainList from '../../components/PlainList'
-import Post from '../../components/Post'
+import Post from '../Post'
 
 const Loading = () => <p>fetching...</p>
 const Error = () => <p>something went wrong</p>
