@@ -4,7 +4,7 @@ import {AUTH_TOKEN} from '../../constants'
 import {LOGIN_MUTATION} from '../../store/mutation/LoginMutation'
 import {SIGNUP_MUTATION} from '../../store/mutation/SignupMutation'
 
-const Login = props => {
+const AuthForm = props => {
   const [isLogin, setIsLogin] = useState(true)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -68,4 +68,4 @@ const Login = props => {
   )
 }
 
-export default Login
+export default AuthForm

@@ -3,7 +3,7 @@ import {useSpring, animated} from 'react-spring'
 import styled from 'styled-components'
 import TextButton from '../TextButton'
 
-const ToolbarItem = styled(TextButton)`
+const Button = styled(TextButton)`
   text-align: center;
 
   svg {
@@ -16,11 +16,11 @@ const ToolbarItem = styled(TextButton)`
   }
 `
 
-const PostToolbarItem = ({Icon, children, ...props}) => {
+const IconButton = ({Icon, children, ...props}) => {
   const [spring, set] = useSpring(() => ({transform: 'translateY(0px)'}))
 
   return (
-    <ToolbarItem
+    <Button
       onMouseOver={() => set({transform: 'translateY(-4rem)'})}
       onMouseOut={() => set({transform: 'translateY(0)'})}
       {...props}
@@ -29,8 +29,8 @@ const PostToolbarItem = ({Icon, children, ...props}) => {
         <Icon />
       </animated.div>
       {children}
-    </ToolbarItem>
+    </Button>
   )
 }
 
-export default PostToolbarItem
+export default IconButton

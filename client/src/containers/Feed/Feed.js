@@ -3,8 +3,8 @@ import FeedQuery from '../../store/query/FeedQuery'
 import LikeMutation from '../../store/mutation/LikeMutation'
 import {subscribeToNewPosts} from '../../store/subscription/SubscribeToNewPosts'
 import {subscribeToNewLikes} from '../../store/subscription/SubscribeToNewLikes'
-import FeedList from './FeedList'
-import FeedItem from './FeedItem'
+import PlainList from '../../components/PlainList'
+import Post from '../../components/Post'
 
 const Loading = () => <p>fetching...</p>
 const Error = () => <p>something went wrong</p>
@@ -20,13 +20,15 @@ const Feed = () => (
 
       if (data.feed && !data.feed.posts.length) return <p>no posts</p>
       return (
-        <FeedList>
+        <PlainList>
           {data.feed.posts.map(post => (
-            <LikeMutation postId={post.id} key={post.id}>
-              {likeMutation => <FeedItem post={post} onLike={likeMutation} />}
-            </LikeMutation>
+            <li key={post.id}>
+              <LikeMutation postId={post.id}>
+                {likeMutation => <Post post={post} onLike={likeMutation} />}
+              </LikeMutation>
+            </li>
           ))}
-        </FeedList>
+        </PlainList>
       )
     }}
   </FeedQuery>

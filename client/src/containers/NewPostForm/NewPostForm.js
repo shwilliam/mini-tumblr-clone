@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import PostMutation from '../../store/mutation/PostMutation'
 import withValidation from '../../enhancers/withValidation'
-import TextArea from '../TextArea'
-import TextInput from '../TextInput'
-import Button from '../Button'
+import TextArea from '../../components/TextArea'
+import TextInput from '../../components/TextInput'
+import Button from '../../components/Button'
+import ErrorText from '../../components/ErrorText'
 import ImageDropzone from '../ImageDropzone'
-import ErrorText from '../ErrorText'
 
 const TextAreaInput = withValidation(TextArea)
 const UrlInput = withValidation(TextInput)
@@ -13,14 +13,18 @@ const UrlInput = withValidation(TextInput)
 // TODO: require text fields
 // TODO: clean up file error handling
 
-const NewPost = ({type, onCreate, ...props}) => {
+const NewPostForm = ({type, onCreate, ...props}) => {
   const [text, setText] = useState('')
   const [link, setLink] = useState('')
   const [file, setFile] = useState()
   const [fileError, setFileError] = useState()
 
   return (
-    <PostMutation text={text} picture={file} link={link}>
+    <PostMutation
+      text={text}
+      picture={type === 'photo' ? file : null}
+      link={type === 'link' ? link : null}
+    >
       {createPost => (
         <form
           onSubmit={e => {
@@ -37,10 +41,11 @@ const NewPost = ({type, onCreate, ...props}) => {
           {type === 'photo' && (
             <>
               <ErrorText>{fileError}</ErrorText>
-              <ImageDropzone file={file} onChange={setFile} />
+              <ImageDropzone value={file} onChange={setFile} />
             </>
           )}
           <TextAreaInput
+            value={text}
             onChange={setText}
             errorMessage="this field is required"
             validation=".*\S.*"
@@ -64,4 +69,4 @@ const NewPost = ({type, onCreate, ...props}) => {
   )
 }
 
-export default NewPost
+export default NewPostForm

@@ -1,13 +1,13 @@
 import React from 'react'
-import PostToolbar from '../components/PostToolbar'
-import Feed from '../components/Feed'
+import Toolbar from '../containers/Toolbar'
+import Feed from '../containers/Feed'
 import {AUTH_TOKEN} from '../constants'
 const localUserDataJSON = localStorage.getItem(AUTH_TOKEN)
 const isLoggedIn = localUserDataJSON && JSON.parse(localUserDataJSON)
 
 const Home = () => (
   <>
-    {isLoggedIn && <PostToolbar />}
+    {isLoggedIn && <Toolbar />}
     <Feed />
   </>
 )

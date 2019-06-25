@@ -1,11 +1,10 @@
 import React, {useState} from 'react'
-import ErrorText from '../ErrorText'
+import ErrorText from '../../components/ErrorText'
 
 const validate = (val, message, pattern) =>
   new RegExp(pattern).test(val) ? '' : message
 
 const withValidation = Component => ({
-  type = 'text',
   errorMessage,
   validation,
   onChange,
@@ -24,7 +23,7 @@ const withValidation = Component => ({
   return (
     <div>
       {error && <ErrorText>{error}</ErrorText>}
-      <Component value={value} onChange={handleChange} type={type} {...props} />
+      <Component value={value} onChange={handleChange} {...props} />
     </div>
   )
 }

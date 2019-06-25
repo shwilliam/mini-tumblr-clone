@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {timeFromDate} from '../../utils'
 import {AUTH_TOKEN} from '../../constants'
 import Card from '../Card'
-import LikeButton from './LikeButton'
+import LikeButton from '../LikeButton'
 import MarkdownText from '../MarkdownText'
 
 const localUserDataJSON = localStorage.getItem(AUTH_TOKEN)
@@ -30,7 +30,7 @@ const Actions = styled.div`
   display: flex;
 `
 
-const PostCard = ({post, onLike, children}) => {
+const Post = ({post, onLike, children}) => {
   const email = localUserData && localUserData.email
   const isLiked = post => post.likes.some(like => like.user.email === email)
 
@@ -67,4 +67,4 @@ const PostCard = ({post, onLike, children}) => {
   )
 }
 
-export default PostCard
+export default Post
