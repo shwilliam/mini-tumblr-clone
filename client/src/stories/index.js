@@ -1,6 +1,7 @@
 import '../theme/reset.css'
 import './Button'
 import './Card'
+import './DisplayPicture'
 import './ErrorText'
 import './IconButton'
 import './Layout'
