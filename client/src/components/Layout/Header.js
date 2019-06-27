@@ -1,14 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import {GoSignIn, GoSignOut} from 'react-icons/go'
-import {AUTH_TOKEN} from '../../constants'
+import {useAuth} from '../../hooks'
 import TextButton from '../TextButton'
 import TextLink from '../TextLink'
 import Nav from './Nav'
 import Title from './Title'
-
-const localUserDataJSON = localStorage.getItem(AUTH_TOKEN)
-const localUserData = localUserDataJSON && JSON.parse(localUserDataJSON)
 
 const StyledHeader = styled.header`
   border-bottom: 1px solid ${({theme}) => theme.secondary};
@@ -26,12 +23,9 @@ const Mini = styled.span`
   left: 0.2em;
 `
 
-const logout = () => {
-  localStorage.removeItem(AUTH_TOKEN)
-  document.location.reload(true)
-}
+export default props => {
+  const [isUser, logout] = useAuth()
 
-const Header = props => {
   return (
     <StyledHeader {...props}>
       <TextLink to="/">
@@ -40,7 +34,7 @@ const Header = props => {
         </Title>
       </TextLink>
       <Nav>
-        {!localUserData ? (
+        {!isUser ? (
           <TextLink aria-label="Sign in" title="Enter" to="auth">
             <GoSignIn />
           </TextLink>
@@ -53,5 +47,3 @@ const Header = props => {
     </StyledHeader>
   )
 }
-
-export default Header
