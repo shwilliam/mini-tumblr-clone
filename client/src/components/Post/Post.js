@@ -4,6 +4,8 @@ import {GoChevronRight} from 'react-icons/go'
 import {timeFromDate} from '../../utils'
 import Card from '../../components/Card'
 import LikeButton from '../../components/LikeButton'
+import ReblogButton from '../../components/ReblogButton'
+import ReblogIcon from '../../components/ReblogIcon'
 import MarkdownText from '../../components/MarkdownText'
 
 const Header = styled.header`
@@ -27,6 +29,10 @@ const Timestamp = styled.p`
 
 const Actions = styled.div`
   display: flex;
+
+  & > * {
+    padding: 0 0.5rem;
+  }
 `
 
 const Link = styled.a`
@@ -34,11 +40,22 @@ const Link = styled.a`
   font-weight: bold;
 `
 
+const isOwnPost = (post, email) =>
+  (post.reblogPoster && email === post.reblogPoster.email) ||
+  email === post.op.email
+
 export default ({post, onLike, isLiked, email, onReblog, children}) => (
   <Card>
     <article>
-      <Header onClick={onReblog}>
-        {post.reblogPoster ? `${post.reblogPoster.name} reblogged ` : ''}
+      <Header>
+        {post.reblogPoster ? (
+          <>
+            {post.reblogPoster.name}
+            <ReblogIcon />
+          </>
+        ) : (
+          ''
+        )}
         {post.op.name}
       </Header>
       {post.imgUrl && <Picture alt={post.text} src={post.imgUrl} />}
@@ -53,15 +70,18 @@ export default ({post, onLike, isLiked, email, onReblog, children}) => (
       <Footer>
         <Timestamp>{timeFromDate(post.createdAt)}</Timestamp>
         <Actions>
-          {email && email !== post.op.email && (
-            <LikeButton
-              aria-label={`Like post by ${post.op.name}`}
-              onClick={onLike}
-              disabled={isLiked(post)}
-              value={isLiked(post)}
-              label={post.likes.length}
-              id={post.id}
-            />
+          {!isOwnPost(post, email) && email && (
+            <>
+              <ReblogButton onClick={onReblog} />
+              <LikeButton
+                aria-label={`Like post by ${post.op.name}`}
+                onClick={onLike}
+                disabled={isLiked(post)}
+                value={isLiked(post)}
+                label={post.likes.length}
+                id={post.id}
+              />
+            </>
           )}
         </Actions>
       </Footer>

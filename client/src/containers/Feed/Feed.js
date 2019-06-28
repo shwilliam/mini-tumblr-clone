@@ -22,7 +22,11 @@ export default () => (
         <PlainList>
           {data.feed.posts.map(post => (
             <FeedListItem key={post.id}>
-              <DisplayPicture email={post.op.email} />
+              <DisplayPicture
+                email={
+                  post.reblogPoster ? post.reblogPoster.email : post.op.email
+                }
+              />
               <LikeMutation postId={post.id}>
                 {likeMutation => <Post post={post} onLike={likeMutation} />}
               </LikeMutation>
