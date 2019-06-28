@@ -38,6 +38,15 @@ const publish = async (root, args, context) => {
   })
 }
 
+const reblog = async (root, args, context) =>
+  context.prisma.createPost({
+    imgUrl: args.picture,
+    text: args.text,
+    link: args.link,
+    op: {connect: {id: args.op}},
+    reblogPoster: {connect: {id: getUserId(context)}},
+  })
+
 const signup = async (parent, args, context, info) => {
   const password = await bcrypt.hash(args.password, 10)
   const user = await context.prisma.createUser({...args, password})
@@ -86,4 +95,4 @@ const like = async (parent, args, context, info) => {
   })
 }
 
-module.exports = {publish, signup, login, like}
+module.exports = {publish, reblog, signup, login, like}

@@ -33,6 +33,11 @@ const NEW_POSTS_SUBSCRIPTION = gql`
         name
         email
       }
+      reblogPoster {
+        id
+        name
+        email
+      }
       likes {
         id
         user {

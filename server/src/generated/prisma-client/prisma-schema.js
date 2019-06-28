@@ -239,8 +239,9 @@ type Post {
   text: String!
   imgUrl: String
   link: String
-  op: User
   likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
+  op: User!
+  reblogPoster: User
 }
 
 type PostConnection {
@@ -254,8 +255,9 @@ input PostCreateInput {
   text: String!
   imgUrl: String
   link: String
-  op: UserCreateOneWithoutPostsInput
   likes: LikeCreateManyWithoutPostInput
+  op: UserCreateOneWithoutPostsInput!
+  reblogPoster: UserCreateOneInput
 }
 
 input PostCreateManyWithoutOpInput {
@@ -273,7 +275,8 @@ input PostCreateWithoutLikesInput {
   text: String!
   imgUrl: String
   link: String
-  op: UserCreateOneWithoutPostsInput
+  op: UserCreateOneWithoutPostsInput!
+  reblogPoster: UserCreateOneInput
 }
 
 input PostCreateWithoutOpInput {
@@ -282,6 +285,7 @@ input PostCreateWithoutOpInput {
   imgUrl: String
   link: String
   likes: LikeCreateManyWithoutPostInput
+  reblogPoster: UserCreateOneInput
 }
 
 type PostEdge {
@@ -402,8 +406,9 @@ input PostUpdateInput {
   text: String
   imgUrl: String
   link: String
-  op: UserUpdateOneWithoutPostsInput
   likes: LikeUpdateManyWithoutPostInput
+  op: UserUpdateOneRequiredWithoutPostsInput
+  reblogPoster: UserUpdateOneInput
 }
 
 input PostUpdateManyDataInput {
@@ -446,7 +451,8 @@ input PostUpdateWithoutLikesDataInput {
   text: String
   imgUrl: String
   link: String
-  op: UserUpdateOneWithoutPostsInput
+  op: UserUpdateOneRequiredWithoutPostsInput
+  reblogPoster: UserUpdateOneInput
 }
 
 input PostUpdateWithoutOpDataInput {
@@ -454,6 +460,7 @@ input PostUpdateWithoutOpDataInput {
   imgUrl: String
   link: String
   likes: LikeUpdateManyWithoutPostInput
+  reblogPoster: UserUpdateOneInput
 }
 
 input PostUpdateWithWhereUniqueWithoutOpInput {
@@ -537,10 +544,11 @@ input PostWhereInput {
   link_not_starts_with: String
   link_ends_with: String
   link_not_ends_with: String
-  op: UserWhereInput
   likes_every: LikeWhereInput
   likes_some: LikeWhereInput
   likes_none: LikeWhereInput
+  op: UserWhereInput
+  reblogPoster: UserWhereInput
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]
@@ -591,6 +599,11 @@ input UserCreateInput {
   password: String!
   posts: PostCreateManyWithoutOpInput
   likes: LikeCreateManyWithoutUserInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutLikesInput {
@@ -660,6 +673,14 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  posts: PostUpdateManyWithoutOpInput
+  likes: LikeUpdateManyWithoutUserInput
+}
+
 input UserUpdateInput {
   name: String
   email: String
@@ -674,6 +695,15 @@ input UserUpdateManyMutationInput {
   password: String
 }
 
+input UserUpdateOneInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredWithoutLikesInput {
   create: UserCreateWithoutLikesInput
   update: UserUpdateWithoutLikesDataInput
@@ -681,12 +711,10 @@ input UserUpdateOneRequiredWithoutLikesInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneWithoutPostsInput {
+input UserUpdateOneRequiredWithoutPostsInput {
   create: UserCreateWithoutPostsInput
   update: UserUpdateWithoutPostsDataInput
   upsert: UserUpsertWithoutPostsInput
-  delete: Boolean
-  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 
@@ -702,6 +730,11 @@ input UserUpdateWithoutPostsDataInput {
   email: String
   password: String
   likes: LikeUpdateManyWithoutUserInput
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithoutLikesInput {

@@ -175,6 +175,8 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type LikeOrderByInput = "id_ASC" | "id_DESC";
+
 export type PostOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -186,8 +188,6 @@ export type PostOrderByInput =
   | "imgUrl_DESC"
   | "link_ASC"
   | "link_DESC";
-
-export type LikeOrderByInput = "id_ASC" | "id_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -204,6 +204,28 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 export type LikeWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
+
+export interface LikeWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  post?: Maybe<PostWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<LikeWhereInput[] | LikeWhereInput>;
+  OR?: Maybe<LikeWhereInput[] | LikeWhereInput>;
+  NOT?: Maybe<LikeWhereInput[] | LikeWhereInput>;
+}
 
 export interface PostWhereInput {
   id?: Maybe<ID_Input>;
@@ -270,10 +292,11 @@ export interface PostWhereInput {
   link_not_starts_with?: Maybe<String>;
   link_ends_with?: Maybe<String>;
   link_not_ends_with?: Maybe<String>;
-  op?: Maybe<UserWhereInput>;
   likes_every?: Maybe<LikeWhereInput>;
   likes_some?: Maybe<LikeWhereInput>;
   likes_none?: Maybe<LikeWhereInput>;
+  op?: Maybe<UserWhereInput>;
+  reblogPoster?: Maybe<UserWhereInput>;
   AND?: Maybe<PostWhereInput[] | PostWhereInput>;
   OR?: Maybe<PostWhereInput[] | PostWhereInput>;
   NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
@@ -347,28 +370,6 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface LikeWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  post?: Maybe<PostWhereInput>;
-  user?: Maybe<UserWhereInput>;
-  AND?: Maybe<LikeWhereInput[] | LikeWhereInput>;
-  OR?: Maybe<LikeWhereInput[] | LikeWhereInput>;
-  NOT?: Maybe<LikeWhereInput[] | LikeWhereInput>;
-}
-
 export type PostWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
@@ -394,7 +395,8 @@ export interface PostCreateWithoutLikesInput {
   text: String;
   imgUrl?: Maybe<String>;
   link?: Maybe<String>;
-  op?: Maybe<UserCreateOneWithoutPostsInput>;
+  op: UserCreateOneWithoutPostsInput;
+  reblogPoster?: Maybe<UserCreateOneInput>;
 }
 
 export interface UserCreateOneWithoutPostsInput {
@@ -420,17 +422,18 @@ export interface LikeCreateWithoutUserInput {
   post: PostCreateOneWithoutLikesInput;
 }
 
-export interface UserCreateOneWithoutLikesInput {
-  create?: Maybe<UserCreateWithoutLikesInput>;
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutLikesInput {
+export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
   posts?: Maybe<PostCreateManyWithoutOpInput>;
+  likes?: Maybe<LikeCreateManyWithoutUserInput>;
 }
 
 export interface PostCreateManyWithoutOpInput {
@@ -444,6 +447,7 @@ export interface PostCreateWithoutOpInput {
   imgUrl?: Maybe<String>;
   link?: Maybe<String>;
   likes?: Maybe<LikeCreateManyWithoutPostInput>;
+  reblogPoster?: Maybe<UserCreateOneInput>;
 }
 
 export interface LikeCreateManyWithoutPostInput {
@@ -454,6 +458,19 @@ export interface LikeCreateManyWithoutPostInput {
 export interface LikeCreateWithoutPostInput {
   id?: Maybe<ID_Input>;
   user: UserCreateOneWithoutLikesInput;
+}
+
+export interface UserCreateOneWithoutLikesInput {
+  create?: Maybe<UserCreateWithoutLikesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutLikesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  posts?: Maybe<PostCreateManyWithoutOpInput>;
 }
 
 export interface LikeUpdateInput {
@@ -472,15 +489,14 @@ export interface PostUpdateWithoutLikesDataInput {
   text?: Maybe<String>;
   imgUrl?: Maybe<String>;
   link?: Maybe<String>;
-  op?: Maybe<UserUpdateOneWithoutPostsInput>;
+  op?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+  reblogPoster?: Maybe<UserUpdateOneInput>;
 }
 
-export interface UserUpdateOneWithoutPostsInput {
+export interface UserUpdateOneRequiredWithoutPostsInput {
   create?: Maybe<UserCreateWithoutPostsInput>;
   update?: Maybe<UserUpdateWithoutPostsDataInput>;
   upsert?: Maybe<UserUpsertWithoutPostsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
@@ -548,23 +564,21 @@ export interface UserUpsertWithoutPostsInput {
   create: UserCreateWithoutPostsInput;
 }
 
-export interface PostUpsertWithoutLikesInput {
-  update: PostUpdateWithoutLikesDataInput;
-  create: PostCreateWithoutLikesInput;
-}
-
-export interface UserUpdateOneRequiredWithoutLikesInput {
-  create?: Maybe<UserCreateWithoutLikesInput>;
-  update?: Maybe<UserUpdateWithoutLikesDataInput>;
-  upsert?: Maybe<UserUpsertWithoutLikesInput>;
+export interface UserUpdateOneInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateWithoutLikesDataInput {
+export interface UserUpdateDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
   posts?: Maybe<PostUpdateManyWithoutOpInput>;
+  likes?: Maybe<LikeUpdateManyWithoutUserInput>;
 }
 
 export interface PostUpdateManyWithoutOpInput {
@@ -597,6 +611,7 @@ export interface PostUpdateWithoutOpDataInput {
   imgUrl?: Maybe<String>;
   link?: Maybe<String>;
   likes?: Maybe<LikeUpdateManyWithoutPostInput>;
+  reblogPoster?: Maybe<UserUpdateOneInput>;
 }
 
 export interface LikeUpdateManyWithoutPostInput {
@@ -623,6 +638,25 @@ export interface LikeUpdateWithWhereUniqueWithoutPostInput {
 
 export interface LikeUpdateWithoutPostDataInput {
   user?: Maybe<UserUpdateOneRequiredWithoutLikesInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutLikesInput {
+  create?: Maybe<UserCreateWithoutLikesInput>;
+  update?: Maybe<UserUpdateWithoutLikesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutLikesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutLikesDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  posts?: Maybe<PostUpdateManyWithoutOpInput>;
+}
+
+export interface UserUpsertWithoutLikesInput {
+  update: UserUpdateWithoutLikesDataInput;
+  create: UserCreateWithoutLikesInput;
 }
 
 export interface LikeUpsertWithWhereUniqueWithoutPostInput {
@@ -718,9 +752,14 @@ export interface PostUpdateManyDataInput {
   link?: Maybe<String>;
 }
 
-export interface UserUpsertWithoutLikesInput {
-  update: UserUpdateWithoutLikesDataInput;
-  create: UserCreateWithoutLikesInput;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface PostUpsertWithoutLikesInput {
+  update: PostUpdateWithoutLikesDataInput;
+  create: PostCreateWithoutLikesInput;
 }
 
 export interface PostCreateInput {
@@ -728,31 +767,24 @@ export interface PostCreateInput {
   text: String;
   imgUrl?: Maybe<String>;
   link?: Maybe<String>;
-  op?: Maybe<UserCreateOneWithoutPostsInput>;
   likes?: Maybe<LikeCreateManyWithoutPostInput>;
+  op: UserCreateOneWithoutPostsInput;
+  reblogPoster?: Maybe<UserCreateOneInput>;
 }
 
 export interface PostUpdateInput {
   text?: Maybe<String>;
   imgUrl?: Maybe<String>;
   link?: Maybe<String>;
-  op?: Maybe<UserUpdateOneWithoutPostsInput>;
   likes?: Maybe<LikeUpdateManyWithoutPostInput>;
+  op?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+  reblogPoster?: Maybe<UserUpdateOneInput>;
 }
 
 export interface PostUpdateManyMutationInput {
   text?: Maybe<String>;
   imgUrl?: Maybe<String>;
   link?: Maybe<String>;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  posts?: Maybe<PostCreateManyWithoutOpInput>;
-  likes?: Maybe<LikeCreateManyWithoutUserInput>;
 }
 
 export interface UserUpdateInput {
@@ -846,7 +878,6 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   text: () => Promise<String>;
   imgUrl: () => Promise<String>;
   link: () => Promise<String>;
-  op: <T = UserPromise>() => T;
   likes: <T = FragmentableArray<Like>>(args?: {
     where?: LikeWhereInput;
     orderBy?: LikeOrderByInput;
@@ -856,6 +887,8 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  op: <T = UserPromise>() => T;
+  reblogPoster: <T = UserPromise>() => T;
 }
 
 export interface PostSubscription
@@ -866,7 +899,6 @@ export interface PostSubscription
   text: () => Promise<AsyncIterator<String>>;
   imgUrl: () => Promise<AsyncIterator<String>>;
   link: () => Promise<AsyncIterator<String>>;
-  op: <T = UserSubscription>() => T;
   likes: <T = Promise<AsyncIterator<LikeSubscription>>>(args?: {
     where?: LikeWhereInput;
     orderBy?: LikeOrderByInput;
@@ -876,6 +908,8 @@ export interface PostSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  op: <T = UserSubscription>() => T;
+  reblogPoster: <T = UserSubscription>() => T;
 }
 
 export interface PostNullablePromise
@@ -886,7 +920,6 @@ export interface PostNullablePromise
   text: () => Promise<String>;
   imgUrl: () => Promise<String>;
   link: () => Promise<String>;
-  op: <T = UserPromise>() => T;
   likes: <T = FragmentableArray<Like>>(args?: {
     where?: LikeWhereInput;
     orderBy?: LikeOrderByInput;
@@ -896,6 +929,8 @@ export interface PostNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  op: <T = UserPromise>() => T;
+  reblogPoster: <T = UserPromise>() => T;
 }
 
 export interface User {
@@ -1351,7 +1386,7 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
 

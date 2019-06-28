@@ -17,7 +17,7 @@ export default () => (
       subscribeToNewPosts(subscribeToMore)
       subscribeToNewLikes(subscribeToMore)
 
-      if (data.feed && !data.feed.posts.length) return <p>no posts</p>
+      if (!data.feed || !data.feed.posts.length) return <p>no posts</p>
       return (
         <PlainList>
           {data.feed.posts.map(post => (

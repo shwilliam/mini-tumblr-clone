@@ -34,10 +34,13 @@ const Link = styled.a`
   font-weight: bold;
 `
 
-export default ({post, onLike, isLiked, email, children}) => (
+export default ({post, onLike, isLiked, email, onReblog, children}) => (
   <Card>
     <article>
-      <Header>{post.op.name}</Header>
+      <Header onClick={onReblog}>
+        {post.reblogPoster ? `${post.reblogPoster.name} reblogged ` : ''}
+        {post.op.name}
+      </Header>
       {post.imgUrl && <Picture alt={post.text} src={post.imgUrl} />}
       {!post.link && !post.imgUrl && post.text && (
         <MarkdownText source={post.text} />

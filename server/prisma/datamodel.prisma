@@ -4,8 +4,9 @@ type Post {
   text: String!
   imgUrl: String
   link: String
-  op: User
   likes: [Like!]!
+  op: User! @relation(name: "OriginalPoster")
+  reblogPoster: User @relation(name: "ReblogPoster")
 }
 
 type User {
@@ -13,7 +14,7 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  posts: [Post!]!
+  posts: [Post!]! @relation(name: "OriginalPoster")
   likes: [Like!]!
 }
 
