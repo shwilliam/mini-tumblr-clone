@@ -1,30 +1,18 @@
 import React from 'react'
-import styled from 'styled-components'
 import FeedQuery from '../../store/query/FeedQuery'
 import LikeMutation from '../../store/mutation/LikeMutation'
 import {subscribeToNewPosts} from '../../store/subscription/SubscribeToNewPosts'
 import {subscribeToNewLikes} from '../../store/subscription/SubscribeToNewLikes'
 import PlainList from '../../components/PlainList'
+import FeedListItem from '../../components/FeedListItem'
 import DisplayPicture from '../../components/DisplayPicture'
-import Post from '../Post'
+import Post from './Post'
 
-const PostListItem = styled.li`
-  display: flex;
-  padding-bottom: 1rem;
-
-  &:first-child {
-    padding-top: 1rem;
-  }
-`
-
-const Loading = () => <p>fetching...</p>
-const Error = () => <p>something went wrong</p>
-
-const Feed = () => (
+export default () => (
   <FeedQuery>
     {({loading, error, data, subscribeToMore}) => {
-      if (loading) return <Loading />
-      if (error) return <Error />
+      if (loading) return <p>fetching...</p>
+      if (error) return <p>something went wrong</p>
 
       subscribeToNewPosts(subscribeToMore)
       subscribeToNewLikes(subscribeToMore)
@@ -33,17 +21,15 @@ const Feed = () => (
       return (
         <PlainList>
           {data.feed.posts.map(post => (
-            <PostListItem key={post.id}>
+            <FeedListItem key={post.id}>
               <DisplayPicture email={post.op.email} />
               <LikeMutation postId={post.id}>
                 {likeMutation => <Post post={post} onLike={likeMutation} />}
               </LikeMutation>
-            </PostListItem>
+            </FeedListItem>
           ))}
         </PlainList>
       )
     }}
   </FeedQuery>
 )
-
-export default Feed

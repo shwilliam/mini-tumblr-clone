@@ -1,27 +1,12 @@
 import React from 'react'
 import {useSpring, animated} from 'react-spring'
-import styled from 'styled-components'
-import TextButton from '../TextButton'
+import StyledButton from './StyledButton'
 
-const Button = styled(TextButton)`
-  text-align: center;
-  padding: 1rem;
-
-  svg {
-    margin-bottom: -0.3rem;
-    font-size: 2rem;
-  }
-
-  p {
-    margin: 0;
-  }
-`
-
-const IconButton = ({Icon, children, ...props}) => {
+export default ({Icon, children, ...props}) => {
   const [spring, set] = useSpring(() => ({transform: 'translateY(0px)'}))
 
   return (
-    <Button
+    <StyledButton
       onMouseOver={() => set({transform: 'translateY(-4rem)'})}
       onMouseOut={() => set({transform: 'translateY(0)'})}
       {...props}
@@ -29,9 +14,7 @@ const IconButton = ({Icon, children, ...props}) => {
       <animated.div style={spring}>
         <Icon />
       </animated.div>
-      {children}
-    </Button>
+      <p>{children}</p>
+    </StyledButton>
   )
 }
-
-export default IconButton

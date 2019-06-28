@@ -1,27 +1,10 @@
 import React from 'react'
 import {useSpring, animated, interpolate} from 'react-spring'
-import styled from 'styled-components'
 import {GoHeart} from 'react-icons/go'
-import TextButton from '../TextButton'
+import CountLabel from './CountLabel'
+import StyledButton from './StyledButton'
 
-const Button = styled(TextButton)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-`
-
-const CountLabel = styled.p`
-  z-index: 1;
-  position: absolute;
-  bottom: 20%;
-  margin: 0;
-  font-size: 0.5rem;
-  line-height: 2;
-  opacity: 0.4;
-`
-
-const LikeButton = ({value = false, label, id, onClick, ...props}) => {
+export default ({value = false, label, id, onClick, ...props}) => {
   const {spring} = useSpring({
     from: {spring: 0},
     spring: value ? 1 : 0,
@@ -29,7 +12,7 @@ const LikeButton = ({value = false, label, id, onClick, ...props}) => {
   })
 
   return (
-    <Button
+    <StyledButton
       title="Heart"
       type="button"
       onClick={onClick}
@@ -65,8 +48,6 @@ const LikeButton = ({value = false, label, id, onClick, ...props}) => {
         fill={value ? '#ff0000a5' : '#000000a5'}
         aria-labelledby={`label-${id}`}
       />
-    </Button>
+    </StyledButton>
   )
 }
-
-export default LikeButton

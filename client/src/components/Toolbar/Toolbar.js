@@ -1,20 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
-import PlainList from '../PlainList'
+import StyledList from './StyledList'
+import ToolbarItem from './ToolbarItem'
 
-const List = styled(PlainList)`
-  display: flex;
-  justify-content: space-around;
-  flex-grow: 1;
-  width: 100%;
-`
-
-const Toolbar = ({children, ...props}) => (
-  <List>
+export default ({children, ...props}) => (
+  <StyledList>
     {React.Children.map(children, el => (
-      <li>{el}</li>
+      <ToolbarItem>{el}</ToolbarItem>
     ))}
-  </List>
+  </StyledList>
 )
-
-export default Toolbar
