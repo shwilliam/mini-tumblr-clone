@@ -5,5 +5,5 @@ import Header from '../components/Header'
 export default props => {
   const [isUser, logout] = useAuth()
 
-  return <Header isUser={isUser} {...props} />
+  return <Header isUser={isUser} onLogout={logout} {...props} />
 }

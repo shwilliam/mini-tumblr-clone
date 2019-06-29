@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import {GoSignIn, GoSignOut} from 'react-icons/go'
-import {useAuth} from '../../hooks'
 import TextButton from '../TextButton'
 import TextLink from '../TextLink'
 import Nav from './Nav'
@@ -23,27 +22,24 @@ const Mini = styled.span`
   left: 0.2em;
 `
 
-export default props => {
-  const [isUser, logout] = useAuth()
-
-  return (
-    <StyledHeader {...props}>
-      <TextLink to="/">
-        <Title>
-          <Mini>mini</Mini>Tumblr
-        </Title>
-      </TextLink>
-      <Nav>
-        {!isUser ? (
-          <TextLink aria-label="Sign in" title="Enter" to="auth">
-            <GoSignIn />
-          </TextLink>
-        ) : (
-          <TextButton aria-label="Sign out" label="Exit" onClick={logout}>
-            <GoSignOut />
-          </TextButton>
-        )}
-      </Nav>
-    </StyledHeader>
-  )
-}
+export default ({isUser, onLogout, children, ...props}) => (
+  <StyledHeader {...props}>
+    <TextLink to="/">
+      <Title>
+        <Mini>mini</Mini>Tumblr
+      </Title>
+    </TextLink>
+    {children}
+    <Nav>
+      {!isUser ? (
+        <TextLink aria-label="Sign in" title="Enter" to="auth">
+          <GoSignIn />
+        </TextLink>
+      ) : (
+        <TextButton aria-label="Sign out" label="Exit" onClick={onLogout}>
+          <GoSignOut />
+        </TextButton>
+      )}
+    </Nav>
+  </StyledHeader>
+)
