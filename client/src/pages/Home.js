@@ -1,4 +1,5 @@
 import React from 'react'
+import {SearchContextProvider} from '../context/search'
 import {useAuth} from '../hooks'
 import Header from '../containers/Header'
 import Toolbar from '../containers/Toolbar'
@@ -11,11 +12,13 @@ const Home = () => {
 
   return (
     <Layout>
-      <Header />
-      <Main>
-        {isUser && <Toolbar />}
-        <Feed />
-      </Main>
+      <SearchContextProvider>
+        <Header />
+        <Main>
+          {isUser && <Toolbar />}
+          <Feed />
+        </Main>
+      </SearchContextProvider>
     </Layout>
   )
 }

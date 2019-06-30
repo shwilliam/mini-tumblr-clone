@@ -1,14 +1,11 @@
-import React from 'react'
-import {Query} from 'react-apollo'
+import React, {useContext} from 'react'
+import {Query, withApollo} from 'react-apollo'
 import gql from 'graphql-tag'
-
-const Feed = ({children}) => (
-  <Query query={FEED_QUERY}>{feed => children(feed)}</Query>
-)
+import SearchContext from '../../context/search'
 
 const FEED_QUERY = gql`
-  {
-    feed(orderBy: createdAt_DESC) {
+  query Feed($filter: String) {
+    feed(filter: $filter, orderBy: createdAt_DESC) {
       posts {
         id
         text
@@ -36,5 +33,15 @@ const FEED_QUERY = gql`
     }
   }
 `
+
+const Feed = withApollo(({client, children}) => {
+  const {query} = useContext(SearchContext)
+
+  return (
+    <Query query={FEED_QUERY} variables={{filter: query}}>
+      {feed => children(feed)}
+    </Query>
+  )
+})
 
 export default Feed
