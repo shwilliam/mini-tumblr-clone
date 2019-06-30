@@ -1,5 +1,7 @@
 import React, {createContext, useState} from 'react'
 
+// TODO: rename to `FeedContext`
+
 const SearchContext = createContext('')
 
 const SearchContextProvider = ({children, ...props}) => {
