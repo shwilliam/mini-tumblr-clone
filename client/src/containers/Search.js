@@ -1,5 +1,8 @@
 import React, {useContext, useState} from 'react'
 import SearchContext from '../context/search'
+import SearchForm from '../components/SearchForm'
+import Button from '../components/Button'
+import TextInput from '../components/TextInput'
 
 export default props => {
   const [query, setQuery] = useState('')
@@ -11,14 +14,16 @@ export default props => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <SearchForm onSubmit={handleSubmit}>
+      <TextInput
         type="search"
         value={query}
         onChange={({target}) => setQuery(target.value)}
         {...props}
       />
-      <button type="submit">search</button>
-    </form>
+      <Button type="secondary" htmlType="submit">
+        search
+      </Button>
+    </SearchForm>
   )
 }
