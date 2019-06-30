@@ -1,3 +1,4 @@
 import useAuth from './useAuth'
+import useScrolledToBottom from './useScrolledToBottom'
 
-export {useAuth}
+export {useAuth, useScrolledToBottom}
