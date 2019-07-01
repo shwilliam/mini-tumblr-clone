@@ -25,7 +25,6 @@ export default ({post, onLike, isLiked, email, onReblog, children}) => (
           </>
         )}
         {post.op.name}
-        {children}
       </Header>
       {post.imgUrl && <Picture alt={post.text} src={post.imgUrl} />}
       {!post.link && !post.imgUrl && post.text && (
@@ -38,21 +37,20 @@ export default ({post, onLike, isLiked, email, onReblog, children}) => (
       )}
       <Footer>
         <Timestamp>{timeFromDate(post.createdAt)}</Timestamp>
-        <FlexWrapper>
-          {!isOwnPost(post, email) && email && (
-            <>
-              <ReblogButton onClick={onReblog} />
-              <LikeButton
-                aria-label={`Like post by ${post.op.name}`}
-                onClick={onLike}
-                disabled={isLiked(post)}
-                value={isLiked(post)}
-                label={post.likes.length}
-                id={post.id}
-              />
-            </>
-          )}
-        </FlexWrapper>
+        {!isOwnPost(post, email) && email && (
+          <FlexWrapper>
+            {children}
+            <ReblogButton onClick={onReblog} />
+            <LikeButton
+              aria-label={`Like post by ${post.op.name}`}
+              onClick={onLike}
+              disabled={isLiked(post)}
+              value={isLiked(post)}
+              label={post.likes.length}
+              id={post.id}
+            />
+          </FlexWrapper>
+        )}
       </Footer>
     </article>
   </Card>
