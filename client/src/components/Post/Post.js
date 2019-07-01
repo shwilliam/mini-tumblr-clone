@@ -25,6 +25,7 @@ export default ({post, onLike, isLiked, email, onReblog, children}) => (
           </>
         )}
         {post.op.name}
+        {children}
       </Header>
       {post.imgUrl && <Picture alt={post.text} src={post.imgUrl} />}
       {!post.link && !post.imgUrl && post.text && (
