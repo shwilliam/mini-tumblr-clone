@@ -1,5 +1,4 @@
 import React from 'react'
-import {GoChevronRight} from 'react-icons/go'
 import {timeFromDate} from '../../utils'
 import Card from '../../components/Card'
 import LikeButton from '../../components/LikeButton'
@@ -12,6 +11,7 @@ import Footer from './Footer'
 import Timestamp from './Timestamp'
 import FlexWrapper from './FlexWrapper'
 import Link from './Link'
+import ShareIcon from './ShareIcon'
 import isOwnPost from './isOwnPost'
 
 export default ({post, onLike, isLiked, email, onReblog, children}) => (
@@ -32,7 +32,7 @@ export default ({post, onLike, isLiked, email, onReblog, children}) => (
       )}
       {post.link && (
         <Link href={post.link} rel="noopener noreferrer" target="_blank">
-          {post.text} <GoChevronRight />
+          {post.text} <ShareIcon fill="#000000a5" />
         </Link>
       )}
       <Footer>
