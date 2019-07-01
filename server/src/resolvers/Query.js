@@ -1,9 +1,17 @@
 const feed = async (root, args, context) => {
-  const where = args.filter
-    ? {
-        OR: [{text_contains: args.filter}],
-      }
-    : {}
+  const where = {
+    AND: [
+      {
+        OR: [
+          {
+            AND: [{op: {id: args.user}}, {reblogPoster: null}],
+          },
+          {reblogPoster: {id: args.user}},
+        ],
+      },
+      {text_contains: args.filter},
+    ],
+  }
 
   const posts = await context.prisma.posts({
     where,

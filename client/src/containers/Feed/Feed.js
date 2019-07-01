@@ -7,10 +7,11 @@ import {subscribeToNewLikes} from '../../store/subscription/SubscribeToNewLikes'
 import {useScrolledToBottom} from '../../hooks'
 import PlainList from '../../components/PlainList'
 import FeedListItem from '../../components/FeedListItem'
+import TextLink from '../../components/TextLink'
 import DisplayPicture from '../../components/DisplayPicture'
 import Post from './Post'
 
-export default () => {
+export default ({user, ...props}) => {
   const [posts, setPosts] = useState([])
   const [amount, setAmount] = useState(10)
   const {query} = useContext(SearchContext)
@@ -18,7 +19,7 @@ export default () => {
   useScrolledToBottom(feedRef, () => setAmount(amount + 10))
 
   return (
-    <FeedQuery filter={query} first={amount}>
+    <FeedQuery filter={query} user={user} first={amount} {...props}>
       {({loading, error, data, subscribeToMore}) => {
         if (loading && !posts.length) return <p>fetching...</p>
         if (error) return <p>something went wrong</p>
@@ -34,13 +35,19 @@ export default () => {
             {posts.length &&
               posts.map(post => (
                 <FeedListItem key={post.id}>
-                  <DisplayPicture
-                    email={
-                      post.reblogPoster
-                        ? post.reblogPoster.email
-                        : post.op.email
-                    }
-                  />
+                  <TextLink
+                    to={`/user/${
+                      post.reblogPoster ? post.reblogPoster.id : post.op.id
+                    }`}
+                  >
+                    <DisplayPicture
+                      email={
+                        post.reblogPoster
+                          ? post.reblogPoster.email
+                          : post.op.email
+                      }
+                    />
+                  </TextLink>
                   <LikeMutation postId={post.id}>
                     {likeMutation => <Post post={post} onLike={likeMutation} />}
                   </LikeMutation>
