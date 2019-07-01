@@ -8,15 +8,17 @@ import FlexCard from '../components/FlexCard'
 import RelativeWrapper from '../components/RelativeWrapper'
 import NewPostForm from './NewPostForm'
 
-export default props => {
+export default () => {
   const [localUserData] = useAuth()
   const [activePostType, setActivePostType] = useState()
 
+  // not logged in
+  if (!localUserData) return null
   return (
     <RelativeWrapper>
       {localUserData && <DisplayPicture email={localUserData.email} />}
       <FlexCard>
-        <Toolbar {...props}>
+        <Toolbar>
           <IconButton
             onClick={() => setActivePostType('text')}
             Icon={GoTextSize}

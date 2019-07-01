@@ -4,7 +4,7 @@ import SearchForm from '../components/SearchForm'
 import Button from '../components/Button'
 import TextInput from '../components/TextInput'
 
-export default props => {
+export default () => {
   const [query, setQuery] = useState('')
   const {setQuery: setContextQuery} = useContext(SearchContext)
 
@@ -19,7 +19,6 @@ export default props => {
         type="search"
         value={query}
         onChange={({target}) => setQuery(target.value)}
-        {...props}
       />
       <Button type="secondary" htmlType="submit">
         search

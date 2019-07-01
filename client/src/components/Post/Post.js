@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import {GoChevronRight} from 'react-icons/go'
 import {timeFromDate} from '../../utils'
 import Card from '../../components/Card'
@@ -7,54 +6,23 @@ import LikeButton from '../../components/LikeButton'
 import ReblogButton from '../../components/ReblogButton'
 import ReblogIcon from '../../components/ReblogIcon'
 import MarkdownText from '../../components/MarkdownText'
-
-const Header = styled.header`
-  font-weight: bold;
-  margin-bottom: 1rem;
-`
-
-const Picture = styled.img`
-  width: 100%;
-`
-
-const Footer = styled.footer`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
-`
-
-const Timestamp = styled.p`
-  margin: 0;
-`
-
-const Actions = styled.div`
-  display: flex;
-
-  & > * {
-    padding: 0 0.5rem;
-  }
-`
-
-const Link = styled.a`
-  color: inherit;
-  font-weight: bold;
-`
-
-const isOwnPost = (post, email) =>
-  (post.reblogPoster && email === post.reblogPoster.email) ||
-  email === post.op.email
+import Header from './Header'
+import Picture from './Picture'
+import Footer from './Footer'
+import Timestamp from './Timestamp'
+import FlexWrapper from './FlexWrapper'
+import Link from './Link'
+import isOwnPost from './isOwnPost'
 
 export default ({post, onLike, isLiked, email, onReblog, children}) => (
   <Card>
     <article>
       <Header>
-        {post.reblogPoster ? (
+        {post.reblogPoster && (
           <>
             {post.reblogPoster.name}
             <ReblogIcon />
           </>
-        ) : (
-          ''
         )}
         {post.op.name}
       </Header>
@@ -69,7 +37,7 @@ export default ({post, onLike, isLiked, email, onReblog, children}) => (
       )}
       <Footer>
         <Timestamp>{timeFromDate(post.createdAt)}</Timestamp>
-        <Actions>
+        <FlexWrapper>
           {!isOwnPost(post, email) && email && (
             <>
               <ReblogButton onClick={onReblog} />
@@ -83,7 +51,7 @@ export default ({post, onLike, isLiked, email, onReblog, children}) => (
               />
             </>
           )}
-        </Actions>
+        </FlexWrapper>
       </Footer>
     </article>
   </Card>
