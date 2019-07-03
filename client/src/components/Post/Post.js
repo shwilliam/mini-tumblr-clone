@@ -11,7 +11,7 @@ import FollowButton from './FollowButton'
 import Footer from './Footer'
 import Timestamp from './Timestamp'
 import FlexWrapper from './FlexWrapper'
-import Link from './Link'
+import TextLink from '../TextLink'
 import ShareIcon from './ShareIcon'
 import isOwnPost from './isOwnPost'
 import isUser from './isUser'
@@ -28,12 +28,12 @@ export default ({
   <Card>
     <article>
       <Header>
-        {post.op.name}
+        <TextLink to={`/user/${post.op.id}`}>{post.op.name}</TextLink>
         {post.reblogPoster && (
-          <>
+          <TextLink to={`/user/${post.reblogPoster.id}`}>
             <ReblogIcon />
             {post.reblogPoster.name}
-          </>
+          </TextLink>
         )}
         {email && !isUser(post, email) && (
           // TODO: hide if already following
@@ -45,9 +45,9 @@ export default ({
         <MarkdownText source={post.text} />
       )}
       {post.link && (
-        <Link href={post.link} rel="noopener noreferrer" target="_blank">
+        <a href={post.link} rel="noopener noreferrer" target="_blank">
           {post.text} <ShareIcon fill="#000000a5" />
-        </Link>
+        </a>
       )}
       <Footer>
         <Timestamp>{timeFromDate(post.createdAt)}</Timestamp>
