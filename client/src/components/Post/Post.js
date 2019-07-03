@@ -51,20 +51,22 @@ export default ({
       )}
       <Footer>
         <Timestamp>{timeFromDate(post.createdAt)}</Timestamp>
-        {email && !isOwnPost(post, email) && (
-          <FlexWrapper>
-            {children}
-            <ReblogButton onClick={onReblog} />
-            <LikeButton
-              aria-label={`Like post by ${post.op.name}`}
-              onClick={onLike}
-              disabled={isLiked(post)}
-              value={isLiked(post)}
-              label={post.likes.length}
-              id={post.id}
-            />
-          </FlexWrapper>
-        )}
+        <FlexWrapper>
+          {children}
+          {email && !isOwnPost(post, email) && (
+            <>
+              <ReblogButton onClick={onReblog} />
+              <LikeButton
+                aria-label={`Like post by ${post.op.name}`}
+                onClick={onLike}
+                disabled={isLiked(post)}
+                value={isLiked(post)}
+                label={post.likes.length}
+                id={post.id}
+              />
+            </>
+          )}
+        </FlexWrapper>
       </Footer>
     </article>
   </Card>
