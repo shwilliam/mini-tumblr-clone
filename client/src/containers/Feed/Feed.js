@@ -1,7 +1,6 @@
 import React, {useContext, useState, useRef} from 'react'
 import SearchContext from '../../context/search'
 import FeedQuery from '../../store/query/FeedQuery'
-import LikeMutation from '../../store/mutation/LikeMutation'
 import {subscribeToNewPosts} from '../../store/subscription/SubscribeToNewPosts'
 import {subscribeToNewLikes} from '../../store/subscription/SubscribeToNewLikes'
 import {useScrolledToBottom} from '../../hooks'
@@ -48,9 +47,7 @@ export default ({user, ...props}) => {
                       }
                     />
                   </TextLink>
-                  <LikeMutation postId={post.id}>
-                    {likeMutation => <Post post={post} onLike={likeMutation} />}
-                  </LikeMutation>
+                  <Post post={post} />
                 </FeedListItem>
               ))}
           </PlainList>
