@@ -3,8 +3,14 @@ import {Query, withApollo} from 'react-apollo'
 import gql from 'graphql-tag'
 
 const FEED_QUERY = gql`
-  query Feed($filter: String, $user: String, $first: Int) {
-    feed(filter: $filter, user: $user, first: $first, orderBy: createdAt_DESC) {
+  query Feed($filter: String, $user: String, $explore: Boolean, $first: Int) {
+    feed(
+      filter: $filter
+      user: $user
+      explore: $explore
+      first: $first
+      orderBy: createdAt_DESC
+    ) {
       posts {
         id
         text
@@ -33,8 +39,8 @@ const FEED_QUERY = gql`
   }
 `
 
-const Feed = withApollo(({filter, user, first, client, children}) => (
-  <Query query={FEED_QUERY} variables={{filter, user, first}}>
+const Feed = withApollo(({filter, user, first, explore, client, children}) => (
+  <Query query={FEED_QUERY} variables={{filter, user, first, explore}}>
     {feed => children(feed)}
   </Query>
 ))

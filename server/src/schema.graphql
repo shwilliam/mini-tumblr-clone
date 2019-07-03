@@ -5,6 +5,7 @@ type Query {
   feed(
     filter: String
     user: String
+    explore: Boolean
     skip: Int
     first: Int
     orderBy: PostOrderByInput

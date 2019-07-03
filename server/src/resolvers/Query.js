@@ -1,4 +1,8 @@
+const {getFollowers} = require('../utils')
+
 const feed = async (root, args, context) => {
+  const followers = !args.explore && (await getFollowers(context))
+
   const where = {
     AND: [
       {
@@ -10,6 +14,16 @@ const feed = async (root, args, context) => {
         ],
       },
       {text_contains: args.filter},
+      followers && !args.user
+        ? {
+            OR: [
+              {
+                AND: [{op: {id_in: followers}}, {reblogPoster: null}],
+              },
+              {reblogPoster: {id_in: followers}},
+            ],
+          }
+        : {},
     ],
   }
 

@@ -10,7 +10,7 @@ import TextLink from '../../components/TextLink'
 import DisplayPicture from '../../components/DisplayPicture'
 import Post from './Post'
 
-export default ({user, ...props}) => {
+export default ({user, explore = false, ...props}) => {
   const [posts, setPosts] = useState([])
   const [amount, setAmount] = useState(10)
   const {query} = useContext(SearchContext)
@@ -18,7 +18,13 @@ export default ({user, ...props}) => {
   useScrolledToBottom(feedRef, () => setAmount(amount + 10))
 
   return (
-    <FeedQuery filter={query} user={user} first={amount} {...props}>
+    <FeedQuery
+      filter={query}
+      user={user}
+      explore={explore}
+      first={amount}
+      {...props}
+    >
       {({loading, error, data, subscribeToMore}) => {
         if (loading && !posts.length) return <p>fetching...</p>
         if (error) return <p>something went wrong</p>
