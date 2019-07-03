@@ -8,6 +8,7 @@ const User = require('./resolvers/User')
 const Post = require('./resolvers/Post')
 const Subscription = require('./resolvers/Subscription')
 const Like = require('./resolvers/Like')
+const Follow = require('./resolvers/Follow')
 
 const dir = './uploads'
 try {
@@ -25,6 +26,7 @@ const resolvers = {
   Post,
   Subscription,
   Like,
+  Follow,
 }
 
 const server = new GraphQLServer({

@@ -95,4 +95,21 @@ const like = async (parent, args, context, info) => {
   })
 }
 
-module.exports = {publish, reblog, signup, login, like}
+const follow = async (parent, args, context, info) => {
+  const userId = getUserId(context)
+
+  const followExists = await context.prisma.$exists.follow({
+    follower: {id: userId},
+    following: {id: args.userId},
+  })
+  if (followExists) {
+    throw new Error(`Already following user ${args.userId}`)
+  }
+
+  return context.prisma.createFollow({
+    follower: {connect: {id: userId}},
+    following: {connect: {id: args.userId}},
+  })
+}
+
+module.exports = {publish, reblog, signup, login, like, follow}

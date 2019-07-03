@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateLike {
+/* GraphQL */ `type AggregateFollow {
+  count: Int!
+}
+
+type AggregateLike {
   count: Int!
 }
 
@@ -20,6 +24,179 @@ type BatchPayload {
 }
 
 scalar DateTime
+
+type Follow {
+  id: ID!
+  follower: User!
+  following: User!
+}
+
+type FollowConnection {
+  pageInfo: PageInfo!
+  edges: [FollowEdge]!
+  aggregate: AggregateFollow!
+}
+
+input FollowCreateInput {
+  id: ID
+  follower: UserCreateOneWithoutFollowingInput!
+  following: UserCreateOneWithoutFollowersInput!
+}
+
+input FollowCreateManyWithoutFollowerInput {
+  create: [FollowCreateWithoutFollowerInput!]
+  connect: [FollowWhereUniqueInput!]
+}
+
+input FollowCreateManyWithoutFollowingInput {
+  create: [FollowCreateWithoutFollowingInput!]
+  connect: [FollowWhereUniqueInput!]
+}
+
+input FollowCreateWithoutFollowerInput {
+  id: ID
+  following: UserCreateOneWithoutFollowersInput!
+}
+
+input FollowCreateWithoutFollowingInput {
+  id: ID
+  follower: UserCreateOneWithoutFollowingInput!
+}
+
+type FollowEdge {
+  node: Follow!
+  cursor: String!
+}
+
+enum FollowOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type FollowPreviousValues {
+  id: ID!
+}
+
+input FollowScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  AND: [FollowScalarWhereInput!]
+  OR: [FollowScalarWhereInput!]
+  NOT: [FollowScalarWhereInput!]
+}
+
+type FollowSubscriptionPayload {
+  mutation: MutationType!
+  node: Follow
+  updatedFields: [String!]
+  previousValues: FollowPreviousValues
+}
+
+input FollowSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: FollowWhereInput
+  AND: [FollowSubscriptionWhereInput!]
+  OR: [FollowSubscriptionWhereInput!]
+  NOT: [FollowSubscriptionWhereInput!]
+}
+
+input FollowUpdateInput {
+  follower: UserUpdateOneRequiredWithoutFollowingInput
+  following: UserUpdateOneRequiredWithoutFollowersInput
+}
+
+input FollowUpdateManyWithoutFollowerInput {
+  create: [FollowCreateWithoutFollowerInput!]
+  delete: [FollowWhereUniqueInput!]
+  connect: [FollowWhereUniqueInput!]
+  set: [FollowWhereUniqueInput!]
+  disconnect: [FollowWhereUniqueInput!]
+  update: [FollowUpdateWithWhereUniqueWithoutFollowerInput!]
+  upsert: [FollowUpsertWithWhereUniqueWithoutFollowerInput!]
+  deleteMany: [FollowScalarWhereInput!]
+}
+
+input FollowUpdateManyWithoutFollowingInput {
+  create: [FollowCreateWithoutFollowingInput!]
+  delete: [FollowWhereUniqueInput!]
+  connect: [FollowWhereUniqueInput!]
+  set: [FollowWhereUniqueInput!]
+  disconnect: [FollowWhereUniqueInput!]
+  update: [FollowUpdateWithWhereUniqueWithoutFollowingInput!]
+  upsert: [FollowUpsertWithWhereUniqueWithoutFollowingInput!]
+  deleteMany: [FollowScalarWhereInput!]
+}
+
+input FollowUpdateWithoutFollowerDataInput {
+  following: UserUpdateOneRequiredWithoutFollowersInput
+}
+
+input FollowUpdateWithoutFollowingDataInput {
+  follower: UserUpdateOneRequiredWithoutFollowingInput
+}
+
+input FollowUpdateWithWhereUniqueWithoutFollowerInput {
+  where: FollowWhereUniqueInput!
+  data: FollowUpdateWithoutFollowerDataInput!
+}
+
+input FollowUpdateWithWhereUniqueWithoutFollowingInput {
+  where: FollowWhereUniqueInput!
+  data: FollowUpdateWithoutFollowingDataInput!
+}
+
+input FollowUpsertWithWhereUniqueWithoutFollowerInput {
+  where: FollowWhereUniqueInput!
+  update: FollowUpdateWithoutFollowerDataInput!
+  create: FollowCreateWithoutFollowerInput!
+}
+
+input FollowUpsertWithWhereUniqueWithoutFollowingInput {
+  where: FollowWhereUniqueInput!
+  update: FollowUpdateWithoutFollowingDataInput!
+  create: FollowCreateWithoutFollowingInput!
+}
+
+input FollowWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  follower: UserWhereInput
+  following: UserWhereInput
+  AND: [FollowWhereInput!]
+  OR: [FollowWhereInput!]
+  NOT: [FollowWhereInput!]
+}
+
+input FollowWhereUniqueInput {
+  id: ID
+}
 
 type Like {
   id: ID!
@@ -197,6 +374,11 @@ input LikeWhereUniqueInput {
 scalar Long
 
 type Mutation {
+  createFollow(data: FollowCreateInput!): Follow!
+  updateFollow(data: FollowUpdateInput!, where: FollowWhereUniqueInput!): Follow
+  upsertFollow(where: FollowWhereUniqueInput!, create: FollowCreateInput!, update: FollowUpdateInput!): Follow!
+  deleteFollow(where: FollowWhereUniqueInput!): Follow
+  deleteManyFollows(where: FollowWhereInput): BatchPayload!
   createLike(data: LikeCreateInput!): Like!
   updateLike(data: LikeUpdateInput!, where: LikeWhereUniqueInput!): Like
   upsertLike(where: LikeWhereUniqueInput!, create: LikeCreateInput!, update: LikeUpdateInput!): Like!
@@ -559,6 +741,9 @@ input PostWhereUniqueInput {
 }
 
 type Query {
+  follow(where: FollowWhereUniqueInput!): Follow
+  follows(where: FollowWhereInput, orderBy: FollowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Follow]!
+  followsConnection(where: FollowWhereInput, orderBy: FollowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FollowConnection!
   like(where: LikeWhereUniqueInput!): Like
   likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like]!
   likesConnection(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikeConnection!
@@ -572,6 +757,7 @@ type Query {
 }
 
 type Subscription {
+  follow(where: FollowSubscriptionWhereInput): FollowSubscriptionPayload
   like(where: LikeSubscriptionWhereInput): LikeSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
@@ -584,6 +770,8 @@ type User {
   password: String!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
+  following(where: FollowWhereInput, orderBy: FollowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Follow!]
+  followers(where: FollowWhereInput, orderBy: FollowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Follow!]
 }
 
 type UserConnection {
@@ -599,10 +787,22 @@ input UserCreateInput {
   password: String!
   posts: PostCreateManyWithoutOpInput
   likes: LikeCreateManyWithoutUserInput
+  following: FollowCreateManyWithoutFollowerInput
+  followers: FollowCreateManyWithoutFollowingInput
 }
 
 input UserCreateOneInput {
   create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutFollowersInput {
+  create: UserCreateWithoutFollowersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutFollowingInput {
+  create: UserCreateWithoutFollowingInput
   connect: UserWhereUniqueInput
 }
 
@@ -616,12 +816,34 @@ input UserCreateOneWithoutPostsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateWithoutFollowersInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  posts: PostCreateManyWithoutOpInput
+  likes: LikeCreateManyWithoutUserInput
+  following: FollowCreateManyWithoutFollowerInput
+}
+
+input UserCreateWithoutFollowingInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  posts: PostCreateManyWithoutOpInput
+  likes: LikeCreateManyWithoutUserInput
+  followers: FollowCreateManyWithoutFollowingInput
+}
+
 input UserCreateWithoutLikesInput {
   id: ID
   name: String!
   email: String!
   password: String!
   posts: PostCreateManyWithoutOpInput
+  following: FollowCreateManyWithoutFollowerInput
+  followers: FollowCreateManyWithoutFollowingInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -630,6 +852,8 @@ input UserCreateWithoutPostsInput {
   email: String!
   password: String!
   likes: LikeCreateManyWithoutUserInput
+  following: FollowCreateManyWithoutFollowerInput
+  followers: FollowCreateManyWithoutFollowingInput
 }
 
 type UserEdge {
@@ -679,6 +903,8 @@ input UserUpdateDataInput {
   password: String
   posts: PostUpdateManyWithoutOpInput
   likes: LikeUpdateManyWithoutUserInput
+  following: FollowUpdateManyWithoutFollowerInput
+  followers: FollowUpdateManyWithoutFollowingInput
 }
 
 input UserUpdateInput {
@@ -687,6 +913,8 @@ input UserUpdateInput {
   password: String
   posts: PostUpdateManyWithoutOpInput
   likes: LikeUpdateManyWithoutUserInput
+  following: FollowUpdateManyWithoutFollowerInput
+  followers: FollowUpdateManyWithoutFollowingInput
 }
 
 input UserUpdateManyMutationInput {
@@ -704,6 +932,20 @@ input UserUpdateOneInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutFollowersInput {
+  create: UserCreateWithoutFollowersInput
+  update: UserUpdateWithoutFollowersDataInput
+  upsert: UserUpsertWithoutFollowersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutFollowingInput {
+  create: UserCreateWithoutFollowingInput
+  update: UserUpdateWithoutFollowingDataInput
+  upsert: UserUpsertWithoutFollowingInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredWithoutLikesInput {
   create: UserCreateWithoutLikesInput
   update: UserUpdateWithoutLikesDataInput
@@ -718,11 +960,31 @@ input UserUpdateOneRequiredWithoutPostsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateWithoutFollowersDataInput {
+  name: String
+  email: String
+  password: String
+  posts: PostUpdateManyWithoutOpInput
+  likes: LikeUpdateManyWithoutUserInput
+  following: FollowUpdateManyWithoutFollowerInput
+}
+
+input UserUpdateWithoutFollowingDataInput {
+  name: String
+  email: String
+  password: String
+  posts: PostUpdateManyWithoutOpInput
+  likes: LikeUpdateManyWithoutUserInput
+  followers: FollowUpdateManyWithoutFollowingInput
+}
+
 input UserUpdateWithoutLikesDataInput {
   name: String
   email: String
   password: String
   posts: PostUpdateManyWithoutOpInput
+  following: FollowUpdateManyWithoutFollowerInput
+  followers: FollowUpdateManyWithoutFollowingInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -730,11 +992,23 @@ input UserUpdateWithoutPostsDataInput {
   email: String
   password: String
   likes: LikeUpdateManyWithoutUserInput
+  following: FollowUpdateManyWithoutFollowerInput
+  followers: FollowUpdateManyWithoutFollowingInput
 }
 
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
+}
+
+input UserUpsertWithoutFollowersInput {
+  update: UserUpdateWithoutFollowersDataInput!
+  create: UserCreateWithoutFollowersInput!
+}
+
+input UserUpsertWithoutFollowingInput {
+  update: UserUpdateWithoutFollowingDataInput!
+  create: UserCreateWithoutFollowingInput!
 }
 
 input UserUpsertWithoutLikesInput {
@@ -810,6 +1084,12 @@ input UserWhereInput {
   likes_every: LikeWhereInput
   likes_some: LikeWhereInput
   likes_none: LikeWhereInput
+  following_every: FollowWhereInput
+  following_some: FollowWhereInput
+  following_none: FollowWhereInput
+  followers_every: FollowWhereInput
+  followers_some: FollowWhereInput
+  followers_none: FollowWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

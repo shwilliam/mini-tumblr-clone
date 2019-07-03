@@ -16,6 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  follow: (where?: FollowWhereInput) => Promise<boolean>;
   like: (where?: LikeWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
@@ -40,6 +41,25 @@ export interface Prisma {
    * Queries
    */
 
+  follow: (where: FollowWhereUniqueInput) => FollowNullablePromise;
+  follows: (args?: {
+    where?: FollowWhereInput;
+    orderBy?: FollowOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Follow>;
+  followsConnection: (args?: {
+    where?: FollowWhereInput;
+    orderBy?: FollowOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FollowConnectionPromise;
   like: (where: LikeWhereUniqueInput) => LikeNullablePromise;
   likes: (args?: {
     where?: LikeWhereInput;
@@ -103,6 +123,18 @@ export interface Prisma {
    * Mutations
    */
 
+  createFollow: (data: FollowCreateInput) => FollowPromise;
+  updateFollow: (args: {
+    data: FollowUpdateInput;
+    where: FollowWhereUniqueInput;
+  }) => FollowPromise;
+  upsertFollow: (args: {
+    where: FollowWhereUniqueInput;
+    create: FollowCreateInput;
+    update: FollowUpdateInput;
+  }) => FollowPromise;
+  deleteFollow: (where: FollowWhereUniqueInput) => FollowPromise;
+  deleteManyFollows: (where?: FollowWhereInput) => BatchPayloadPromise;
   createLike: (data: LikeCreateInput) => LikePromise;
   updateLike: (args: {
     data: LikeUpdateInput;
@@ -156,6 +188,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  follow: (
+    where?: FollowSubscriptionWhereInput
+  ) => FollowSubscriptionPayloadSubscription;
   like: (
     where?: LikeSubscriptionWhereInput
   ) => LikeSubscriptionPayloadSubscription;
@@ -175,8 +210,6 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type LikeOrderByInput = "id_ASC" | "id_DESC";
-
 export type PostOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -188,6 +221,10 @@ export type PostOrderByInput =
   | "imgUrl_DESC"
   | "link_ASC"
   | "link_DESC";
+
+export type LikeOrderByInput = "id_ASC" | "id_DESC";
+
+export type FollowOrderByInput = "id_ASC" | "id_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -201,31 +238,9 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type LikeWhereUniqueInput = AtLeastOne<{
+export type FollowWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
-
-export interface LikeWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  post?: Maybe<PostWhereInput>;
-  user?: Maybe<UserWhereInput>;
-  AND?: Maybe<LikeWhereInput[] | LikeWhereInput>;
-  OR?: Maybe<LikeWhereInput[] | LikeWhereInput>;
-  NOT?: Maybe<LikeWhereInput[] | LikeWhereInput>;
-}
 
 export interface PostWhereInput {
   id?: Maybe<ID_Input>;
@@ -302,6 +317,28 @@ export interface PostWhereInput {
   NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
 }
 
+export interface LikeWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  post?: Maybe<PostWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<LikeWhereInput[] | LikeWhereInput>;
+  OR?: Maybe<LikeWhereInput[] | LikeWhereInput>;
+  NOT?: Maybe<LikeWhereInput[] | LikeWhereInput>;
+}
+
 export interface UserWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
@@ -365,10 +402,42 @@ export interface UserWhereInput {
   likes_every?: Maybe<LikeWhereInput>;
   likes_some?: Maybe<LikeWhereInput>;
   likes_none?: Maybe<LikeWhereInput>;
+  following_every?: Maybe<FollowWhereInput>;
+  following_some?: Maybe<FollowWhereInput>;
+  following_none?: Maybe<FollowWhereInput>;
+  followers_every?: Maybe<FollowWhereInput>;
+  followers_some?: Maybe<FollowWhereInput>;
+  followers_none?: Maybe<FollowWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
+
+export interface FollowWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  follower?: Maybe<UserWhereInput>;
+  following?: Maybe<UserWhereInput>;
+  AND?: Maybe<FollowWhereInput[] | FollowWhereInput>;
+  OR?: Maybe<FollowWhereInput[] | FollowWhereInput>;
+  NOT?: Maybe<FollowWhereInput[] | FollowWhereInput>;
+}
+
+export type LikeWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export type PostWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -379,61 +448,25 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: Maybe<String>;
 }>;
 
-export interface LikeCreateInput {
+export interface FollowCreateInput {
   id?: Maybe<ID_Input>;
-  post: PostCreateOneWithoutLikesInput;
-  user: UserCreateOneWithoutLikesInput;
+  follower: UserCreateOneWithoutFollowingInput;
+  following: UserCreateOneWithoutFollowersInput;
 }
 
-export interface PostCreateOneWithoutLikesInput {
-  create?: Maybe<PostCreateWithoutLikesInput>;
-  connect?: Maybe<PostWhereUniqueInput>;
-}
-
-export interface PostCreateWithoutLikesInput {
-  id?: Maybe<ID_Input>;
-  text: String;
-  imgUrl?: Maybe<String>;
-  link?: Maybe<String>;
-  op: UserCreateOneWithoutPostsInput;
-  reblogPoster?: Maybe<UserCreateOneInput>;
-}
-
-export interface UserCreateOneWithoutPostsInput {
-  create?: Maybe<UserCreateWithoutPostsInput>;
+export interface UserCreateOneWithoutFollowingInput {
+  create?: Maybe<UserCreateWithoutFollowingInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutPostsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  likes?: Maybe<LikeCreateManyWithoutUserInput>;
-}
-
-export interface LikeCreateManyWithoutUserInput {
-  create?: Maybe<LikeCreateWithoutUserInput[] | LikeCreateWithoutUserInput>;
-  connect?: Maybe<LikeWhereUniqueInput[] | LikeWhereUniqueInput>;
-}
-
-export interface LikeCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  post: PostCreateOneWithoutLikesInput;
-}
-
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateInput {
+export interface UserCreateWithoutFollowingInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
   posts?: Maybe<PostCreateManyWithoutOpInput>;
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
+  followers?: Maybe<FollowCreateManyWithoutFollowingInput>;
 }
 
 export interface PostCreateManyWithoutOpInput {
@@ -471,114 +504,123 @@ export interface UserCreateWithoutLikesInput {
   email: String;
   password: String;
   posts?: Maybe<PostCreateManyWithoutOpInput>;
+  following?: Maybe<FollowCreateManyWithoutFollowerInput>;
+  followers?: Maybe<FollowCreateManyWithoutFollowingInput>;
 }
 
-export interface LikeUpdateInput {
-  post?: Maybe<PostUpdateOneRequiredWithoutLikesInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutLikesInput>;
+export interface FollowCreateManyWithoutFollowerInput {
+  create?: Maybe<
+    FollowCreateWithoutFollowerInput[] | FollowCreateWithoutFollowerInput
+  >;
+  connect?: Maybe<FollowWhereUniqueInput[] | FollowWhereUniqueInput>;
 }
 
-export interface PostUpdateOneRequiredWithoutLikesInput {
+export interface FollowCreateWithoutFollowerInput {
+  id?: Maybe<ID_Input>;
+  following: UserCreateOneWithoutFollowersInput;
+}
+
+export interface UserCreateOneWithoutFollowersInput {
+  create?: Maybe<UserCreateWithoutFollowersInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutFollowersInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  posts?: Maybe<PostCreateManyWithoutOpInput>;
+  likes?: Maybe<LikeCreateManyWithoutUserInput>;
+  following?: Maybe<FollowCreateManyWithoutFollowerInput>;
+}
+
+export interface LikeCreateManyWithoutUserInput {
+  create?: Maybe<LikeCreateWithoutUserInput[] | LikeCreateWithoutUserInput>;
+  connect?: Maybe<LikeWhereUniqueInput[] | LikeWhereUniqueInput>;
+}
+
+export interface LikeCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  post: PostCreateOneWithoutLikesInput;
+}
+
+export interface PostCreateOneWithoutLikesInput {
   create?: Maybe<PostCreateWithoutLikesInput>;
-  update?: Maybe<PostUpdateWithoutLikesDataInput>;
-  upsert?: Maybe<PostUpsertWithoutLikesInput>;
   connect?: Maybe<PostWhereUniqueInput>;
 }
 
-export interface PostUpdateWithoutLikesDataInput {
-  text?: Maybe<String>;
+export interface PostCreateWithoutLikesInput {
+  id?: Maybe<ID_Input>;
+  text: String;
   imgUrl?: Maybe<String>;
   link?: Maybe<String>;
-  op?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
-  reblogPoster?: Maybe<UserUpdateOneInput>;
+  op: UserCreateOneWithoutPostsInput;
+  reblogPoster?: Maybe<UserCreateOneInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutPostsInput {
+export interface UserCreateOneWithoutPostsInput {
   create?: Maybe<UserCreateWithoutPostsInput>;
-  update?: Maybe<UserUpdateWithoutPostsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutPostsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateWithoutPostsDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  likes?: Maybe<LikeUpdateManyWithoutUserInput>;
-}
-
-export interface LikeUpdateManyWithoutUserInput {
-  create?: Maybe<LikeCreateWithoutUserInput[] | LikeCreateWithoutUserInput>;
-  delete?: Maybe<LikeWhereUniqueInput[] | LikeWhereUniqueInput>;
-  connect?: Maybe<LikeWhereUniqueInput[] | LikeWhereUniqueInput>;
-  set?: Maybe<LikeWhereUniqueInput[] | LikeWhereUniqueInput>;
-  disconnect?: Maybe<LikeWhereUniqueInput[] | LikeWhereUniqueInput>;
-  update?: Maybe<
-    | LikeUpdateWithWhereUniqueWithoutUserInput[]
-    | LikeUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | LikeUpsertWithWhereUniqueWithoutUserInput[]
-    | LikeUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<LikeScalarWhereInput[] | LikeScalarWhereInput>;
-}
-
-export interface LikeUpdateWithWhereUniqueWithoutUserInput {
-  where: LikeWhereUniqueInput;
-  data: LikeUpdateWithoutUserDataInput;
-}
-
-export interface LikeUpdateWithoutUserDataInput {
-  post?: Maybe<PostUpdateOneRequiredWithoutLikesInput>;
-}
-
-export interface LikeUpsertWithWhereUniqueWithoutUserInput {
-  where: LikeWhereUniqueInput;
-  update: LikeUpdateWithoutUserDataInput;
-  create: LikeCreateWithoutUserInput;
-}
-
-export interface LikeScalarWhereInput {
+export interface UserCreateWithoutPostsInput {
   id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  AND?: Maybe<LikeScalarWhereInput[] | LikeScalarWhereInput>;
-  OR?: Maybe<LikeScalarWhereInput[] | LikeScalarWhereInput>;
-  NOT?: Maybe<LikeScalarWhereInput[] | LikeScalarWhereInput>;
+  name: String;
+  email: String;
+  password: String;
+  likes?: Maybe<LikeCreateManyWithoutUserInput>;
+  following?: Maybe<FollowCreateManyWithoutFollowerInput>;
+  followers?: Maybe<FollowCreateManyWithoutFollowingInput>;
 }
 
-export interface UserUpsertWithoutPostsInput {
-  update: UserUpdateWithoutPostsDataInput;
-  create: UserCreateWithoutPostsInput;
+export interface FollowCreateManyWithoutFollowingInput {
+  create?: Maybe<
+    FollowCreateWithoutFollowingInput[] | FollowCreateWithoutFollowingInput
+  >;
+  connect?: Maybe<FollowWhereUniqueInput[] | FollowWhereUniqueInput>;
 }
 
-export interface UserUpdateOneInput {
+export interface FollowCreateWithoutFollowingInput {
+  id?: Maybe<ID_Input>;
+  follower: UserCreateOneWithoutFollowingInput;
+}
+
+export interface UserCreateOneInput {
   create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateDataInput {
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  posts?: Maybe<PostCreateManyWithoutOpInput>;
+  likes?: Maybe<LikeCreateManyWithoutUserInput>;
+  following?: Maybe<FollowCreateManyWithoutFollowerInput>;
+  followers?: Maybe<FollowCreateManyWithoutFollowingInput>;
+}
+
+export interface FollowUpdateInput {
+  follower?: Maybe<UserUpdateOneRequiredWithoutFollowingInput>;
+  following?: Maybe<UserUpdateOneRequiredWithoutFollowersInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutFollowingInput {
+  create?: Maybe<UserCreateWithoutFollowingInput>;
+  update?: Maybe<UserUpdateWithoutFollowingDataInput>;
+  upsert?: Maybe<UserUpsertWithoutFollowingInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutFollowingDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
   posts?: Maybe<PostUpdateManyWithoutOpInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
+  followers?: Maybe<FollowUpdateManyWithoutFollowingInput>;
 }
 
 export interface PostUpdateManyWithoutOpInput {
@@ -652,6 +694,234 @@ export interface UserUpdateWithoutLikesDataInput {
   email?: Maybe<String>;
   password?: Maybe<String>;
   posts?: Maybe<PostUpdateManyWithoutOpInput>;
+  following?: Maybe<FollowUpdateManyWithoutFollowerInput>;
+  followers?: Maybe<FollowUpdateManyWithoutFollowingInput>;
+}
+
+export interface FollowUpdateManyWithoutFollowerInput {
+  create?: Maybe<
+    FollowCreateWithoutFollowerInput[] | FollowCreateWithoutFollowerInput
+  >;
+  delete?: Maybe<FollowWhereUniqueInput[] | FollowWhereUniqueInput>;
+  connect?: Maybe<FollowWhereUniqueInput[] | FollowWhereUniqueInput>;
+  set?: Maybe<FollowWhereUniqueInput[] | FollowWhereUniqueInput>;
+  disconnect?: Maybe<FollowWhereUniqueInput[] | FollowWhereUniqueInput>;
+  update?: Maybe<
+    | FollowUpdateWithWhereUniqueWithoutFollowerInput[]
+    | FollowUpdateWithWhereUniqueWithoutFollowerInput
+  >;
+  upsert?: Maybe<
+    | FollowUpsertWithWhereUniqueWithoutFollowerInput[]
+    | FollowUpsertWithWhereUniqueWithoutFollowerInput
+  >;
+  deleteMany?: Maybe<FollowScalarWhereInput[] | FollowScalarWhereInput>;
+}
+
+export interface FollowUpdateWithWhereUniqueWithoutFollowerInput {
+  where: FollowWhereUniqueInput;
+  data: FollowUpdateWithoutFollowerDataInput;
+}
+
+export interface FollowUpdateWithoutFollowerDataInput {
+  following?: Maybe<UserUpdateOneRequiredWithoutFollowersInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutFollowersInput {
+  create?: Maybe<UserCreateWithoutFollowersInput>;
+  update?: Maybe<UserUpdateWithoutFollowersDataInput>;
+  upsert?: Maybe<UserUpsertWithoutFollowersInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutFollowersDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  posts?: Maybe<PostUpdateManyWithoutOpInput>;
+  likes?: Maybe<LikeUpdateManyWithoutUserInput>;
+  following?: Maybe<FollowUpdateManyWithoutFollowerInput>;
+}
+
+export interface LikeUpdateManyWithoutUserInput {
+  create?: Maybe<LikeCreateWithoutUserInput[] | LikeCreateWithoutUserInput>;
+  delete?: Maybe<LikeWhereUniqueInput[] | LikeWhereUniqueInput>;
+  connect?: Maybe<LikeWhereUniqueInput[] | LikeWhereUniqueInput>;
+  set?: Maybe<LikeWhereUniqueInput[] | LikeWhereUniqueInput>;
+  disconnect?: Maybe<LikeWhereUniqueInput[] | LikeWhereUniqueInput>;
+  update?: Maybe<
+    | LikeUpdateWithWhereUniqueWithoutUserInput[]
+    | LikeUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | LikeUpsertWithWhereUniqueWithoutUserInput[]
+    | LikeUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<LikeScalarWhereInput[] | LikeScalarWhereInput>;
+}
+
+export interface LikeUpdateWithWhereUniqueWithoutUserInput {
+  where: LikeWhereUniqueInput;
+  data: LikeUpdateWithoutUserDataInput;
+}
+
+export interface LikeUpdateWithoutUserDataInput {
+  post?: Maybe<PostUpdateOneRequiredWithoutLikesInput>;
+}
+
+export interface PostUpdateOneRequiredWithoutLikesInput {
+  create?: Maybe<PostCreateWithoutLikesInput>;
+  update?: Maybe<PostUpdateWithoutLikesDataInput>;
+  upsert?: Maybe<PostUpsertWithoutLikesInput>;
+  connect?: Maybe<PostWhereUniqueInput>;
+}
+
+export interface PostUpdateWithoutLikesDataInput {
+  text?: Maybe<String>;
+  imgUrl?: Maybe<String>;
+  link?: Maybe<String>;
+  op?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+  reblogPoster?: Maybe<UserUpdateOneInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutPostsInput {
+  create?: Maybe<UserCreateWithoutPostsInput>;
+  update?: Maybe<UserUpdateWithoutPostsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutPostsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutPostsDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  likes?: Maybe<LikeUpdateManyWithoutUserInput>;
+  following?: Maybe<FollowUpdateManyWithoutFollowerInput>;
+  followers?: Maybe<FollowUpdateManyWithoutFollowingInput>;
+}
+
+export interface FollowUpdateManyWithoutFollowingInput {
+  create?: Maybe<
+    FollowCreateWithoutFollowingInput[] | FollowCreateWithoutFollowingInput
+  >;
+  delete?: Maybe<FollowWhereUniqueInput[] | FollowWhereUniqueInput>;
+  connect?: Maybe<FollowWhereUniqueInput[] | FollowWhereUniqueInput>;
+  set?: Maybe<FollowWhereUniqueInput[] | FollowWhereUniqueInput>;
+  disconnect?: Maybe<FollowWhereUniqueInput[] | FollowWhereUniqueInput>;
+  update?: Maybe<
+    | FollowUpdateWithWhereUniqueWithoutFollowingInput[]
+    | FollowUpdateWithWhereUniqueWithoutFollowingInput
+  >;
+  upsert?: Maybe<
+    | FollowUpsertWithWhereUniqueWithoutFollowingInput[]
+    | FollowUpsertWithWhereUniqueWithoutFollowingInput
+  >;
+  deleteMany?: Maybe<FollowScalarWhereInput[] | FollowScalarWhereInput>;
+}
+
+export interface FollowUpdateWithWhereUniqueWithoutFollowingInput {
+  where: FollowWhereUniqueInput;
+  data: FollowUpdateWithoutFollowingDataInput;
+}
+
+export interface FollowUpdateWithoutFollowingDataInput {
+  follower?: Maybe<UserUpdateOneRequiredWithoutFollowingInput>;
+}
+
+export interface FollowUpsertWithWhereUniqueWithoutFollowingInput {
+  where: FollowWhereUniqueInput;
+  update: FollowUpdateWithoutFollowingDataInput;
+  create: FollowCreateWithoutFollowingInput;
+}
+
+export interface FollowScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  AND?: Maybe<FollowScalarWhereInput[] | FollowScalarWhereInput>;
+  OR?: Maybe<FollowScalarWhereInput[] | FollowScalarWhereInput>;
+  NOT?: Maybe<FollowScalarWhereInput[] | FollowScalarWhereInput>;
+}
+
+export interface UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput;
+  create: UserCreateWithoutPostsInput;
+}
+
+export interface UserUpdateOneInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  posts?: Maybe<PostUpdateManyWithoutOpInput>;
+  likes?: Maybe<LikeUpdateManyWithoutUserInput>;
+  following?: Maybe<FollowUpdateManyWithoutFollowerInput>;
+  followers?: Maybe<FollowUpdateManyWithoutFollowingInput>;
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface PostUpsertWithoutLikesInput {
+  update: PostUpdateWithoutLikesDataInput;
+  create: PostCreateWithoutLikesInput;
+}
+
+export interface LikeUpsertWithWhereUniqueWithoutUserInput {
+  where: LikeWhereUniqueInput;
+  update: LikeUpdateWithoutUserDataInput;
+  create: LikeCreateWithoutUserInput;
+}
+
+export interface LikeScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  AND?: Maybe<LikeScalarWhereInput[] | LikeScalarWhereInput>;
+  OR?: Maybe<LikeScalarWhereInput[] | LikeScalarWhereInput>;
+  NOT?: Maybe<LikeScalarWhereInput[] | LikeScalarWhereInput>;
+}
+
+export interface UserUpsertWithoutFollowersInput {
+  update: UserUpdateWithoutFollowersDataInput;
+  create: UserCreateWithoutFollowersInput;
+}
+
+export interface FollowUpsertWithWhereUniqueWithoutFollowerInput {
+  where: FollowWhereUniqueInput;
+  update: FollowUpdateWithoutFollowerDataInput;
+  create: FollowCreateWithoutFollowerInput;
 }
 
 export interface UserUpsertWithoutLikesInput {
@@ -752,14 +1022,20 @@ export interface PostUpdateManyDataInput {
   link?: Maybe<String>;
 }
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
+export interface UserUpsertWithoutFollowingInput {
+  update: UserUpdateWithoutFollowingDataInput;
+  create: UserCreateWithoutFollowingInput;
 }
 
-export interface PostUpsertWithoutLikesInput {
-  update: PostUpdateWithoutLikesDataInput;
-  create: PostCreateWithoutLikesInput;
+export interface LikeCreateInput {
+  id?: Maybe<ID_Input>;
+  post: PostCreateOneWithoutLikesInput;
+  user: UserCreateOneWithoutLikesInput;
+}
+
+export interface LikeUpdateInput {
+  post?: Maybe<PostUpdateOneRequiredWithoutLikesInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutLikesInput>;
 }
 
 export interface PostCreateInput {
@@ -793,12 +1069,25 @@ export interface UserUpdateInput {
   password?: Maybe<String>;
   posts?: Maybe<PostUpdateManyWithoutOpInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
+  following?: Maybe<FollowUpdateManyWithoutFollowerInput>;
+  followers?: Maybe<FollowUpdateManyWithoutFollowingInput>;
 }
 
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+}
+
+export interface FollowSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<FollowWhereInput>;
+  AND?: Maybe<FollowSubscriptionWhereInput[] | FollowSubscriptionWhereInput>;
+  OR?: Maybe<FollowSubscriptionWhereInput[] | FollowSubscriptionWhereInput>;
+  NOT?: Maybe<FollowSubscriptionWhereInput[] | FollowSubscriptionWhereInput>;
 }
 
 export interface LikeSubscriptionWhereInput {
@@ -838,30 +1127,170 @@ export interface NodeNode {
   id: ID_Output;
 }
 
-export interface Like {
+export interface Follow {
   id: ID_Output;
 }
 
-export interface LikePromise extends Promise<Like>, Fragmentable {
+export interface FollowPromise extends Promise<Follow>, Fragmentable {
   id: () => Promise<ID_Output>;
-  post: <T = PostPromise>() => T;
-  user: <T = UserPromise>() => T;
+  follower: <T = UserPromise>() => T;
+  following: <T = UserPromise>() => T;
 }
 
-export interface LikeSubscription
-  extends Promise<AsyncIterator<Like>>,
+export interface FollowSubscription
+  extends Promise<AsyncIterator<Follow>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  post: <T = PostSubscription>() => T;
-  user: <T = UserSubscription>() => T;
+  follower: <T = UserSubscription>() => T;
+  following: <T = UserSubscription>() => T;
 }
 
-export interface LikeNullablePromise
-  extends Promise<Like | null>,
+export interface FollowNullablePromise
+  extends Promise<Follow | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  post: <T = PostPromise>() => T;
-  user: <T = UserPromise>() => T;
+  follower: <T = UserPromise>() => T;
+  following: <T = UserPromise>() => T;
+}
+
+export interface User {
+  id: ID_Output;
+  name: String;
+  email: String;
+  password: String;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  likes: <T = FragmentableArray<Like>>(args?: {
+    where?: LikeWhereInput;
+    orderBy?: LikeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  following: <T = FragmentableArray<Follow>>(args?: {
+    where?: FollowWhereInput;
+    orderBy?: FollowOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  followers: <T = FragmentableArray<Follow>>(args?: {
+    where?: FollowWhereInput;
+    orderBy?: FollowOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  likes: <T = Promise<AsyncIterator<LikeSubscription>>>(args?: {
+    where?: LikeWhereInput;
+    orderBy?: LikeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  following: <T = Promise<AsyncIterator<FollowSubscription>>>(args?: {
+    where?: FollowWhereInput;
+    orderBy?: FollowOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  followers: <T = Promise<AsyncIterator<FollowSubscription>>>(args?: {
+    where?: FollowWhereInput;
+    orderBy?: FollowOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  likes: <T = FragmentableArray<Like>>(args?: {
+    where?: LikeWhereInput;
+    orderBy?: LikeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  following: <T = FragmentableArray<Follow>>(args?: {
+    where?: FollowWhereInput;
+    orderBy?: FollowOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  followers: <T = FragmentableArray<Follow>>(args?: {
+    where?: FollowWhereInput;
+    orderBy?: FollowOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface Post {
@@ -933,111 +1362,51 @@ export interface PostNullablePromise
   reblogPoster: <T = UserPromise>() => T;
 }
 
-export interface User {
+export interface Like {
   id: ID_Output;
-  name: String;
-  email: String;
-  password: String;
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
+export interface LikePromise extends Promise<Like>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  posts: <T = FragmentableArray<Post>>(args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  likes: <T = FragmentableArray<Like>>(args?: {
-    where?: LikeWhereInput;
-    orderBy?: LikeOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  post: <T = PostPromise>() => T;
+  user: <T = UserPromise>() => T;
 }
 
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface LikeSubscription
+  extends Promise<AsyncIterator<Like>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  likes: <T = Promise<AsyncIterator<LikeSubscription>>>(args?: {
-    where?: LikeWhereInput;
-    orderBy?: LikeOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  post: <T = PostSubscription>() => T;
+  user: <T = UserSubscription>() => T;
 }
 
-export interface UserNullablePromise
-  extends Promise<User | null>,
+export interface LikeNullablePromise
+  extends Promise<Like | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  posts: <T = FragmentableArray<Post>>(args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  likes: <T = FragmentableArray<Like>>(args?: {
-    where?: LikeWhereInput;
-    orderBy?: LikeOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  post: <T = PostPromise>() => T;
+  user: <T = UserPromise>() => T;
 }
 
-export interface LikeConnection {
+export interface FollowConnection {
   pageInfo: PageInfo;
-  edges: LikeEdge[];
+  edges: FollowEdge[];
 }
 
-export interface LikeConnectionPromise
-  extends Promise<LikeConnection>,
+export interface FollowConnectionPromise
+  extends Promise<FollowConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<LikeEdge>>() => T;
-  aggregate: <T = AggregateLikePromise>() => T;
+  edges: <T = FragmentableArray<FollowEdge>>() => T;
+  aggregate: <T = AggregateFollowPromise>() => T;
 }
 
-export interface LikeConnectionSubscription
-  extends Promise<AsyncIterator<LikeConnection>>,
+export interface FollowConnectionSubscription
+  extends Promise<AsyncIterator<FollowConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<LikeEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateLikeSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<FollowEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateFollowSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -1061,6 +1430,60 @@ export interface PageInfoSubscription
   hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
   startCursor: () => Promise<AsyncIterator<String>>;
   endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface FollowEdge {
+  node: Follow;
+  cursor: String;
+}
+
+export interface FollowEdgePromise extends Promise<FollowEdge>, Fragmentable {
+  node: <T = FollowPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface FollowEdgeSubscription
+  extends Promise<AsyncIterator<FollowEdge>>,
+    Fragmentable {
+  node: <T = FollowSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateFollow {
+  count: Int;
+}
+
+export interface AggregateFollowPromise
+  extends Promise<AggregateFollow>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateFollowSubscription
+  extends Promise<AsyncIterator<AggregateFollow>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface LikeConnection {
+  pageInfo: PageInfo;
+  edges: LikeEdge[];
+}
+
+export interface LikeConnectionPromise
+  extends Promise<LikeConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<LikeEdge>>() => T;
+  aggregate: <T = AggregateLikePromise>() => T;
+}
+
+export interface LikeConnectionSubscription
+  extends Promise<AsyncIterator<LikeConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<LikeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateLikeSubscription>() => T;
 }
 
 export interface LikeEdge {
@@ -1220,6 +1643,47 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
+export interface FollowSubscriptionPayload {
+  mutation: MutationType;
+  node: Follow;
+  updatedFields: String[];
+  previousValues: FollowPreviousValues;
+}
+
+export interface FollowSubscriptionPayloadPromise
+  extends Promise<FollowSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = FollowPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = FollowPreviousValuesPromise>() => T;
+}
+
+export interface FollowSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<FollowSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = FollowSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = FollowPreviousValuesSubscription>() => T;
+}
+
+export interface FollowPreviousValues {
+  id: ID_Output;
+}
+
+export interface FollowPreviousValuesPromise
+  extends Promise<FollowPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+}
+
+export interface FollowPreviousValuesSubscription
+  extends Promise<AsyncIterator<FollowPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+}
+
 export interface LikeSubscriptionPayload {
   mutation: MutationType;
   node: Like;
@@ -1371,6 +1835,11 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -1379,11 +1848,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
@@ -1412,6 +1876,10 @@ export const models: Model[] = [
   },
   {
     name: "Like",
+    embedded: false
+  },
+  {
+    name: "Follow",
     embedded: false
   }
 ];

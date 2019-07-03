@@ -29,6 +29,7 @@ type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   like(postId: ID): Like
+  follow(userId: ID): Follow
 }
 
 type Post {
@@ -48,6 +49,12 @@ type Like {
   user: User!
 }
 
+type Follow {
+  id: ID!
+  follower: User!
+  following: User!
+}
+
 type Subscription {
   newPost: Post
   newLike: Like
@@ -64,4 +71,6 @@ type User {
   email: String!
   posts: [Post!]!
   likes: [Like!]!
+  following: [Follow!]!
+  followers: [Follow!]!
 }

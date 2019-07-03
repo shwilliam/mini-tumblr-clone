@@ -16,10 +16,18 @@ type User {
   password: String!
   posts: [Post!]! @relation(name: "OriginalPoster")
   likes: [Like!]!
+  following: [Follow!]! @relation(name: "Follower")
+  followers: [Follow!]! @relation(name: "Following")
 }
 
 type Like {
   id: ID! @id
   post: Post!
   user: User!
+}
+
+type Follow {
+  id: ID! @id
+  follower: User! @relation(name: "Follower")
+  following: User! @relation(name: "Following")
 }

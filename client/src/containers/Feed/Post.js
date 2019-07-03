@@ -1,5 +1,6 @@
 import React from 'react'
 import ReblogMutation from '../../store/mutation/ReblogMutation'
+import FollowMutation from '../../store/mutation/FollowMutation'
 import {useAuth} from '../../hooks'
 import ShareButton from '../ShareButton'
 import Post from '../../components/Post'
@@ -26,6 +27,13 @@ export default ({post, ...props}) => {
             onReblog={reblogPost}
             {...props}
           >
+            <FollowMutation
+              userId={post.reblogPoster ? post.reblogPoster.id : post.op.id}
+            >
+              {followMutation => (
+                <button onClick={followMutation}>follow</button>
+              )}
+            </FollowMutation>
             <ShareButton content={post.text} />
           </Post>
         )}
