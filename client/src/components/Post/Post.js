@@ -5,26 +5,40 @@ import LikeButton from '../../components/LikeButton'
 import ReblogButton from '../../components/ReblogButton'
 import ReblogIcon from '../../components/ReblogIcon'
 import MarkdownText from '../../components/MarkdownText'
-import Header from './Header'
 import Picture from './Picture'
+import Header from './Header'
+import FollowButton from './FollowButton'
 import Footer from './Footer'
 import Timestamp from './Timestamp'
 import FlexWrapper from './FlexWrapper'
 import Link from './Link'
 import ShareIcon from './ShareIcon'
 import isOwnPost from './isOwnPost'
+import isUser from './isUser'
 
-export default ({post, onLike, isLiked, email, onReblog, children}) => (
+export default ({
+  post,
+  isLiked,
+  email,
+  onLike,
+  onReblog,
+  onFollow,
+  children,
+}) => (
   <Card>
     <article>
       <Header>
+        {post.op.name}
         {post.reblogPoster && (
           <>
-            {post.reblogPoster.name}
             <ReblogIcon />
+            {post.reblogPoster.name}
           </>
         )}
-        {post.op.name}
+        {email && !isUser(post, email) && (
+          // TODO: hide if already following
+          <FollowButton onClick={onFollow}>follow</FollowButton>
+        )}
       </Header>
       {post.imgUrl && <Picture alt={post.text} src={post.imgUrl} />}
       {!post.link && !post.imgUrl && post.text && (
@@ -37,7 +51,7 @@ export default ({post, onLike, isLiked, email, onReblog, children}) => (
       )}
       <Footer>
         <Timestamp>{timeFromDate(post.createdAt)}</Timestamp>
-        {!isOwnPost(post, email) && email && (
+        {email && !isOwnPost(post, email) && (
           <FlexWrapper>
             {children}
             <ReblogButton onClick={onReblog} />

@@ -23,23 +23,23 @@ export default ({post, ...props}) => {
             op={post.op.id}
           >
             {reblogPost => (
-              <Post
-                isLiked={isLiked}
-                email={localUserData && localUserData.email}
-                post={post}
-                onReblog={reblogPost}
-                onLike={likeMutation}
-                {...props}
+              <FollowMutation
+                userId={post.reblogPoster ? post.reblogPoster.id : post.op.id}
               >
-                <FollowMutation
-                  userId={post.reblogPoster ? post.reblogPoster.id : post.op.id}
-                >
-                  {followMutation => (
-                    <button onClick={followMutation}>follow</button>
-                  )}
-                </FollowMutation>
-                <ShareButton content={post.text} />
-              </Post>
+                {followMutation => (
+                  <Post
+                    isLiked={isLiked}
+                    email={localUserData && localUserData.email}
+                    post={post}
+                    onReblog={reblogPost}
+                    onLike={likeMutation}
+                    onFollow={followMutation}
+                    {...props}
+                  >
+                    <ShareButton content={post.text} />
+                  </Post>
+                )}
+              </FollowMutation>
             )}
           </ReblogMutation>
         )}
