@@ -18,7 +18,8 @@ export default props => {
   const _confirm = async data => {
     const authData = isLogin ? data.login : data.signup
     const {token, user} = authData
-    _saveUserData({token, email: user.email})
+
+    _saveUserData({token, email: user.email, id: user.id})
   }
 
   return (

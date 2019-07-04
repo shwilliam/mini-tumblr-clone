@@ -18,8 +18,9 @@ import isUser from './isUser'
 
 export default ({
   post,
-  isLiked,
   email,
+  isLiked,
+  isFollowed,
   onLike,
   onReblog,
   onFollow,
@@ -35,8 +36,7 @@ export default ({
             {post.reblogPoster.name}
           </TextLink>
         )}
-        {email && !isUser(post, email) && (
-          // TODO: hide if already following
+        {email && !isUser(post, email) && !isFollowed && (
           <FollowButton onClick={onFollow}>follow</FollowButton>
         )}
       </Header>
@@ -59,8 +59,8 @@ export default ({
               <LikeButton
                 aria-label={`Like post by ${post.op.name}`}
                 onClick={onLike}
-                disabled={isLiked(post)}
-                value={isLiked(post)}
+                disabled={isLiked}
+                value={isLiked}
                 label={post.likes.length}
                 id={post.id}
               />

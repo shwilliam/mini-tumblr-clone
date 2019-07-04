@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import ReblogMutation from '../../store/mutation/ReblogMutation'
 import FollowMutation from '../../store/mutation/FollowMutation'
 import LikeMutation from '../../store/mutation/LikeMutation'
@@ -8,9 +8,17 @@ import Post from '../../components/Post'
 
 export default ({post, ...props}) => {
   const [localUserData] = useAuth()
-  const isLiked = () =>
-    localUserData &&
-    post.likes.some(like => like.user.email === localUserData.email)
+  const [isLiked, setIsLiked] = useState(false)
+  const [isFollowed, setIsFollowed] = useState(true)
+
+  useEffect(() => {
+    if (!localUserData) return
+    setIsLiked(post.likes.some(like => like.user.email === localUserData.email))
+    setIsFollowed(
+      post.op.followers.some(follow => follow.follower.id === localUserData.id),
+      // TODO: subscribed toast
+    )
+  }, [localUserData, post.likes, post.op.followers])
 
   return (
     <>
@@ -26,11 +34,13 @@ export default ({post, ...props}) => {
               <FollowMutation
                 userId={post.reblogPoster ? post.reblogPoster.id : post.op.id}
               >
+                {/* TODO: subscribe to follows */}
                 {followMutation => (
                   <Post
-                    isLiked={isLiked}
                     email={localUserData && localUserData.email}
                     post={post}
+                    isLiked={isLiked}
+                    isFollowed={isFollowed}
                     onReblog={reblogPost}
                     onLike={likeMutation}
                     onFollow={followMutation}

@@ -21,11 +21,23 @@ const FEED_QUERY = gql`
           id
           name
           email
+          followers {
+            id
+            follower {
+              id
+            }
+          }
         }
         reblogPoster {
           id
           name
           email
+          followers {
+            id
+            follower {
+              id
+            }
+          }
         }
         likes {
           id
