@@ -5,14 +5,21 @@ import TextLink from '../TextLink'
 import Nav from './Nav'
 import Title from './Title'
 
-const StyledHeader = styled.header`
+const StyleWrapper = styled.div`
   border-bottom: 1px solid ${({theme}) => theme.secondary};
+  margin-bottom: 1rem;
+`
+
+const StyledHeader = styled.header`
+  max-width: calc(500px + 3rem);
+  position: relative;
+  right: 3rem;
+  margin: 0 auto;
   color: ${({theme}) => theme.secondary};
   display: flex;
   justify-content: space-between;
   overflow: hidden;
   padding: 1rem;
-  margin-bottom: 1rem;
 `
 
 const Mini = styled.span`
@@ -22,23 +29,25 @@ const Mini = styled.span`
 `
 
 export default ({isUser, onLogout, children, ...props}) => (
-  <StyledHeader {...props}>
-    <TextLink to={isUser ? '/' : '/explore'}>
-      <Title>
-        <Mini>mini</Mini>Tumblr
-      </Title>
-    </TextLink>
-    {children}
-    {!isUser ? (
-      <Nav>
-        <TextLink to="/auth">Sign in</TextLink>
-      </Nav>
-    ) : (
-      <Nav>
-        <TextLink to="/">Home</TextLink>
-        <TextLink to="/explore">Explore</TextLink>
-        <TextButton onClick={onLogout}>Sign out</TextButton>
-      </Nav>
-    )}
-  </StyledHeader>
+  <StyleWrapper>
+    <StyledHeader {...props}>
+      <TextLink to={isUser ? '/' : '/explore'}>
+        <Title>
+          <Mini>mini</Mini>Tumblr
+        </Title>
+      </TextLink>
+      {children}
+      {!isUser ? (
+        <Nav>
+          <TextLink to="/auth">Sign in</TextLink>
+        </Nav>
+      ) : (
+        <Nav>
+          <TextLink to="/">Home</TextLink>
+          <TextLink to="/explore">Explore</TextLink>
+          <TextButton onClick={onLogout}>Sign out</TextButton>
+        </Nav>
+      )}
+    </StyledHeader>
+  </StyleWrapper>
 )

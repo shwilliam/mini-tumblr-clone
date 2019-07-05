@@ -1,7 +1,6 @@
 import React, {useContext, useState} from 'react'
 import SearchContext from '../context/search'
 import SearchForm from '../components/SearchForm'
-import Button from '../components/Button'
 import TextInput from '../components/TextInput'
 
 export default () => {
@@ -20,9 +19,6 @@ export default () => {
         value={query}
         onChange={({target}) => setQuery(target.value)}
       />
-      <Button type="secondary" htmlType="submit">
-        search
-      </Button>
     </SearchForm>
   )
 }
