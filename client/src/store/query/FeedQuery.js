@@ -52,7 +52,11 @@ const FEED_QUERY = gql`
 `
 
 const Feed = withApollo(({filter, user, first, explore, client, children}) => (
-  <Query query={FEED_QUERY} variables={{filter, user, first, explore}}>
+  <Query
+    query={FEED_QUERY}
+    fetchPolicy="network-only"
+    variables={{filter, user, first, explore}}
+  >
     {feed => children(feed)}
   </Query>
 ))

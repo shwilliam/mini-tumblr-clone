@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react'
-import {navigate} from '@reach/router'
 import {AUTH_TOKEN} from '../constants'
 
 export default function() {
@@ -11,7 +10,7 @@ export default function() {
 
   const logout = () => {
     localStorage.removeItem(AUTH_TOKEN)
-    navigate('/explore')
+    window.location.pathname = '/explore'
   }
 
   return [localUserData, logout]
