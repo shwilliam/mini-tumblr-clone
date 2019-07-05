@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react'
+import {navigate} from '@reach/router'
 import {AUTH_TOKEN} from '../constants'
 
 export default function() {
@@ -10,7 +11,7 @@ export default function() {
 
   const logout = () => {
     localStorage.removeItem(AUTH_TOKEN)
-    document.location.reload(true)
+    navigate('/explore')
   }
 
   return [localUserData, logout]

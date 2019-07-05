@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import {GoSignIn, GoSignOut} from 'react-icons/go'
 import TextButton from '../TextButton'
 import TextLink from '../TextLink'
 import Nav from './Nav'
@@ -24,22 +23,22 @@ const Mini = styled.span`
 
 export default ({isUser, onLogout, children, ...props}) => (
   <StyledHeader {...props}>
-    <TextLink to="/">
+    <TextLink to={isUser ? '/' : '/explore'}>
       <Title>
         <Mini>mini</Mini>Tumblr
       </Title>
     </TextLink>
     {children}
-    <Nav>
-      {!isUser ? (
-        <TextLink aria-label="Sign in" title="Enter" to="auth">
-          <GoSignIn />
-        </TextLink>
-      ) : (
-        <TextButton aria-label="Sign out" label="Exit" onClick={onLogout}>
-          <GoSignOut />
-        </TextButton>
-      )}
-    </Nav>
+    {!isUser ? (
+      <Nav>
+        <TextLink to="/auth">Sign in</TextLink>
+      </Nav>
+    ) : (
+      <Nav>
+        <TextLink to="/">Home</TextLink>
+        <TextLink to="/explore">Explore</TextLink>
+        <TextButton onClick={onLogout}>Sign out</TextButton>
+      </Nav>
+    )}
   </StyledHeader>
 )
