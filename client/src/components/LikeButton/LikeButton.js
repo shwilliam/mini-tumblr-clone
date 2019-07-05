@@ -19,7 +19,11 @@ export default ({value = false, label, id, onClick, ...props}) => {
       style={{position: 'relative'}}
       {...props}
     >
-      {label > 0 && <CountLabel id={`label-${id}`}>{label}</CountLabel>}
+      {label > 0 && (
+        <CountLabel id={`label-${id}`} isLiked={value}>
+          {label}
+        </CountLabel>
+      )}
       <animated.div
         aria-hidden
         style={{
