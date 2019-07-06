@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react'
 import SearchContext from '../context/search'
 import SearchForm from '../components/SearchForm'
-import TextInput from '../components/TextInput'
+import IconInput from '../components/IconInput'
 
 export default () => {
   const [query, setQuery] = useState('')
@@ -14,7 +14,7 @@ export default () => {
 
   return (
     <SearchForm onSubmit={handleSubmit}>
-      <TextInput
+      <IconInput
         type="search"
         value={query}
         onChange={({target}) => setQuery(target.value)}

@@ -18,21 +18,14 @@ const getBgColor = ({btnType, theme}) => {
   }
 }
 
-const getBorderColor = ({btnType, theme}) => {
-  switch (btnType) {
-    case 'secondary':
-      return theme.main
-    default:
-      return 'transparent'
-  }
-}
-
 export default styled.button`
   width: 100%;
   color: ${getColor};
   background-color: ${getBgColor};
   border-width: 1px;
-  border-color: ${getBorderColor};
-  border-radius: 5px;
+  border: none;
+  border-radius: 3px;
   cursor: pointer;
+  width: 100%;
+  height: 34px;
 `

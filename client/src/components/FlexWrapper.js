@@ -5,5 +5,10 @@ export default styled.div`
 
   & > * {
     padding: 0 0.25rem;
+    margin-left: 0.5rem;
+
+    &:first-child {
+      margin-left: 0;
+    }
   }
 `

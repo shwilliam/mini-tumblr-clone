@@ -3,6 +3,10 @@ import {Mutation} from 'react-apollo'
 import {AUTH_TOKEN} from '../constants'
 import {LOGIN_MUTATION} from '../store/mutation/LoginMutation'
 import {SIGNUP_MUTATION} from '../store/mutation/SignupMutation'
+import AuthForm from '../components/AuthForm'
+import TextInput from '../components/TextInput'
+import FlexWrapper from '../components/FlexWrapper'
+import Button from '../components/Button'
 
 export default props => {
   const [isLogin, setIsLogin] = useState(true)
@@ -29,7 +33,7 @@ export default props => {
       onCompleted={data => _confirm(data)}
     >
       {mutation => (
-        <form
+        <AuthForm
           onSubmit={e => {
             e.preventDefault()
             mutation()
@@ -37,7 +41,7 @@ export default props => {
           {...props}
         >
           {!isLogin && (
-            <input
+            <TextInput
               value={name}
               onChange={e => setName(e.target.value)}
               type="text"
@@ -45,25 +49,29 @@ export default props => {
               required
             />
           )}
-          <input
+          <TextInput
             value={email}
             onChange={e => setEmail(e.target.value)}
             type="email"
             placeholder="email"
             required
           />
-          <input
+          <TextInput
             value={password}
             onChange={e => setPassword(e.target.value)}
             type="password"
             placeholder="password"
             required
           />
-          <button type="submit">{isLogin ? 'login' : 'create account'}</button>
-          <button type="button" onClick={() => setIsLogin(!isLogin)}>
-            {isLogin ? 'create an account?' : 'already have an account?'}
-          </button>
-        </form>
+          <FlexWrapper>
+            <Button type="primary" htmlType="submit">
+              {isLogin ? 'login' : 'create account'}
+            </Button>
+            <Button type="secondary" onClick={() => setIsLogin(!isLogin)}>
+              {isLogin ? 'create an account?' : 'already have an account?'}
+            </Button>
+          </FlexWrapper>
+        </AuthForm>
       )}
     </Mutation>
   )
