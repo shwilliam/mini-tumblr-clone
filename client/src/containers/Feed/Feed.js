@@ -9,6 +9,8 @@ import FeedListItem from '../../components/FeedListItem'
 import TextLink from '../../components/TextLink'
 import DisplayPicture from '../../components/DisplayPicture'
 import Post from './Post'
+import PaddedCard from '../../components/PaddedCard'
+import Loader from '../../components/Loader'
 
 export default ({user, explore = false, ...props}) => {
   const [posts, setPosts] = useState([])
@@ -26,15 +28,21 @@ export default ({user, explore = false, ...props}) => {
       {...props}
     >
       {({loading, error, data, subscribeToMore}) => {
-        if (loading && !posts.length) return <p>fetching...</p>
-        if (error) return <p>something went wrong</p>
+        if (loading && !posts.length) return <Loader />
+        if (error)
+          return (
+            <PaddedCard>
+              Oops... Something went wrong. Please refresh the page to try
+              again.
+            </PaddedCard>
+          )
 
         subscribeToNewPosts(subscribeToMore)
         subscribeToNewLikes(subscribeToMore)
 
         setPosts(data.feed.posts)
 
-        if (!posts.length) return <p>no posts</p>
+        if (!posts.length) return <PaddedCard>No posts here...</PaddedCard>
         return (
           <PlainList ref={feedRef}>
             {posts.length &&
