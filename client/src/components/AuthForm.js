@@ -6,7 +6,7 @@ export default styled.form`
   right: 0;
   bottom: 0;
   left: 0;
-  max-width: 500px;
+  width: 500px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

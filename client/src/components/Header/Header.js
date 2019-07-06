@@ -11,7 +11,7 @@ const StyleWrapper = styled.div`
 `
 
 const StyledHeader = styled.header`
-  max-width: calc(500px + 3rem);
+  width: calc(500px + 3rem);
   position: relative;
   right: 3rem;
   margin: 0 auto;
