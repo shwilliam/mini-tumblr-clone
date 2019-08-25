@@ -29,13 +29,16 @@ export default ({user, explore = false, ...props}) => {
     >
       {({loading, error, data, subscribeToMore}) => {
         if (loading && !posts.length) return <Loader />
-        if (error)
+        if (error && error.message === 'GraphQL error: Not authenticated') {
+          return <PaddedCard>Please log in to view this page.</PaddedCard>
+        } else if (error) {
           return (
             <PaddedCard>
               Oops... Something went wrong. Please refresh the page to try
               again.
             </PaddedCard>
           )
+        }
 
         subscribeToNewPosts(subscribeToMore)
         subscribeToNewLikes(subscribeToMore)

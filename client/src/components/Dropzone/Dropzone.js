@@ -7,7 +7,7 @@ export default React.forwardRef((props, ref) => (
     {props.isDragActive ? (
       <p>drop your file here!</p>
     ) : props.file ? (
-      <p>dont't forget to add a description</p>
+      <p>don't forget to add a description</p>
     ) : (
       <p>drag your file here, or click to select</p>
     )}

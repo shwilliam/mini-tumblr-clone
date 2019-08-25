@@ -31,7 +31,7 @@ const Mini = styled.span`
 export default ({isUser, onLogout, children, ...props}) => (
   <StyleWrapper>
     <StyledHeader {...props}>
-      <TextLink to={isUser ? '/' : '/explore'}>
+      <TextLink to={isUser ? '/home' : '/'}>
         <Title>
           <Mini>mini</Mini>Tumblr
         </Title>
