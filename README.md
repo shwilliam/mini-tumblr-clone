@@ -1,7 +1,11 @@
 # Tumblr mini
 
-> Full-stack Tumblr clone with a GraphQL server built using Prisma & `graphql-yoga`,
-> and a frontend made with React and styled using `styled-components` & `react-spring`
+> Full-stack Tumblr clone prototype with a GraphQL server built using Prisma &
+> `graphql-yoga`, and a frontend made with React and styled using `styled-components`
+
+<img width="988" alt="Site screengrab" src="https://user-images.githubusercontent.com/38357771/63645565-ed0dde00-c6b5-11e9-80a7-6e84388d6415.png">
+
+![Like animation](https://user-images.githubusercontent.com/38357771/63645566-ee3f0b00-c6b5-11e9-9978-101b853a1bcc.gif)
 
 ## Install
 
