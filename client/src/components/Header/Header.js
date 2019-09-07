@@ -43,8 +43,8 @@ export default ({isUser, onLogout, children, ...props}) => (
         </Nav>
       ) : (
         <Nav>
-          <TextLink to="/">Home</TextLink>
-          <TextLink to="/explore">Explore</TextLink>
+          <TextLink to="/home">Home</TextLink>
+          <TextLink to="/">Explore</TextLink>
           <TextButton onClick={onLogout}>Sign out</TextButton>
         </Nav>
       )}

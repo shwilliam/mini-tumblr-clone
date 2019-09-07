@@ -10,7 +10,6 @@ import NotFound from './pages/NotFound'
 export default () => (
   <Router>
     <Explore path="/" />
-    <Explore path="/explore" />
     <Home path="/home" />
     <User path="/user/:userId" />
     <Auth path="/auth" />
