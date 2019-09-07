@@ -10,7 +10,6 @@ import ImageDropzone from './ImageDropzone'
 const TextAreaInput = withValidation(TextArea)
 const UrlInput = withValidation(TextInput)
 
-// TODO: require text fields
 // TODO: clean up file error handling
 
 export default ({type, onCreate, ...props}) => {
@@ -30,8 +29,18 @@ export default ({type, onCreate, ...props}) => {
           onSubmit={e => {
             e.preventDefault()
 
-            if (type === 'photo' && !file)
-              return setFileError('please upload an image')
+            switch (type) {
+              case 'photo':
+                if (!file) return setFileError('please upload an image')
+                break
+              case 'link':
+                if (!link) return
+                break
+              default:
+                if (!text) return
+                break
+            }
+
             createPost()
             onCreate()
           }}
