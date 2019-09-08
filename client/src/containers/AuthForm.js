@@ -65,7 +65,7 @@ export default props => {
           />
           <FlexWrapper>
             <Button type="primary" htmlType="submit">
-              {isLogin ? 'login' : 'create account'}
+              {isLogin ? 'log in' : 'sign up'}
             </Button>
             <Button type="secondary" onClick={() => setIsLogin(!isLogin)}>
               {isLogin ? 'create an account?' : 'already have an account?'}

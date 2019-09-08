@@ -2,13 +2,13 @@ import React, {useState} from 'react'
 import PostMutation from '../store/mutation/PostMutation'
 import withValidation from '../enhancers/withValidation'
 import TextArea from '../components/TextArea'
-import StyledUrlInput from '../components/UrlInput'
+import Input from '../components/Input'
 import Button from '../components/Button'
 import ErrorText from '../components/ErrorText'
 import ImageDropzone from './ImageDropzone'
 
 const TextAreaInput = withValidation(TextArea)
-const UrlInput = withValidation(StyledUrlInput)
+const UrlInput = withValidation(Input)
 
 // TODO: clean up file error handling
 

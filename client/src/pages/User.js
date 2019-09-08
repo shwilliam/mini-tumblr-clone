@@ -11,7 +11,6 @@ export default ({userId}) => (
       <Search />
     </Header>
     <Main>
-      {/* show toolbar if user is feed owner */}
       <Feed user={userId} />
     </Main>
   </SearchContextProvider>
