@@ -7,5 +7,5 @@ export default styled.input`
   height: 34px;
   border: none;
   border-radius: 3px;
-  padding: 0 10px 2px 20px;
+  padding: 6px 10px 2px 20px;
 `
