@@ -11,15 +11,14 @@ const StyleWrapper = styled.div`
 `
 
 const StyledHeader = styled.header`
-  width: calc(500px + 3rem);
-  position: relative;
-  right: 3rem;
+  max-width: calc(700px + 2rem);
   margin: 0 auto;
   color: ${({theme}) => theme.secondary};
   display: flex;
   justify-content: space-between;
-  overflow: hidden;
+  flex-wrap: wrap;
   padding: 1rem;
+  padding-top: 0.7rem;
 `
 
 const Mini = styled.span`

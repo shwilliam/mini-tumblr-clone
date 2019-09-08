@@ -10,7 +10,7 @@ export default function() {
 
   const logout = () => {
     localStorage.removeItem(AUTH_TOKEN)
-    window.location.pathname = '/explore'
+    window.location.pathname = '/'
   }
 
   return [localUserData, logout]

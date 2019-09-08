@@ -5,7 +5,8 @@ import Toolbar from '../components/Toolbar'
 import IconButton from '../components/IconButton'
 import DisplayPicture from '../components/DisplayPicture'
 import FlexCard from '../components/FlexCard'
-import RelativeWrapper from '../components/RelativeWrapper'
+import FlexWrapper from '../components/FlexWrapper'
+// import RelativeWrapper from '../components/RelativeWrapper'
 import NewPostForm from './NewPostForm'
 
 export default () => {
@@ -15,7 +16,7 @@ export default () => {
   // not logged in
   if (!localUserData) return null
   return (
-    <RelativeWrapper>
+    <FlexWrapper>
       {localUserData && <DisplayPicture email={localUserData.email} />}
       <FlexCard>
         <Toolbar>
@@ -42,6 +43,6 @@ export default () => {
           />
         )}
       </FlexCard>
-    </RelativeWrapper>
+    </FlexWrapper>
   )
 }
