@@ -3,9 +3,15 @@
 > Full-stack Tumblr clone prototype with a GraphQL server built using Prisma &
 > `graphql-yoga`, and a frontend made with React and styled using `styled-components`
 
-<img width="988" alt="Site screengrab" src="https://user-images.githubusercontent.com/38357771/63645565-ed0dde00-c6b5-11e9-80a7-6e84388d6415.png">
+<img width="895" alt="Site screengrab" src="https://user-images.githubusercontent.com/38357771/64497413-bb267b00-d262-11e9-9c5f-6ef9ffbd453c.png">
 
-![Like animation](https://user-images.githubusercontent.com/38357771/63645566-ee3f0b00-c6b5-11e9-9978-101b853a1bcc.gif)
+## Features
+
+- GraphQL backend (Prisma + `graphql-yoga`)
+- Authentication w/ JSON web tokens
+- Handles creating, liking, reblogging and sharing posts
+- Allows users to follow other users
+- Isolated component development w/ Storybook
 
 ## Install
 
