@@ -6,4 +6,5 @@ export default styled(PlainList)`
   justify-content: space-between;
   flex-grow: 1;
   width: 100%;
+  margin-bottom: 0.3rem;
 `
