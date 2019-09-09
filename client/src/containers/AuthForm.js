@@ -6,6 +6,7 @@ import {SIGNUP_MUTATION} from '../store/mutation/SignupMutation'
 import AuthForm from '../components/AuthForm'
 import TextInput from '../components/TextInput'
 import FlexWrapper from '../components/FlexWrapper'
+import Center from '../components/Center'
 import Button from '../components/Button'
 
 export default props => {
@@ -33,45 +34,47 @@ export default props => {
       onCompleted={data => _confirm(data)}
     >
       {mutation => (
-        <AuthForm
-          onSubmit={e => {
-            e.preventDefault()
-            mutation()
-          }}
-          {...props}
-        >
-          {!isLogin && (
+        <Center>
+          <AuthForm
+            onSubmit={e => {
+              e.preventDefault()
+              mutation()
+            }}
+            {...props}
+          >
+            {!isLogin && (
+              <TextInput
+                value={name}
+                onChange={e => setName(e.target.value)}
+                type="text"
+                placeholder="name"
+                required
+              />
+            )}
             <TextInput
-              value={name}
-              onChange={e => setName(e.target.value)}
-              type="text"
-              placeholder="name"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              type="email"
+              placeholder="email"
               required
             />
-          )}
-          <TextInput
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            type="email"
-            placeholder="email"
-            required
-          />
-          <TextInput
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            type="password"
-            placeholder="password"
-            required
-          />
-          <FlexWrapper>
-            <Button type="primary" htmlType="submit">
-              {isLogin ? 'log in' : 'sign up'}
-            </Button>
-            <Button type="secondary" onClick={() => setIsLogin(!isLogin)}>
-              {isLogin ? 'create an account?' : 'already have an account?'}
-            </Button>
-          </FlexWrapper>
-        </AuthForm>
+            <TextInput
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              type="password"
+              placeholder="password"
+              required
+            />
+            <FlexWrapper>
+              <Button type="primary" htmlType="submit">
+                {isLogin ? 'log in' : 'sign up'}
+              </Button>
+              <Button type="secondary" onClick={() => setIsLogin(!isLogin)}>
+                {isLogin ? 'create an account?' : 'already have an account?'}
+              </Button>
+            </FlexWrapper>
+          </AuthForm>
+        </Center>
       )}
     </Mutation>
   )

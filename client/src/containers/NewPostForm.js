@@ -10,8 +10,6 @@ import ImageDropzone from './ImageDropzone'
 const TextAreaInput = withValidation(TextArea)
 const UrlInput = withValidation(Input)
 
-// TODO: clean up file error handling
-
 export default ({type, onCreate, ...props}) => {
   const [text, setText] = useState('')
   const [link, setLink] = useState('')
